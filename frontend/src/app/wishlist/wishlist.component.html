@@ -1,0 +1,114 @@
+<app-header></app-header>
+<div id="preloader"  *ngIf="showPreloader"></div>
+
+<div *ngIf="!display" id="main" class="card" style="width: 48rem">
+    <div class="border border-left border-right px-0">
+      <div class="p-3 border-bottom">
+          
+        <h4 class="d-flex align-items-center mb-0">
+          Wishlist 
+        </h4>
+      </div>
+      <div>
+        <div>
+          <ng-container *ngFor="let item of filteredposts.reverse()">
+            <div class="d-flex p-3 border-bottom" *ngIf="(searchText$ | async) === '' || item.bookname.toLowerCase().includes((searchText$ | async)?.toLowerCase()) || item.author.toLowerCase().includes((searchText$ | async)?.toLowerCase()) ">
+              <img
+              src="../../../assets/{{item.userimage}}"
+              class="rounded-circle"
+              height="50"
+              id="sse"
+              alt="Avatar"
+              loading="lazy"
+            />
+            <div class="d-flex w-100 ps-3">
+              <div>
+               
+                  <h6 class="text-body">
+                   {{item.username}}
+                    <span class="small text-muted font-weight-normal"
+                      >{{item.useremail}}</span
+                    >
+                    <span class="small text-muted font-weight-normal"> • </span>
+                    <span class="small  font-weight-normal">{{getTime(item.time)}}</span>
+                    <!-- <span><i class="fas fa-angle-down float-end"></i></span> -->
+                  </h6>
+                <p style="line-height: 1.2">
+                  {{item.postdetails}}
+                </p>
+                <div class="card border mb-3 shadow-0" style="max-width: 540px">
+                  <div class="row g-0">
+                    <div class="col-md-3">
+                      <img
+                        src="../../../assets/{{item.image}}"
+                        alt="Avatar"
+                        class="img-fluid rounded-left mt-4"
+                      />
+                    </div>
+                    <div class="col-md-9">
+                      <div class="card-body">
+                        <p class="card-text" style="line-height: 1">
+                          About the Book 
+                        </p>
+                        <h5 id="n">{{item.bookname}}</h5>
+                        <h6 id="nu">{{item.author}}</h6>
+                        <p class="card-text small mb-0" style="line-height: 1.2">
+                          {{item.bookdetails}}
+                        </p>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ul
+                  class="list-unstyled d-flex justify-content-start mb-0 ms-2 pe-xl-5"
+                >
+                  <li>
+                      <i id="idu" class="bi bi-hand-thumbs-up-fill" [ngStyle]="{'color': item.like>=1? 'rgb(0, 110, 255)': '#d1d1d1'}" ></i>
+                      <span class="small ps-2">{{item.like}}</span>
+                      <div>
+                        <p id="x">Like</p>
+  
+                      </div>
+                  </li>
+                  <li>
+                      <i  class="bi bi-heart-fill ms-5" [ngStyle]="{'color': item.wishlist>=1? 'red': '#d1d1d1'}"(click)="wishlist(item._id)"></i>   
+                      <div>
+                        <p id="xy">Wishlist</p>
+  
+                      </div>
+                  </li>
+                  <li>
+                      <i class="bi bi-chat-dots ms-4 "></i>
+                      <div>
+                        <p id="xyz">Chat</p>
+  
+                      </div>
+                  </li>
+                 
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+  
+          </ng-container>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="display" id="main" class="container-fluid ">
+    <div class="row">
+    
+    
+                       <img src="../../assets/wish.png" id="wish" class="img-fluid ">
+                
+                       
+                   
+            
+   
+   </div>
+   </div>

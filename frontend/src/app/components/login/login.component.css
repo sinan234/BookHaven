@@ -1,0 +1,95 @@
+#aot{
+    position: relative;
+    margin-top: 150px;
+    height: 580px;
+    border-radius: 15px;
+    border: 0.5px solid black;
+    border-color: rgb(118, 118, 126);
+}
+img{
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    border-radius: 15px;
+    height: 400px;
+    width: 490px;
+}
+#aot2{
+    position: relative;
+    margin-top:  50px;
+    margin-left: 685px;
+}
+input[type=email] {
+    background-color: #f6f6f6;;
+    border: none;
+    color: #0d0d0d;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-left: 50px;
+    width: 65%;
+    border: 2px solid #c9bebe;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+  }
+  h2{
+    color: #44b89d;
+  }
+  
+  input[type=email]:focus {
+    background-color: #fff;
+    border-bottom: 2px solid #5fbae9;
+  }
+  
+  input[type=email]:placeholder {
+    color: #cccccc;
+  }
+  input[type=password] {
+    background-color: #f6f6f6;
+    border: none;
+    color: #0d0d0d;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 25px;
+    margin-left: 50px;
+    width: 65%;
+    border: 2px solid #c9bebe;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    caret-color: transparent;
+  }
+  
+  input[type=password]:focus {
+    background-color: #fff;
+    border-bottom: 2px solid #5fbae9;
+  }
+  
+  input[type=password]:placeholder {
+    color: #cccccc;
+  }
+  #frm{
+    position: relative;
+    margin-top: 40px;
+  }
+  button{
+    width: 110px;
+    margin-top: 30px;
+    margin-left: 210px;
+  }
+

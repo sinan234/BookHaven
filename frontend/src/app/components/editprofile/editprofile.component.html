@@ -1,0 +1,76 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<app-header></app-header>
+<div id="preloader"  *ngIf="showPreloader"></div>
+
+<div  id="div1" class="container bootstrap snippets bootdey">
+<div class="row d-flex">
+  <div class="profile-nav col-md-3">
+      <div class="panel">
+          <div class="user-heading round">
+              <a href="#">
+                  <img src="../../../assets/{{user?.image}}" alt="">
+              </a>
+              <h1>{{user.name}}</h1>
+              <p>{{user.email}}</p>
+          </div>
+
+          <ul class="nav nav-pills nav-stacked">
+            <li id="i" ><a routerLink="/login/profile"><i class="fa fa-user"></i> Profile</a></li>
+            <li id="j" class="active"><a><i class="fa fa-edit" ></i> Edit profile</a></li>
+          </ul>
+      </div>
+  </div>
+  <div class="profile-info col-md-9">
+    <div class="panel">
+      <form #a="ngForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="category1">Category 1</label>
+          <select id="product_categorie" name="cat1" class="form-control" required [(ngModel)]="cat1">
+            <option [value]="'Choose your interested category1'" disabled>Choose your interested category 1</option>
+            <option [value]="'Adventure'">Adventure</option>
+            <option [value]="'Fiction'">Fiction</option>
+            <option [value]="'Thriller'">Thriller</option>
+            <option [value]="'Biography'">Biography</option>
+            <option [value]="'Mystery'">Mystery</option>
+            <option [value]="'Romance'">Romance</option>
+          </select>        </div>
+        <div class="form-group">
+          <label for="category2">Category 2</label>
+          <select id="product_categorie" name="cat2" class="form-control" required [(ngModel)]="cat2">
+            <option [value]="'Choose your interested category1'" disabled>Choose your interested category 2</option>
+            <option [value]="'Adventure'">Adventure</option>
+            <option [value]="'Fiction'">Fiction</option>
+            <option [value]="'Thriller'">Thriller</option>
+            <option [value]="'Biography'">Biography</option>
+            <option [value]="'Mystery'">Mystery</option>
+            <option [value]="'Romance'">Romance</option>
+          </select>           </div>
+        <div class="form-group">
+          <label for="category3">Category 3</label>
+          <select id="product_categorie" name="cat3" class="form-control" required [(ngModel)]="cat3">
+            <option [value]="'Choose your interested category1'" disabled>Choose your interested category 3</option>
+            <option [value]="'Adventure'">Adventure</option>
+            <option [value]="'Fiction'">Fiction</option>
+            <option [value]="'Thriller'">Thriller</option>
+            <option [value]="'Biography'">Biography</option>
+            <option [value]="'Mystery'">Mystery</option>
+            <option [value]="'Romance'">Romance</option>
+          </select>           </div>
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input type="text" class="form-control" id="location" [(ngModel)]="location" name="location">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="text" class="form-control" id="phone" [(ngModel)]="phone" name="phone">
+        </div>
+        <button class="btn btn-primary" [disabled]="!a.valid"  (click)="onsubmit()">Save</button>
+      </form>
+    </div>
+  </div>
+  
+</div>

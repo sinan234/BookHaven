@@ -1,0 +1,12 @@
+<app-header></app-header>
+<div class="container" id="aot">
+    <div class="d-flex">
+        <img class="img-fluid rounded float-left" src="../../../assets/main.png">
+        <div id="aot2">
+            <h2>Log in to your account</h2>
+            <form #a="ngForm" id="frm" (ngSubmit)="onsubmit(a)">
+            <input type="email" class="form-control" placeholder="Enter your email" required [(ngModel)]="email" name="email" />
+            <input type="password" class="form-control" placeholder="Enter your password" minlength="6" required [(ngModel)]="password" name="password"/>
+            <button type="submit" class="btn btn-outline-success">Log in</button>
+        </form>
+</div>

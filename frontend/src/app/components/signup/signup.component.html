@@ -1,0 +1,55 @@
+
+
+<app-header></app-header>
+<div class="container" id="aot">
+    <div class="d-flex">
+        <img class="img-fluid rounded float-left" src="../../../assets/signup.webp">
+        <div id="aot2">
+            <h2>Sign up</h2>
+            <form *ngIf="!show">
+              <input type="text" class="form-control" placeholder="Enter your Full name" required [(ngModel)]="name" name="name" />
+            <input type="email" class="form-control" placeholder="Enter your email" required [(ngModel)]="email" name="email" />
+            <input type="password" class="form-control" placeholder="Enter your password" minlength="6" required [(ngModel)]="password" name="password"/>
+            <input type="password"class="form-control" placeholder="Confirm your password" minlength="6" required [(ngModel)]="cpassword" name="cpassword"/>
+             <button id="btn" class="btn btn-outline-primary" (click)="next()">Next</button>
+        </form>
+        <form *ngIf="show"  #a="ngForm" (ngSubmit)="onsubmit(a)" >
+            <input type="number" class="form-control" placeholder="Enter your phone" required [(ngModel)]="phone" name="phone" />
+            <input type="text" class="form-control" placeholder="Enter your location" required [(ngModel)]="location" name="location" />
+           
+            <select id="product_categorie" name="cat1" class="form-control" required [(ngModel)]="cat1">
+                <option [value]="'Choose your interested category1'" disabled>Choose your interested category 1</option>
+                <option [value]="'Adventure'">Adventure</option>
+                <option [value]="'Fiction'">Fiction</option>
+                <option [value]="'Thriller'">Thriller</option>
+                <option [value]="'Biography'">Biography</option>
+                <option [value]="'Mystery'">Mystery</option>
+                <option [value]="'Romance'">Romance</option>
+              </select>
+              <select id="product_categorie" name="cat2" class="form-control" required [(ngModel)]="cat2">
+                <option [value]="'Choose your interested category2'">Choose your interested category 2</option>
+                <option [value]="'Adventure'">Adventure</option>
+                <option [value]="'Fiction'">Fiction</option>
+                <option [value]="'Thriller'">Thriller</option>
+                <option [value]="'Biography'">Biography</option>
+                <option [value]="'Mystery'">Mystery</option>
+                <option [value]="'Romance'">Romance</option>
+              </select>
+             
+              <select id="product_categorie" name="cat3" class="form-control" required [(ngModel)]="cat3">
+                <option [value]="'Choose your interested category 3'">Choose your interested category 3</option>
+                <option [value]="'Adventure'">Adventure</option>
+                <option [value]="'Fiction'">Fiction</option>
+                <option [value]="'Thriller'">Thriller</option>
+                <option [value]="'Biography'">Biography</option>
+                <option [value]="'Mystery'">Mystery</option>
+                <option [value]="'Romance'">Romance</option>
+              </select>
+              <label class="ms-3 mt-3">Choose your Profile picture</label>
+              <input type="file" placeholder="Choose your Profile Picture" [(ngModel)]="image" name="image" />
+              <button id="nb" class="btn btn-outline-success" (click)="onpay()"> Pay Rs.20 as convenience fee</button>
+              <input type="submit" [disabled]="!a.valid" class="form-control" />
+        </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+
+    <header class="header_section sticky">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container  " >
+          <a class="navbar-brand" >
+            <span>
+              BookHaven 
+            </span>
+          </a>
+        
+          <div class="collapse navbar-collapse " id="navbarSupportedContent">
+            <ul class="navbar-nav " >
+         
+                <li class="nav-item ">
+                <a  class="nav-link " routerLink="/home" routerLinkActive="active" >Home </a>
+              </li>
+             <ng-container *ngIf="loginService.getStatus()">
+              <li class="nav-item" >
+                <div class="nav-link-container" routerLink="/login/feed" routerLinkActive="active">
+                  <a class="nav-link" >Feed</a>
+                </div>
+              </li>
+              
+              <li  class="nav-item"   >
+                <a  class="nav-link"  routerLinkActive="active" routerLink="/login/wishlist" > Wishlist</a>
+              </li>
+              <li  class="nav-item"  >
+                <a  class="nav-link"  routerLinkActive="active" routerLink="/login/chat"  > Chat</a>
+              </li>
+              <li  class="nav-item"  >
+                <a  class="nav-link"  routerLinkActive="active" routerLink="/login/profile" > Profile</a>
+              </li>
+            </ng-container>
+              <ng-container *ngIf="!show">
+              <li  class="nav-item" >
+                <a id="s" class="nav-link" [routerLink]="['/']"  fragment="about" > About</a>
+              </li>
+            
+              <li  class="nav-item" >
+                <a id="s" class="nav-link" [routerLink]="['/']" fragment="contact">Contact </a>
+              </li>
+
+                 <button id="btn"  class="btn btn-outline-success " type="button" routerLink="/signup" routerLinkActive="active">Sign Up</button>
+              
+                  <button id="btn2"  class=" btn btn-outline-success "  type="button" routerLink="/login" routerLinkActive="active"> Login</button>
+                </ng-container>
+            </ul>
+            <h5 id="a" *ngIf="show" class="text"> Welcome:{{ name}} </h5>
+            <div class="search_form" *ngIf="loginService.getStatus()">
+              <input type="text" class="form-control" placeholder="Search here..." [(ngModel)]="searchText" (input)="onSearchTextChange()">
+              <button class="" type="submit">
+                <i class="bi bi-search"></i>
+              </button>
+              
+            </div>
+            <button id="btn2"  *ngIf="show"class=" btn btn-outline-danger " (click)=logout() type="button"  routerLinkActive="active"> Logout</button>
+
+          </div>
+        </nav>
+      </div>
+    </header>
+   

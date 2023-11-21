@@ -1,0 +1,355 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="icon" href="../../../assets/favicon.png" type="image/gif" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>BookHaven</title>
+
+
+
+</head>
+
+<body>
+
+  <div class="hero_area">
+    <app-header></app-header>
+    <section class="slider_section " id="home">
+      <div id="customCarousel1" class="carousel slide" data-ride="carousel" *ngIf="!show">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container ">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="detail-box">
+                    <h5>
+                      BookHaven Community                  </h5>
+                    <h1>
+                      For All Your <br>
+                      Reading Needs
+                    </h1>
+                    <p>
+                      Welcome to our community book store, where you can explore a world of knowledge and immerse yourself in the joy of reading.                    </p>
+                    <a [routerLink]="['/']"  fragment="category">
+                    Learn more                    </a>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="img-box">
+                    <img id="um" src="../../../assets/nr.avif" alt="hi">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+       
+          
+        </div>
+      </div>
+
+      <div id="customCarousel2" class="carousel slide " data-ride="carousel" *ngIf="show">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container ">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="detail-box">
+                    <h5>
+                      BookHaven Community                 </h5>
+                    <h1>
+                      Connecting<br>
+                     Socially
+                    </h1>
+                    <p>
+                      Users can post readed books and can share to other customers and chat to them also.                    </p>
+                      <a [routerLink]="['/']"  fragment="category">
+                        Learn More
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="img-box">
+                    <img  src="../../../assets/new.jpg" alt="hi">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+       
+          
+        </div>
+      </div>
+        <div class="carousel_btn_box">
+          <a class="carousel-control-prev"  role="button" data-slide="prev" (click)="togglecarousel1()">
+            <i class="bi bi-chevron-left"></i>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next"  role="button" data-slide="next" (click)="togglecarousel2()">
+            <i class="bi bi-chevron-right"></i>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      
+    </section>
+  </div>
+
+
+
+  <section class="catagory_section layout_padding" id="category" #categorySection>
+    <div class="catagory_container">
+      <div class="container ">
+        <div class="heading_container heading_center">
+          <h2>
+            Books Categories
+          </h2>
+          <p>
+            There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
+          </p>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-md-4 ">
+            <div class="box ">
+              <div class="img-box">
+                <img src="../../../assets/cat1.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Textbooks
+                </h5>
+                <p>
+                  Discover textbooks for various subjects and enhance your knowledge. 
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4 ">
+            <div class="box ">
+              <div class="img-box">
+                <img src="../../../assets/cat2.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Science
+                </h5>
+                <p>
+                  Dive into the fascinating world of science with our collection of scientific literature.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4 ">
+            <div class="box ">
+              <div class="img-box">
+                <img src="../../../assets/cat3.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  History
+                </h5>
+                <p>
+                  Uncover the past and explore historical events through our captivating history books.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4 ">
+            <div class="box ">
+              <div class="img-box">
+                <img src="../../../assets/cat4.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Biography
+                </h5>
+                <p>
+                  Get inspired by the remarkable lives of influential individuals with our collection of biographies. 
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4 ">
+            <div class="box ">
+              <div class="img-box">
+                <img src="../../../assets/cat5.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Adventure
+                </h5>
+                <p>
+                  Embark on thrilling journeys and exciting escapades with our captivating adventure books.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4 ">
+            <div class="box ">
+              <div class="img-box">
+                <img src="../../../assets/cat6.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Fantasy
+                </h5>
+                <p>
+                  Immerse yourself in enchanting worlds and magical realms with our captivating fantasy books. 
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="about_section layout_padding" id="about" #aboutSection>
+    <div class="container ">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="img-box">
+            <img src="../../../assets/about-img.png" alt="">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="detail-box">
+            <div class="heading_container">
+              <h2>
+                About Our Bookstore
+              </h2>
+            </div>
+            <p>
+              At our bookstore, we provide a platform for users to conveniently exchange or sell their used books, fostering a vibrant community of book lovers. Users can engage with each other, interact, and even arrange meetups to facilitate book exchanges.            </p>
+            <a href="">
+              Read More
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+
+  
+
+  <section class="contact_section layout_padding" id="contact" #contactSection>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 ">
+          <div class="heading_container ">
+            <h2 class="">
+              Contact Us
+            </h2>
+          </div>
+          <form action="#">
+            <div>
+              <input type="text" placeholder="Name" />
+            </div>
+            <div>
+              <input type="email" placeholder="Email" />
+            </div>
+            <div>
+              <input type="text" placeholder="Pone Number" />
+            </div>
+            <div>
+              <input type="text" class="message-box" placeholder="Message" />
+            </div>
+            <div class="btn-box">
+              <button>
+                SEND
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <div class="img-box">
+            <img src="../../../assets/contact-img.png" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- <section class="info_section layout_padding2" id="about">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 info-col">
+          <div class="info_detail">
+            <h4>
+              About Us
+            </h4>
+            <p>
+              Vitae aut explicabo fugit facere alias distinctio, exem commodi mollitia minusem dignissimos atque asperiores incidunt vel voluptate iste
+            </p>
+            
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 info-col">
+          <div class="info_contact">
+            <h4>
+              Address
+            </h4>
+            <div class="contact_link_box">
+              <a href="">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  Location
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  Call +01 1234567890
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  demo.com
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 info-col">
+          <div class="info_contact">
+            <h4>
+              Newsletter
+            </h4>
+            <form action="#">
+              <input type="text" placeholder="Enter email" />
+              <button type="submit">
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 info-col">
+          <div class="map_container">
+            <div class="map">
+              <div id="googleMap"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section> -->
+
+  
+  <script src="../../../js/jquery-3.4.1.min.js"></script>
+  <script src="../../../js/bootstrap.js"></script>
+  <script src="../../../js/custom.js"></script>
+  
+</body>
+
+</html> 
+

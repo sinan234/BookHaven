@@ -1,0 +1,62 @@
+<div id="f"class="d-flex align-items-center">
+  <img src="../../assets/{{seluser[0]?.image}}" class="rounded-circle ms-5" alt="avatar" style="width: 45px; height: 45px;" alt="hfhf">
+  <h6 id="g" class="text-primary ms-5">{{ seluser[0]?.name }}</h6>
+</div><div class="ds">
+
+  <div class="pt-3 pe-3" id="aa" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
+    <div class="pt-3 pe-3" data-mdb-perfect-scrollbar="true" style="position: relative; max-height: 400px; overflow-y: auto;">
+     
+      <ng-container *ngIf="sender_id==seluser[0]?._id ">
+        <div class="d-flex flex-row justify-content-start" *ngFor="let item of messageList.slice(1)">
+          <img src="../../../assets/{{ seluser[0]?.image }}" class="rounded-circle" alt="avatar" style="width: 45px; height: 45px;">
+          <div>
+            <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7">{{ item }}</p>
+            <p class="small ms-3 mb-3 rounded-3 text-muted float-end">{{ time }}</p>
+          </div>
+        </div>
+  
+        
+        <div class="d-flex flex-row justify-content-end" *ngFor="let mitem of recieveList">
+          <div>
+            <p class="small p-2 me-3 mb-1 rounded-3 bg-primary text-white">{{mitem}}</p>
+            <p class="small me-3 mb-3 rounded-3 text-muted">{{time}}</p>
+          </div>
+          <img src="../../assets/{{user
+          ?.image}}"
+            alt="avatar 1" style="width: 45px; height: 100%;">
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="recid==receiver_id ">
+      <div class="d-flex flex-row justify-content-start" *ngFor="let item of messageList.slice(1)">
+        <img src="../../../assets/{{ seluser[0]?.image }}" class="rounded-circle" alt="avatar" style="width: 45px; height: 45px;">
+        <div>
+          <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7">{{ item }}</p>
+          <p class="small ms-3 mb-3 rounded-3 text-muted float-end">{{ time }}</p>
+        </div>
+      </div>
+
+      
+      <div class="d-flex flex-row justify-content-end" *ngFor="let mitem of recieveList">
+        <div>
+          <p class="small p-2 me-3 mb-1 rounded-3 bg-primary text-white">{{mitem}}</p>
+          <p class="small me-3 mb-3 rounded-3 text-muted">{{time}}</p>
+        </div>
+        <img src="../../assets/{{user
+        ?.image}}"
+          alt="avatar 1" style="width: 45px; height: 100%;">
+      </div>
+    </ng-container>
+    
+
+    </div>
+  </div>
+
+  <div class="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2" id="aa">
+    <img src="../../../assets/{{ user?.image }}" class="rounded-circle" alt="avatar" style="width: 45px; height: 45px;">
+    <input type="text" class="form-control form-control-lg ms-3" id="exampleFormControlInput2" placeholder="Type message" [(ngModel)]="newMessage" (keyup)="($event.key === 'Enter') && sendMessage()">
+    <i class="bi bi-paperclip ms-1"></i>
+    <a class="ms-3 text-muted"><i class="bi bi-emoji-smile"></i></a>
+    <a class="ms-3" (click)="sendMessage()"><i class="bi bi-send-fill"></i></a>
+  </div>
+</div>

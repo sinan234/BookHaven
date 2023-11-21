@@ -1,0 +1,119 @@
+#preloader {
+    position: fixed;
+    top:  100px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    overflow: hidden;
+    background: #f1f2f3;
+  }
+  #sse{
+    width: 60px;
+  }
+  
+  #preloader:before {
+    content: "";
+    position: fixed;
+    top: calc(50% - 30px);
+    left: calc(50% - 30px);
+    border: 6px solid #37517e;
+    border-top-color: #fff;
+    border-bottom-color: #fff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: animate-preloader 2s linear infinite;
+    transition: 1s;
+  }
+  @keyframes animate-preloader {
+    0% {
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  #idu {
+    transition: transform 0.3s;
+    color: #d1d1d1;
+  }
+  
+  #idu:hover {
+    transform: scale(3.8);
+    color: rgb(0, 110, 255);
+
+  }
+ 
+  #x{
+    position: relative;
+    margin-top: 2px;
+  }
+  #xy{
+    position: relative;
+    margin-top: 2px;
+    margin-left: 35px;
+  }
+  #xyz{
+    position: relative;
+    margin-top: 2px;
+    margin-left: 20px;
+  }
+#main{
+    margin-top: 130px;
+    margin-left: 320px;
+}
+.profile-nav, .profile-info{
+    margin-top:30px;   
+}
+#n{
+    color: rgb(0, 110, 255);
+}
+#nu{
+    color:  rgb(0, 110, 255);
+}
+#ur{
+    color: rgb(0, 110, 255);
+}
+
+.profile-nav .user-heading {
+    background: #2ddcfb;
+    color: #fff;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    padding: 30px;
+    text-align: center;
+}
+.panel{
+    position: relative;
+    margin-top: 110px;
+}
+
+.profile-nav .user-heading.round a  {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border: 10px solid rgba(255,255,255,0.3);
+    display: inline-block;
+}
+#q{
+    margin-top: 15px;
+    margin-left: 25px;
+}
+form{
+    margin-left: 300px;
+    width: 700px;
+}
+#s{
+    margin-left: 300px;
+}
+#bg{
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 940px;
+}
+#wish{
+    width: 800px;
+    height: 480px;
+    margin-left: 40px;
+}
