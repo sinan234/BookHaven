@@ -6,7 +6,40 @@
     border-color: transparent;
     box-shadow: inset 0px 0px 0px 1px transparent;
     }
-    
+    #preloader {
+        position: fixed;
+        top:  90px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999;
+        overflow: hidden;
+        background: #f1f2f3;
+      }
+      
+      #preloader:before {
+        content: "";
+        position: fixed;
+        top: calc(50% - 30px);
+        left: calc(50% - 30px);
+        border: 6px solid #37517e;
+        border-top-color: #fff;
+        border-bottom-color: #fff;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: animate-preloader 2s linear infinite;
+        transition: 1s;
+      }
+      @keyframes animate-preloader {
+        0% {
+          transform: rotate(0deg);
+        }
+      
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     .badge-dot {
     border-radius: 50%;
     height: 10px;

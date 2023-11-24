@@ -4,6 +4,7 @@ const Postschema=new mongoose.Schema({
 user_id:String,
 bookname:String,
 author:String,
+bookcategory:String,
 image:String,
 postdetails:String,
 bookdetails:String,

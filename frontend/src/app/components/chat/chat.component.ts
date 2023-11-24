@@ -12,6 +12,8 @@ export class ChatComponent implements OnInit {
   newMessage: any;
   messageList: string[] = [];
   user:any
+  search:string=''
+  showPreloader:boolean=true
   a:any[]=[]
   userId:any
   allusers:any
@@ -21,7 +23,10 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit(){
-    
+    const duration = 400;
+    setTimeout(() => {
+      this.showPreloader = false;
+    }, duration);
     this.http.get('http://localhost:3000/user/getchating')
     .subscribe({
       next:(res:any)=>{

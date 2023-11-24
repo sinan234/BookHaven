@@ -28,6 +28,15 @@ export class HeaderComponent implements OnInit{
      this.show=this.loginService.getStatus();
      console.log("show", this.show)
   }
+  isChatPath(): boolean {
+    const currentPath = window.location.pathname;
+    if(currentPath.startsWith('/login/chat') || currentPath.startsWith('/login/profile') ){
+      return true
+    }
+    else{
+      return false
+    }
+  }
   onSearchTextChange() {
     this.store.dispatch(SearchActions.updateSearchText({ searchText: this.searchText }));
   }

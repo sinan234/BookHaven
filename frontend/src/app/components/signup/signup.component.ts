@@ -32,6 +32,10 @@ export class SignupComponent {
   paymentid:any
   show: boolean = false;
 
+  onFileChange(event: any) {
+
+    this.toastr.success('File uploaded successfully', 'Success');
+  }
   next() {
     console.log('clicked');
     if (this.password != this.cpassword) {

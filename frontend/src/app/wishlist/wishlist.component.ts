@@ -25,7 +25,7 @@ export class WishlistComponent implements OnInit {
   ngOnInit(): void {
     this.searchText$ = this.store.select(selectSearchText);
 
-    const duration = 500;
+    const duration = 600;
     setTimeout(() => {
       this.showPreloader = false;
     }, duration);

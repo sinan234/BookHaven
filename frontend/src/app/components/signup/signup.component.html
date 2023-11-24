@@ -45,8 +45,9 @@
                 <option [value]="'Mystery'">Mystery</option>
                 <option [value]="'Romance'">Romance</option>
               </select>
-              <label class="ms-3 mt-3">Choose your Profile picture</label>
-              <input type="file" placeholder="Choose your Profile Picture" [(ngModel)]="image" name="image" />
+              <label class="ms-5 mt-3">Choose your Profile picture</label>
+              <input type="file"  #imageUpload  placeholder="Choose your Profile Picture" [(ngModel)]="image" name="image"   (change)="onFileChange($event)"
+              accept=".jpg, .jpeg, .png "  />
               <button id="nb" class="btn btn-outline-success" (click)="onpay()"> Pay Rs.20 as convenience fee</button>
               <input type="submit" [disabled]="!a.valid" class="form-control" />
         </form>

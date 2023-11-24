@@ -4,49 +4,76 @@
 />
 
 <app-header></app-header>
-
-<div id="preloader"  *ngIf="showPreloader"></div>
+<div id="nnb">
+  <input type="checkbox" [(ngModel)]="ischecked" />
+  <label id="ku" class=" fw-bold ms-2">Interested Categories</label>
+  </div>
+<div id="preloader" *ngIf="showPreloader"></div>
 
 <div id="main" class="card" style="width: 48rem">
   <div class="border border-left border-right px-0">
     <div class="p-3 border-bottom">
-        
-      <h4 class="d-flex align-items-center mb-0">
-        Feed 
-      </h4>
+      <h4 class="d-flex align-items-center mb-0">Feed</h4>
     </div>
     <div>
       <div class="card shadow-0">
         <div class="card-body border-bottom pb-2">
-            
           <div class="d-flex">
             <img
-              src="../../../assets/{{user?.image}}"
-              class="rounded-circle "
-              id="sss"
+              src="../../../assets/{{ user?.image }}"
+              class="rounded-circle"
               height="50"
               alt="Avatar"
               loading="lazy"
             />
             <div class="d-flex align-items-center w-100 ps-3">
               <div class="w-100">
-                
                 <input
                   type="text"
+                  #myInput
                   id="form143"
                   class="form-control form-status border-0 py-1 px-0"
                   placeholder="Write about a book that you have.."
                   [(ngModel)]="details"
+                  name="details"
+                  (focus)="onInputFocus(myInput.name)"
+                  required
                 />
                 <div *ngIf="show">
-                    <input type="text" class="form-control mt-3" placeholder="Enter the name of the book" [(ngModel)]="bookname" name="bookname" />
-                    <input type="text" class="form-control mt-3" placeholder="Enter the name of the author"[(ngModel)]="author" name="author" />
-                    <input
+                  <input
                     type="text"
+                    class="form-control mt-3"
+                    placeholder="Enter the name of the book"
+                    [(ngModel)]="bookname"
+                    name="bookname"
+                    required
+                  />
+                  <input
+                    type="text"
+                    class="form-control mt-3"
+                    placeholder="Enter the name of the author"
+                    [(ngModel)]="author"
+                    name="author"
+                    required
+                  />
+                  <input
+                    type="text"
+                    class="form-control mt-3"
+                    placeholder="Enter the category of the book"
+                    [(ngModel)]="bookcategory"
+                    name="bookcategory"
+                    required
+                  />
+                  <input
+                    type="text"
+                    #myInputn
                     id="form143"
                     class="form-control form-status border-0 py-1 px-0 mt-3"
                     placeholder="Write more about your book such as your experience, review etc"
                     [(ngModel)]="bookdetails"
+                    name="bookdetails"
+                    (focus)="onInputFocus(myInputn.name)"
+                    required
                   />
                 </div>
               </div>
@@ -57,24 +84,50 @@
               class="list-unstyled d-flex flex-row ps-3 pt-3"
               style="margin-left: 50px"
             >
-            <li>
+              <li>
                 <label for="imageUpload">
-                  <input type="file" id="imageUpload" style="display: none" [(ngModel)]="image"/>
+                  <input
+                  #imageUpload
+                    type="file"
+                    id="imageUpload"
+                    style="display: none"
+                    [(ngModel)]="image"
+                    (change)="onFileChange($event)"
+                    accept=".jpg, .jpeg, .png "
+                  />
                   <i id="ur" class="bi bi-image-fill"></i>
                 </label>
               </li>
               <li>
-                <a href=""><i class="bi bi-camera-fill px-2"></i></a>
+                <a
+                  ><i
+                    id="ur"
+                    (click)="isEmojiPickerVisible = !isEmojiPickerVisible"
+                    class="ms-3 bi bi-emoji-smile-fill"
+                  ></i
+                ></a>
               </li>
+              <br /><emoji-mart
+                class="emoji-mart"
+                *ngIf="isEmojiPickerVisible"
+                (emojiSelect)="addEmoji($event)"
+                title="Choose your emoji"
+              ></emoji-mart>
               <li>
-                <a href=""><i class="bi bi-emoji-smile-fill "></i></a>
+                <a
+                  ><i id="ur" class="bi bi-calendar-check-fill px-2 ms-2"></i
+                ></a>
               </li>
-              <li>
-                <a href=""><i class="bi bi-calendar-check-fill px-2"></i></a>
-              </li>
+
             </ul>
+            <p class="juju"  *ngIf="fileshow">Selected Image: <span class="dsd">{{fileName}}</span></p>
+
             <div class="d-flex align-items-center">
-              <button type="submit" class="btn btn-primary btn-rounded" (click)="onsubmit()">
+              <button
+                type="submit"
+                class="btn btn-primary btn-rounded"
+                (click)="onsubmit()"
+              >
                 Post
               </button>
             </div>
@@ -82,92 +135,115 @@
         </div>
       </div>
       <div>
-        <ng-container *ngFor="let item of postsn.reverse()">
-          <div class="d-flex p-3 border-bottom" *ngIf="(searchText$ | async) === '' || item.bookname.toLowerCase().includes((searchText$ | async)?.toLowerCase()) || item.author.toLowerCase().includes((searchText$ | async)?.toLowerCase()) "
+        <div *ngFor="let item of postsn.reverse()">
+          <ng-container *ngIf="check(item.bookcategory)">
+          <div
+            class="d-flex p-3 border-bottom"
+            *ngIf="
+              (searchText$ | async) === '' ||
+              item.bookname
+                .toLowerCase()
+                .includes((searchText$ | async)?.toLowerCase()) ||
+              item.author
+                .toLowerCase()
+                .includes((searchText$ | async)?.toLowerCase()) ||
+                check(item.bookcategory)
+            "
           >
             <img
-            src="../../../assets/{{item?.userimage}}"
-            class="rounded-circle"
-            height="50"
-            id="sse"
-            alt="Avatar"
-            loading="lazy"
-          />
-          <div class="d-flex w-100 ps-3">
-            <div>
-             
+              src="../../../assets/{{ item?.userimage }}"
+              class="rounded-circle"
+              height="50"
+              id="sse"
+              alt="Avatar"
+              loading="lazy"
+            />
+            <div class="d-flex w-100 ps-3">
+              <div>
                 <h6 class="text-body">
-                 {{item.username}}
-                  <span class="small text-muted font-weight-normal"
-                    >{{item.useremail}}</span
-                  >
+                  {{ item.username }}
+                  <span class="small text-muted font-weight-normal">{{
+                    item.useremail
+                  }}</span>
                   <span class="small text-muted font-weight-normal"> • </span>
-                  <span class="small  font-weight-normal">{{getTime(item.time)}}</span>
+                  <span class="small font-weight-normal">{{
+                    getTime(item.time)
+                  }}</span>
                   <!-- <span><i class="fas fa-angle-down float-end"></i></span> -->
                 </h6>
-              <p style="line-height: 1.2">
-                {{item.postdetails}}
-              </p>
-              <div class="card border mb-3 shadow-0" style="max-width: 540px">
-                <div class="row g-0">
-                  <div class="col-md-3">
-                    <img
-                      src="../../../assets/{{item?.image}}"
-                      alt="Avatar"
-               
-                      class="img-fluid rounded-left mt-4"
-                    />
-                  </div>
-                  <div class="col-md-9">
-                    <div class="card-body">
-                      <p class="card-text" style="line-height: 1">
-                        About the Book 
-                      </p>
-                      <h5 id="n">{{item.bookname}}</h5>
-                      <h6 id="nu">{{item.author}}</h6>
-                      <p class="card-text small mb-0" style="line-height: 1.2">
-                        {{item.bookdetails}}
-                      </p>
-                      
+                <p style="line-height: 1.2">
+                  {{ item.postdetails }}
+                </p>
+                <div class="card border mb-3 shadow-0" style="max-width: 540px">
+                  <div class="row g-0">
+                    <div class="col-md-3">
+                      <img
+                        src="../../../assets/{{ item?.image }}"
+                        alt="Avatar"
+                        class="img-fluid rounded-left "
+                        id="kk"
+                      />
+                    </div>
+                    <div class="col-md-9">
+                      <div class="card-body">
+                        <p class="card-text" style="line-height: 1">
+                          About the Book
+                        </p>
+                        <h5 id="n">{{ item.bookname }}</h5>
+                        <h6 id="nu">{{ item.author }}</h6>
+                        <h6 id="nu">{{ item.bookcategory}}</h6>
+                        <p
+                          class="card-text small mb-0"
+                          style="line-height: 1.2"
+                        >
+                          {{ item.bookdetails }}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <ul
-                class="list-unstyled d-flex justify-content-start mb-0 ms-2 pe-xl-5"
-              >
-                <li>
-                    <i id="idu" class="bi bi-hand-thumbs-up-fill" [ngStyle]="{'color': item.like>=1? 'rgb(0, 110, 255)': '#d1d1d1'}" (click)="like(item._id)"></i>
-                    <span class="small ps-2">{{item.like}}</span>
+                <ul
+                  class="list-unstyled d-flex justify-content-start mb-0 ms-2 pe-xl-5"
+                >
+                  <li>
+                    <i
+                      id="idu"
+                      class="bi bi-hand-thumbs-up-fill"
+                      [ngStyle]="{
+                        color: item.like >= 1 ? 'rgb(0, 110, 255)' : '#d1d1d1'
+                      }"
+                      (click)="like(item._id)"
+                    ></i>
+                    <span class="small ps-2">{{ item.like }}</span>
                     <div>
                       <p id="x">Like</p>
-
                     </div>
-                </li>
-                <li>
-                  <i class="bi bi-heart-fill ms-5" [ngStyle]="{'color': m.includes(item._id)?'red':'#d1d1d1'}" (click)="wishlist(item._id)"></i>
-                   
+                  </li>
+                  <li>
+                    <i
+                      class="bi bi-heart-fill ms-5"
+                      [ngStyle]="{
+                        color: m.includes(item._id) ? 'red' : '#d1d1d1'
+                      }"
+                      (click)="wishlist(item._id)"
+                    ></i>
+
                     <div>
                       <p id="xy">Wishlist</p>
-
                     </div>
-                </li>
-                <li>
-                    <i class="bi bi-chat-dots ms-4 "></i>
+                  </li>
+                  <li [routerLink]="['/login/chat', getid(item.username)]">
+                    <i class="bi bi-chat-dots ms-4"></i>
                     <div>
                       <p id="xyz">Chat</p>
-
                     </div>
-                </li>
-               
-                
-              </ul>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
+          </ng-container>
         </div>
-
-        </ng-container>
-
       </div>
     </div>
   </div>

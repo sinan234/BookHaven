@@ -5,6 +5,7 @@ const User = require("../models/usermodel");
 const Post = require("../models/postmodel");
 const Wishlist=require('../models/wishlistmodel')
 const Like=require('../models/likemodel')
+const Chat=require('../models/chatmodel')
 const bcrypt = require('bcrypt');
 
 const sessionTimeout=180000;
@@ -72,8 +73,9 @@ router.get('/getpost', async (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     const id = jwt.verify(token, "secretkey");
     const userId = id.userId;
+    const alluser=await User.find()
     const user = await User.findOne({ _id: userId });
-
+   
     if (!user) {
       res.status(500).json({ message: "User not found" });
     }
@@ -87,7 +89,8 @@ router.get('/getpost', async (req, res) => {
       message: "Details obtained successfully",
       posts: posts,
       user: user,
-      wish: wishlist
+      wish: wishlist,
+      alluser:alluser
     });
   } catch (err) {
     res.status(500).json({ message: "Unknown error occurred" });
@@ -175,14 +178,15 @@ router.post('/create_post', async(req,res)=>{
       useremail:user.email,
       userimage:user.image,
       bookname:req.body.bookname,
-      author:req.body.image,
+      author:req.body.author,
+      bookcategory:req.body.bookcategory,
       image:req.body.image,
       postdetails:req.body.postdetails,
       bookdetails:req.body.bookdetails,
       time:time,
       like:0,
       comment:0,
-      wishlist:0
+      wishlist:1
 
     })
     await post.save();
@@ -235,7 +239,7 @@ router.put('/updatelike', async (req, res) => {
   }
 });
 
-router.post('/create_wishlist',async(req,res)=>{
+router.post('/create_wishlist', async (req, res) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
     const id = jwt.verify(token, "secretkey");
@@ -245,18 +249,28 @@ router.post('/create_wishlist',async(req,res)=>{
     if (!user) {
       return res.status(500).json({ message: "User not found" });
     }
-    const wish=new Wishlist({
-      userId:userId,
-      productId:req.body.postId
-    })
-    await wish.save();
-    return res.status(200).json({ message: 'Post wishlisted successfully' });
 
-  }catch(err){
-      return res.status(500).json({ message: "Unknown error occurred" });
+    const existingWishlist = await Wishlist.findOne({
+      userId: userId,
+      productId: req.body.postId
+    });
 
+    if (existingWishlist) {
+      return res.status(500).json({ message: "Product already exists in the wishlist" });
     }
-})
+
+    const wish = new Wishlist({
+      userId: userId,
+      productId: req.body.postId
+    });
+
+    await wish.save();
+    return res.status(200).json({ message: 'Product wishlisted successfully' });
+
+  } catch (err) {
+    return res.status(500).json({ message: "Unknown error occurred" });
+  }
+});
 
 router.get('/getwishlist', async(req,res)=>{
   try {
@@ -298,5 +312,31 @@ router.delete('/removewishlist/:id', async(req,res)=>{
   return res.status(500).json({ message: "Unknown error occurred" });
 
 }})
+
+router.post('/addchat', async(req,res)=>{
+  try{
+     const{message,senderid,receigverid,time}=req.body
+     const newChat = new Chat({ 
+      message:message,
+      senderid:senderid,
+      receigverid:receigverid,
+      time:time
+     });
+    await newChat.save()
+    return res.status(201).json({message:"Post saved successfully"})
+  }catch(err){
+    return res.status(500).jsonn({message:"Unknown error occured"})
+  }
+})
+
+router.get('/getchat',async(req,res)=>{
+  try{
+  const chat=await Chat.find()
+  res.status(200).json({message:"Chat obtained successfully" , chat:chat})
+}catch(err){
+  return res.status(500).jsonn({message:"Unknown error occured"})
+
+}})
+
 
 module.exports = router;

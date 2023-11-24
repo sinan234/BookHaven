@@ -21,6 +21,12 @@ import { WishlistComponent } from './wishlist/wishlist.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { PersonComponent } from './person/person.component';
 import { io } from 'socket.io-client';
+import { messageReducer } from './store-ngrx/message.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { MessageEffects } from './store-ngrx/message.effect';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+
 
 @NgModule({
   declarations: [
@@ -34,18 +40,25 @@ import { io } from 'socket.io-client';
     EditprofileComponent,
     WishlistComponent,
     ChatComponent,
-    PersonComponent,
+    PersonComponent
   ],
   imports: [
     BrowserModule,
+    PickerModule,
+    CommonModule,
     AppRoutingModule,
     FormsModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
+    NgOptimizedImage,
     HttpClientModule,
     StoreModule.forRoot({
-      header:headerReducer
-    })
+      header:headerReducer,
+      messages:messageReducer
+    }),
+    EffectsModule.forRoot([
+      MessageEffects
+    ])
   ],
   providers: [
     { provide: 'Socket', useValue: io },

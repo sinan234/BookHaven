@@ -55,7 +55,7 @@ export class LoginComponent {
             title: 'Login Succesful',
             text: 'Welcome'+ ' '+this.service.getName(),
             icon: 'success',
-            timer: 3000, 
+            timer: 1500, 
             showConfirmButton: false 
           });
           this.router.navigate(['login', 'feed'])

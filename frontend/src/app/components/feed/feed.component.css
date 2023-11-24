@@ -68,7 +68,7 @@
     margin-left: 20px;
   }
 #main{
-    margin-top: 130px;
+    margin-top: 10px;
     margin-left: 320px;
 }
 .profile-nav, .profile-info{
@@ -118,4 +118,49 @@ form{
     position: absolute;
     margin-top: 10px;
     margin-left: 940px;
+}
+.container {
+  display: grid;
+  grid-template-columns: 100% 0%;
+  width: 36%;
+
+  button {
+    background: transparent;
+    border: 0;
+    transform: translateX(-40px);
+    cursor: pointer;
+    &:focus {
+      outline: 0;
+    }
+  }
+}
+#nnb{
+  position: relative;
+  margin-top: 100px;
+  margin-left: 900px;
+  color: #1F456E;
+  width: 240px;
+  margin-bottom: 0px;
+}
+.emoji-mart{
+  position: absolute;
+  z-index: 10;
+  margin-top: 30px;
+  margin-left: 30px;
+}
+#kk{
+  position: relative;
+  margin-top: 35px;
+}
+#ku{
+  position: relative;
+  margin-left: 0.5px;
+}
+.juju{
+  position: absolute;
+  margin-top: 40px;
+  margin-left: 66px;
+}
+.dsd{
+  color: green;
 }

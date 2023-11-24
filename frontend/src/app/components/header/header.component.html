@@ -16,8 +16,8 @@
               </li>
              <ng-container *ngIf="loginService.getStatus()">
               <li class="nav-item" >
-                <div class="nav-link-container" routerLink="/login/feed" routerLinkActive="active">
-                  <a class="nav-link" >Feed</a>
+                <div class="nav-link-container" >
+                  <a class="nav-link" routerLink="/login/feed" routerLinkActive="active" >Feed</a>
                 </div>
               </li>
               
@@ -42,11 +42,11 @@
 
                  <button id="btn"  class="btn btn-outline-success " type="button" routerLink="/signup" routerLinkActive="active">Sign Up</button>
               
-                  <button id="btn2"  class=" btn btn-outline-success "  type="button" routerLink="/login" routerLinkActive="active"> Login</button>
+                  <button id="btn3"  class=" btn btn-outline-success "  type="button" routerLink="/login" routerLinkActive="active"> Login</button>
                 </ng-container>
             </ul>
-            <h5 id="a" *ngIf="show" class="text"> Welcome:{{ name}} </h5>
-            <div class="search_form" *ngIf="loginService.getStatus()">
+            <h5 id="a" *ngIf="show" class="text"> Welcome:{{name}} </h5>
+            <div class="search_form" *ngIf="loginService.getStatus() && !isChatPath()">
               <input type="text" class="form-control" placeholder="Search here..." [(ngModel)]="searchText" (input)="onSearchTextChange()">
               <button class="" type="submit">
                 <i class="bi bi-search"></i>
