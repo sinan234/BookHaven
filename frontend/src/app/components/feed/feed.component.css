@@ -78,11 +78,16 @@
     color: rgb(0, 110, 255);
 }
 #nu{
-    color:  rgb(0, 110, 255);
+  font-weight: bold;
+    color:  #2A52BE;
+}
+#num{
+  color:   #0066B2;
 }
 #ur{
     color: rgb(0, 110, 255);
 }
+
 
 .profile-nav .user-heading {
     background: #2ddcfb;
@@ -158,6 +163,7 @@ form{
 }
 .juju{
   position: absolute;
+  font-size: 15px;
   margin-top: 40px;
   margin-left: 66px;
 }

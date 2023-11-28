@@ -51,6 +51,7 @@ export class PersonComponent implements OnInit,DoCheck {
   
   
   ngOnInit(): void {
+      this.updatechat()
       this.recid=this.route.snapshot.paramMap.get('userid')
     console.log('rec id', this.recid)
     this.getChat()
@@ -84,6 +85,9 @@ export class PersonComponent implements OnInit,DoCheck {
       console.log("sender id", this.sender_id)
       console.log("receiver id", this.receiver_id)
       this.messageList.push(message);
+      // this.messageList=this.messageList.filter((item:any)=>{
+      //   return item!=''
+      // })
       localStorage.setItem('messageList', JSON.stringify(this.messageList));
       console.log("messagelist", this.messageList)
     
@@ -99,10 +103,10 @@ export class PersonComponent implements OnInit,DoCheck {
   }
   
   ngDoCheck(): void {
-    const storedMessageList = localStorage.getItem('messageList');
-    if (storedMessageList) {
-      this.messageList = JSON.parse(storedMessageList);
-    }  
+    // const storedMessageList = localStorage.getItem('messageList');
+    // if (storedMessageList) {
+    //   this.messageList = JSON.parse(storedMessageList);
+    // }  
     this.recid=this.route.snapshot.paramMap.get('userid')
     this.seluser=this.allusers?.filter((item:any)=>{
       return item._id===this.recid
@@ -112,13 +116,28 @@ export class PersonComponent implements OnInit,DoCheck {
     this.newMessage = `${this.newMessage}${event.emoji.native}`;
     this.isEmojiPickerVisible = false;
   }
+  updatechat(){
+    const storedMessageList = localStorage.getItem('messageList');
+    if (storedMessageList) {
+      this.messageList = JSON.parse(storedMessageList);
+    }  
+  }
 
   deletechat(recieverid:string){
     console.log("receiver id", recieverid)
     Swal.fire({
-      title: '<span style="font-size: 19px">Are you sure you want to clear chat?</span>',
+      title: '<span style="font-size: 17px">Are you sure you want to clear chat?</span>',
       showCancelButton: true,
       confirmButtonText: 'Yes',
+      didOpen: () => {
+        const SwalModal = Swal.getPopup();
+        if (SwalModal) {
+          SwalModal.style.width = '340px'; 
+          SwalModal.style.height = '160px'; 
+          SwalModal.style.marginLeft='260px';
+
+        }
+      },
        customClass: {
         title: 'my-custom-title-class'
       }
@@ -141,8 +160,11 @@ export class PersonComponent implements OnInit,DoCheck {
             console.log("messagelistnew", this.messageListnew)
             localStorage.removeItem('messageList')
             this.toastr.success("Chat cleared successfully")
+            this.messageListnew=this.messageListnew.filter((item:any)=>{
+              return item!=''
+            })
             localStorage.setItem('messageList', JSON.stringify(this.messageListnew));
-
+            this.updatechat()
             
          }
 

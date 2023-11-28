@@ -71,7 +71,11 @@
     color: rgb(0, 110, 255);
 }
 #nu{
-    color:  rgb(0, 110, 255);
+  font-weight: bold;
+    color:  #2A52BE;
+}
+#num{
+  color:   #0066B2;
 }
 #ur{
     color: rgb(0, 110, 255);

@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit{
   }
   isChatPath(): boolean {
     const currentPath = window.location.pathname;
-    if(currentPath.startsWith('/login/chat') || currentPath.startsWith('/login/profile') ){
+    if(currentPath.startsWith('/login/chat') || currentPath.startsWith('/login/profile') || currentPath.startsWith('/home') ){
       return true
     }
     else{
@@ -44,7 +44,15 @@ export class HeaderComponent implements OnInit{
     Swal.fire({
       title: '<span style="font-size: 19px">Are you sure you want to Logout?</span>',
       showCancelButton: true,
+      didOpen: () => {
+        const SwalModal = Swal.getPopup();
+        if (SwalModal) {
+          SwalModal.style.width = '380px'; 
+          SwalModal.style.height = '180px'; 
+        }
+      },
       confirmButtonText: 'Yes',
+      confirmButtonColor:'#e3242b',
        customClass: {
         title: 'my-custom-title-class'
       }
