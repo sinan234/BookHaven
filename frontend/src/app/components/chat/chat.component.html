@@ -22,16 +22,19 @@
                       <i class="bi bi-search"></i>
                     </span>
                   </div>
-
+                  <ng-container  *ngFor="let item of new">
                   <div
                     class="data-mdb-perfect-scrollbar-true"
                     style="
                       position: relative;
                       display: flex;
                       flex-direction: column;
+                      border-radius: 13px;
+                      margin-top: 5px;
                     "
+                   [ngStyle]="{'background-color': id===item._id && !show ? 'lightblue' : '#ffffff'}"
                    
-                    *ngFor="let item of new"
+
                   >
                   <ng-container *ngIf="search=='' || item.name.toLowerCase().includes(search.toLowerCase())">
                     <ul
@@ -79,7 +82,7 @@
                     </ul>
                   </ng-container>
                   </div>
-
+                </ng-container>
                 </div>
               </div>
               <div class="col-md-6 col-lg-7 col-xl-8" >

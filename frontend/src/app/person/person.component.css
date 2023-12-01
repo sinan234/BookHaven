@@ -17,7 +17,13 @@
     border-radius: 10px;
   }
 #dd{
-  font-size: 8px;
+  font-size: 11px;
+  margin-left: 20px;
+}
+#dde{
+  font-size: 11px;
+  position: relative;
+  margin-right: 10px;
 }
 
   .input-container i {
@@ -26,6 +32,7 @@
   }
   #f{
     border-radius: 10px;
+    z-index: 9;
     border: 1px solid #c5c1c1;
     position: absolute;
     margin-top: 25px;

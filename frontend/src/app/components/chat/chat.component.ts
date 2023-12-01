@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UseridService } from 'src/app/services/userid.service';
 
 
 @Component({
@@ -8,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, DoCheck{
   newMessage: any;
   messageList: string[] = [];
   user:any
@@ -18,7 +19,9 @@ export class ChatComponent implements OnInit {
   userId:any
   allusers:any
   new:any
-  constructor( private http:HttpClient, private route:ActivatedRoute){
+  id:any
+  show:boolean=false
+  constructor( private http:HttpClient, private route:ActivatedRoute, private userid:UseridService){
 
   }
 
@@ -46,6 +49,16 @@ export class ChatComponent implements OnInit {
       }
     })
    
+  }
+  ngDoCheck(): void {
+    this.id=this.userid.getuserid()
+    const currentPath = window.location.pathname;
+    if(currentPath=='/login/chat'){
+         this.show=true
+    }
+    else{
+      this.show=false
+    }
   }
 
 }

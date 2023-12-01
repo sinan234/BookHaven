@@ -43,6 +43,8 @@
                  <button id="btn"  class="btn btn-outline-success " type="button" routerLink="/signup" routerLinkActive="active">Sign Up</button>
               
                   <button id="btn3"  class=" btn btn-outline-success "  type="button" routerLink="/login" routerLinkActive="active"> Login</button>
+                  <button id="btnab"  class="btn btn-outline-primary  " *ngIf="isadmin()" type="button" routerLink="/admin/login"  routerLinkActive="active" >Admin Login</button>
+
                 </ng-container>
             </ul>
             <h5 id="a" *ngIf="show" class="text"> Welcome:{{name}} </h5>

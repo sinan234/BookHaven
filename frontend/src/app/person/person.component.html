@@ -5,7 +5,7 @@
 </div><div class="ds">
 
   <div class="pt-3 pe-3" id="aa" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
-    <div class="pt-3 pe-3" data-mdb-perfect-scrollbar="true" style="position: relative; max-height: 400px; overflow-y: auto;">
+    <div id="messageContainer"class="pt-3 pe-3" data-mdb-perfect-scrollbar="true" style="position: relative; max-height: 400px; overflow-y: auto;">
      
       <ng-container *ngFor="let item of messageList">
         <!-- <div *ngIf="messages$ | async as messages">
@@ -15,20 +15,20 @@
             Message: {{ message.message }}
           </p>
         </div>    -->
-             <div class="d-flex flex-row justify-content-end"*ngIf="(item.senderid==seluser[0]?._id && item.receigverid==userId.toString())" >
+             <div class="d-flex flex-row justify-content-end" *ngIf="(item.senderid==userId.toString() && item.receigverid==seluser[0]?._id)"  >
           <div >
-            <p class="small p-2 me-3 mb-1 rounded-3 bg-primary text-white">{{item.message}}</p>
-            <p class="small me-3 mb-3 rounded-3 text-muted">{{item.time}}</p>
+            <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7">{{ item.message }}</p>
+            <p id="dd" class="small me-3 mb-3 rounded-3 text-muted">{{item.time}}</p>
           </div>
-          <img src="../../assets/{{seluser[0]
+          <img src="../../assets/{{user
           ?.image}}"
             alt="avatar 1" style="width: 45px; height: 100%;">
         </div>
-        <div class="d-flex flex-row justify-content-start" *ngIf="(item.senderid==userId.toString() && item.receigverid==seluser[0]?._id)">
-          <img src="../../../assets/{{ user?.image }}" class="rounded-circle" alt="avatar" style="width: 45px; height: 45px;">
+        <div class="d-flex flex-row justify-content-start" *ngIf="(item.senderid==seluser[0]?._id && item.receigverid==userId.toString())" >
+          <img src="../../../assets/{{ seluser[0]?.image }}" class="rounded-circle" alt="avatar" style="width: 45px; height: 45px;">
           <div>
-            <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7">{{ item.message }}</p>
-            <p class="small ms-3 mb-3 rounded-3 text-muted float-end" id="DD">{{ item.time }}</p>
+            <p class="small p-2 me-3 mb-1 rounded-3 bg-primary text-white">{{item.message}}</p>
+            <p class="small ms-1 mb-3  rounded-3 text-muted " id="dde">{{ item.time }}</p>
           </div>
         </div>
   

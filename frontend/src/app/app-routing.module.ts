@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { BodyComponent } from './components/body/body.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
@@ -25,12 +25,16 @@ const routes: Routes = [
    children:[
     {path:':userid', component:PersonComponent}
    ],canActivate:[AuthGuard]},
+   {
+    path: 'admin',
+    loadChildren: () => import('./admin.module').then((m) => m.AdminModule),
+  },
 
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, initialNavigation: 'enabledBlocking' })],
   providers:[AuthGuard],
   exports: [RouterModule]
 })

@@ -26,6 +26,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { MessageEffects } from './store-ngrx/message.effect';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { AdminModule } from './admin.module';
 
 
 @NgModule({
@@ -40,7 +41,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     EditprofileComponent,
     WishlistComponent,
     ChatComponent,
-    PersonComponent
+    PersonComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +52,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     NgOptimizedImage,
+    AdminModule,
     HttpClientModule,
     StoreModule.forRoot({
       header:headerReducer,
@@ -58,7 +60,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     }),
     EffectsModule.forRoot([
       MessageEffects
-    ])
+    ]),
+    
   ],
   providers: [
     { provide: 'Socket', useValue: io },

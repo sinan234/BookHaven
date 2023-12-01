@@ -28,6 +28,18 @@ export class HeaderComponent implements OnInit{
      this.show=this.loginService.getStatus();
      console.log("show", this.show)
   }
+  
+  isadmin(): boolean {
+    const currentPath = window.location.pathname;
+    console.log(currentPath)
+    if(currentPath==='/home'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
   isChatPath(): boolean {
     const currentPath = window.location.pathname;
     if(currentPath.startsWith('/login/chat') || currentPath.startsWith('/login/profile') || currentPath.startsWith('/home') ){
