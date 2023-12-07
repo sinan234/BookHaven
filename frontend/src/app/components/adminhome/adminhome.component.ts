@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import * as Highcharts from 'highcharts';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-adminhome',
   templateUrl: './adminhome.component.html',
@@ -12,163 +13,132 @@ import * as Highcharts from 'highcharts';
 export class AdminhomeComponent implements OnInit{
   Highcharts: typeof Highcharts = Highcharts; 
   chartOptions: any;
+  chartOptions2: any;
+
  search!:string
  user!:string
  post:any
  wishlist:any[]=[]
 books:any[]=[]
+like:any[]=[]
 wish:any[]=[]
 updatedPostArray:any[]=[]
  constructor(
   private router:Router,
-  private http:HttpClient
+  private http:HttpClient,
+  private spinner:NgxSpinnerService
  ){}
  
  ngOnInit(): void {
    this.getData()
    
-   const colors: string[] = ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee'];
   
-   Highcharts.setOptions({
-     chart: {
-       style: {
-         plotBorderColor: '#ffffff'
-       },
-       backgroundColor: 'blue'
-     },
-     title: {
-       style: {
-         color: 'white'
-       }
-     },
-     xAxis: {
-       labels: {
-         style: {
-           color: 'white'
-         }
-       },
-       lineColor: '#707073',
-       minorGridLineColor: '#505053',
-       tickColor: '#707073',
-       title: {
-         style: {
-           color: 'white'
-         }
-       }
-     },
-     yAxis: {
-       labels: {
-         style: {
-           color: 'white'
-         }
-       },
-       lineColor: '#707073',
-       minorGridLineColor: '#505053',
-       tickColor: '#707073',
-       tickWidth: 1,
-       title: {
-         style: {
-           color: 'white'
-         }
-       }
-     },
-     tooltip: {
-       backgroundColor: 'rgba(0, 0, 0, 0.85)',
-       style: {
-         color: '#F0F0F0'
-       }
-     },
-     plotOptions: {
-       series: {
-         dataLabels: {
-           color: 'white'
-         }
-       }
-     },
-     colors: colors
-   });
-
    this.chartOptions = {
     chart: {
       type: 'line',
-      style: {
-        fontFamily: 'Arial, sans-serif',
-      },
-    },
+  
+    }, 
     title: {
-      text: 'Most Wishlisted Books',
+      text: 'Most Liked and Wishlisted Books',
       style: {
-        color: 'white'
+        color: '#00308F'
       }
     },
     xAxis: {
       categories: this.books,
+     
       title: {
         text: 'Books',
         style: {
-          fontSize:'20px' ,  
-          positin:'relative',        
-          marginTop:'20px'
+          fontSize:'24px' ,  
+          position:'relative',        
+          marginTop:'20px',
+          color:'#00308F',
+          fontWeight:'bold'
            }
       },
       labels: {
         style: {
-          color: 'white',
-          fontSize:'17px'           
+          color: '#00308F',
+          lineColor: '#00308F',
+          minorGridLineColor: '#00308F',
+          fontSize:'19px'     ,
+          tickColor: '#707073',
+      
 
         }
-      }
+      },
+      gridLineColor: ['green', 'blue', 'yellow', 'orange']
     },
     yAxis: {
       title: {
-        text: 'Number of Wishlists',
+        text: 'Number ',
         style: {
-          color: 'white',
-          fontSize:'17px'           
+          color: '#00308F',
+          fontSize:'20px',
+          fontWeight:'bold'          
 
         }
       },
       labels: {
         style: {
-          color: 'white',
-          fontSize:'17px'           
+          color: '#00308F',
+          fontSize:'19px'           
 
 
         }
-      }
+      },  lineColor: '#707073',
+           minorGridLineColor: '#505053',
+           tickColor: '#707073',
+           tickWidth: 1,
     },
     series: [{
       name: 'Wishlists',
       data: this.wish,
-      color: 'blue'
+      color: '#0039a6'
+    },{
+      name: 'Likes',
+      data: this.like,
+      color: '#ff0000' 
     }],
+         tooltip: {
+       backgroundColor: 'rgba(0, 0, 0, 0.85)',
+       style: {
+         color: 'white'
+       }
+     },
     plotOptions: {
       series: {
         dataLabels: {
           color: 'white',
-          fontSize:'20px'           
+          fontSize:'24px'           
 
         }
       }
-    }
+    }  
+
   };
   
-
+  
 
   
  }
 
 getData(){
+  this.spinner.show();
   this.http.get('http://localhost:3000/admin/getdata')
   .subscribe({
     next:(res:any)=>{
       console.log(res)
       this.user=res.user
       this.post=res.post
-      
+      this.spinner.hide()
 
 this.post.forEach((item: any) => {
   this.books.push(item.bookname);
+});
+this.post.forEach((item: any) => {
+  this.like.push(item.like);
 });
     
       this.wishlist=res.wishlist
@@ -205,21 +175,21 @@ this.post.forEach((item: any) => {
 }
   logout(){
     Swal.fire({
-      title: 'Are you sure you want to Logout?',
+      title: '<span style="font-size: 19px">Are you sure you want to Logout?</span>',
       showCancelButton: true,
       confirmButtonText: 'Yes',
     
     }).then((result) => {
       if (result.isConfirmed) {
+        this.router.navigate(['admin','login']);
         Swal.fire({
           title: 'Logged out Successfully',
           text: 'Please login to continue',
           icon: 'success',
-          timer: 2000,
+          timer: 1000,
           showConfirmButton: false
         }).then(() => {
           localStorage.removeItem('admintoken')
-          this.router.navigate(['admin','login']);
         });
       }
     });

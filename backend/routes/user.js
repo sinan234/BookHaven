@@ -8,7 +8,7 @@ const Like=require('../models/likemodel')
 const Chat=require('../models/chatmodel')
 const bcrypt = require('bcrypt');
 
-const sessionTimeout=180000;
+const sessionTimeout=1800000;
 
 router.post("/create_user", async (req, res) => {
   try {

@@ -71,16 +71,17 @@ export class HeaderComponent implements OnInit{
     
     }).then((result:any) => {
       if (result.isConfirmed) {
+        this.router.navigate(['login']);
+
         Swal.fire({
           title: 'Logged out Successfully',
           text: 'Please login to continue',
           icon: 'success',
-          timer: 2000,
+          timer: 1300,
           showConfirmButton: false
         }).then(() => {
           localStorage.removeItem('token')
           localStorage.removeItem('name')
-          this.router.navigate(['login']);
         });
       }
     });

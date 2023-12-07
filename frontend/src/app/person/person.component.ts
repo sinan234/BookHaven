@@ -12,6 +12,8 @@ import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { UseridService } from '../services/userid.service';
 import { Subject } from 'rxjs';
+import { NgxSpinnerService } from "ngx-spinner";
+
 @Component({
   selector: 'app-person',
   templateUrl: './person.component.html',
@@ -54,7 +56,8 @@ export class PersonComponent implements OnInit,DoCheck,OnDestroy, OnChanges {
       private route: ActivatedRoute, 
       private store:Store,
       private toastr:ToastrService,
-      private userid:UseridService
+      private userid:UseridService,
+      private spinner:NgxSpinnerService
           ){
        
   }
@@ -67,7 +70,7 @@ export class PersonComponent implements OnInit,DoCheck,OnDestroy, OnChanges {
     this.recid=this.route.snapshot.paramMap.get('userid')
   console.log('rec id', this.recid)
   this.getChat()
-  
+  this.spinner.show()
   this.http.get('http://localhost:3000/user/getchating')
   .subscribe({
     next:(res:any)=>{
@@ -85,6 +88,8 @@ export class PersonComponent implements OnInit,DoCheck,OnDestroy, OnChanges {
       });
       
        console.log(this.user)
+       this.spinner.hide()
+
     },
     error:(err:any)=>{
       console.log("error occured", err)
@@ -100,6 +105,8 @@ export class PersonComponent implements OnInit,DoCheck,OnDestroy, OnChanges {
         return item!=''
       })
     this.messageList.push(message)
+    const uniqueMessages = Array.from(new Set(this.messageList));
+    this.messageList = uniqueMessages;
     // this.messages=this.messageList.reduce((acc:any,item:any)=>{
     //   if(!acc.includes(item)){
     //     acc.push(item)
@@ -115,7 +122,7 @@ export class PersonComponent implements OnInit,DoCheck,OnDestroy, OnChanges {
 
 }
 
-ngOnChanges(changes: SimpleChanges): void {
+ngOnChanges(): void {
   const uniqueMessages = Array.from(new Set(this.messageList));
   this.messageList = uniqueMessages;
 }
@@ -150,13 +157,13 @@ ngOnChanges(changes: SimpleChanges): void {
   }
   
 
-  public addEmoji(event:any) {
-    this.newMessage = `${this.newMessage}${event.emoji.native}`;
-    this.isEmojiPickerVisible = false;
-  }
-
+ 
+    public addEmoji(event: any) {
+      const emoji = event.emoji.native || '';
+      this.newMessage = (this.newMessage || '').replace('undefined', '') + emoji;
+      this.isEmojiPickerVisible = false;
+    }
   updatechat(){
-
      this.stored = localStorage.getItem('messageList');
     if ( this.stored) {
       this.messageList = JSON.parse(this.stored); 

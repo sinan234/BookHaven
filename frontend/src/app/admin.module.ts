@@ -7,18 +7,22 @@ import { CommonModule } from "@angular/common";
 import { AdminRouting } from "./admin-routing.module.";
 import { AdminhomeComponent } from "./components/adminhome/adminhome.component";
 import { HighchartsChartModule } from 'highcharts-angular';
+import { AdminuserComponent } from "./components/adminuser/adminuser.component";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
     declarations:[
         AdminloginComponent,
-        AdminhomeComponent
+        AdminhomeComponent,
+        AdminuserComponent
     ],
     imports:[
         FormsModule,
         RouterModule,
         CommonModule,
         AdminRouting,
-        HighchartsChartModule
+        HighchartsChartModule,
+        NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
     ]
 })
 export class AdminModule{

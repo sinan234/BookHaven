@@ -8,8 +8,8 @@ import { AppState } from '../../store-ngrx/search.reduce';
 import { Store, select } from '@ngrx/store';
 import { selectSearchText } from '../../store-ngrx/search.selectors';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import items from 'razorpay/dist/types/items';
+import { NgxSpinnerService } from "ngx-spinner";
+
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
@@ -46,20 +46,22 @@ export class FeedComponent implements OnInit, DoCheck {
     private router: Router,
     private http: HttpClient,
     private toastr: ToastrService,
-    private store: Store
+    private store: Store,
+    private spinner:NgxSpinnerService
   ) {}
   ngOnInit(): void {
     this.searchText$ = this.store.select(selectSearchText);
-
+    this.spinner.show()
     this.getData();
 
-    const duration = 900;
-    setTimeout(() => {
-      this.showPreloader = false;
-    }, duration);
+    // const duration = 900;
+    // setTimeout(() => {
+    //   this.showPreloader = false;
+    // }, duration);
   }
 
   ngDoCheck(): void {
+    // console.log(this.searchText$)
     // console.log("book", this.details)
     // console.log("bookdetails", this.bookdetails)
     // console.log("check", this.ischecked)
@@ -105,6 +107,8 @@ export class FeedComponent implements OnInit, DoCheck {
   getData() {
     this.http.get('http://localhost:3000/user/getpost').subscribe({
       next: (res: any) => {
+        this.spinner.hide()
+
         this.user = res.user;
         this.posts = res.posts;
         this.alluser = res.alluser;

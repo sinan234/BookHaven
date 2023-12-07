@@ -4,11 +4,14 @@
 />
 
 <app-header></app-header>
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+
 <div id="nnb">
   <input type="checkbox" [(ngModel)]="ischecked" />
   <label id="ku" class=" fw-bold ms-2">Interested Categories</label>
   </div>
-<div id="preloader" *ngIf="showPreloader"></div>
+<!-- <div id="preloader" *ngIf="showPreloader"></div> -->
+
 
 <div id="main" class="card" style="width: 48rem">
   <div class="border border-left border-right px-0">
@@ -141,14 +144,7 @@
             class="d-flex p-3 border-bottom"
             id="mur"
             *ngIf="
-              (searchText$ | async) === '' ||
-              item.bookname
-                .toLowerCase()
-                .includes((searchText$ | async)?.toLowerCase()) ||
-              item.author
-                .toLowerCase()
-                .includes((searchText$ | async)?.toLowerCase()) ||
-                check(item.bookcategory)
+              (searchText$ | async) === '' || item.bookname.toLowerCase().includes((searchText$|async)) ||  item.author.toLowerCase().includes((searchText$|async))
             "
           >
             <img

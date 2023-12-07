@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -27,6 +27,7 @@ import { MessageEffects } from './store-ngrx/message.effect';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { AdminModule } from './admin.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { AdminModule } from './admin.module';
     BrowserAnimationsModule,
     NgOptimizedImage,
     AdminModule,
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
     HttpClientModule,
     StoreModule.forRoot({
       header:headerReducer,
@@ -73,6 +75,8 @@ import { AdminModule } from './admin.module';
     ToastrService,
 
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
 })
 export class AppModule { }

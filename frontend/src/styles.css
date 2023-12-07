@@ -5,3 +5,15 @@ h1,h2,h3,h4,h5,image,p,span,div,label{
 input{
     caret-color: auto;
 }
+
+.highcharts-background {
+  fill: #F1F2F3 !important;
+
+}
+.highcharts-axis-line {
+  fill: #00308F !important;
+  color: #00308F !important ;
+  stroke: black !important;
+  /* fill: none;
+  stroke: var(--highcharts-neutral-color-80); */
+}

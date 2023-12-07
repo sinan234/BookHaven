@@ -57,10 +57,9 @@
   background-color: rgb(0, 101, 126);
 } */
 
-.a{
-  opacity: 100%;
-  background-color: white;
-}
+/* .chart-container {
+  background-color: white !important;
+} */
 #im{
   font-size: 2rem;
   color: rgb(36, 91, 209);
@@ -11385,4 +11384,7 @@ th {
   
   body.sidebar-toggled footer.sticky-footer {
     width: 100%;
+  }
+  .chart-container .highcharts-xaxis-line:first-child {
+    display: none;
   }

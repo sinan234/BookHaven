@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import {selectSearchText} from '../store-ngrx/search.selectors'
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from "ngx-spinner";
+
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',
@@ -20,15 +22,17 @@ export class WishlistComponent implements OnInit {
   val:any
   constructor(private http:HttpClient, 
     private store:Store,
-    private toastr:ToastrService
+    private toastr:ToastrService,
+    private spinner:NgxSpinnerService
     ){}
   ngOnInit(): void {
     this.searchText$ = this.store.select(selectSearchText);
 
     const duration = 600;
-    setTimeout(() => {
-      this.showPreloader = false;
-    }, duration);
+    // setTimeout(() => {
+    //   this.showPreloader = false;
+    // }, duration);
+    this.spinner.show()
     this.getProducts()
   }
    
@@ -36,6 +40,7 @@ export class WishlistComponent implements OnInit {
     this.http.get('http://localhost:3000/user/getwishlist')
     .subscribe({
        next:(res:any)=>{
+        this.spinner.hide()
         console.log("response from server" , res)
         this.products=res.products
         this.allproducts=res.allproduct
@@ -49,7 +54,7 @@ export class WishlistComponent implements OnInit {
           this.display=true
         }
         console.log("all products",this.filteredposts)
-
+        
        },
        error:(err:any)=>{
         console.log("error occured", err)

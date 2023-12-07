@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title> Admin  - Dashboard</title>
+   
+
+</head>
+
+<body id="page-top">
+
+    <div id="wrapper">
+
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" >
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3"> Admin</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item ">
+                <a class="nav-link" routerLink="/admin/login/home" >
+                  <i class="bi bi-house-door-fill me-2"></i>
+                  <span>Dashboard</span></a>
+            </li>
+
+           
+
+            <li id="s" class="nav-item active">
+                <a class="nav-link" routerLink="/admin/login/home/users" routerLinkActive="active"  >
+                  <i class="bi bi-people-fill"></i>              
+                        <span class="ms-2">Users</span></a>
+            </li>
+          
+
+         
+            
+
+           
+
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                aria-label="Search" name="search" aria-describedby="basic-addon2" [(ngModel)]="search">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="bi bi-search"></i>                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                               </a>
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+
+                        
+
+                        <div class="topbar-divider d-none d-sm-block "></div>
+                        <button id="btn" class="btn btn-danger " (click)="logout()"> Logout</button>
+                     
+
+                    </ul>
+
+                </nav>
+
+                <div class="container-fluid">
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Users</h1>
+                     
+                    </div>
+
+                   
+                    <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+
+
+                    <table>
+                        <thead>
+                          <tr>
+                            <th> Name</th>
+                            <th> Email</th>
+                            <th> Phone</th>
+                            <th> Location</th>
+                            <th> Category1</th>
+                            
+                            <th> Category2</th>
+                            <th> Category3</th>
+                            
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        
+
+                        <tbody class="p-2">
+                            <ng-container *ngFor="let item of users">
+
+                                <tr *ngIf="search === '' || item.name.toLowerCase().includes(search)" >
+
+                            <td>{{item.name}}</td>
+                            <td>{{item.email}}</td>
+                            <td>{{item.phone}}</td>
+                            <td>{{item.location}}</td>
+                            <td>{{item.category1}}</td>
+                            <td>{{item.category2}}</td>
+                            <td>{{item.category3}}</td>
+                           
+                            <td>
+                              <!-- <button class="btn btn-primary edit-btn" (click)="edit(item.Product_Id)">Edit</button> -->
+                              <button class="ms-2 btn btn-danger delete-btn" (click)="delete(item._id)">Delete</button>
+                            </td>
+                          </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
+               
+
+                      
+                      
+
+                </div>
+
+            </div>
+
+         
+
+        </div>
+
+    </div>
+    
+
+</body>
+
+</html>
