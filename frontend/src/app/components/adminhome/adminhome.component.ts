@@ -30,6 +30,7 @@ updatedPostArray:any[]=[]
  ){}
  
  ngOnInit(): void {
+  
    this.getData()
    
   

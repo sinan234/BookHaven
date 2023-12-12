@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, DoCheck, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit ,HostListener } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -37,11 +37,16 @@ export class FeedComponent implements OnInit, DoCheck {
   img: string = '';
   val: any;
   fileName:any;
+  book:boolean=false;
   fileshow:boolean=false
   show: boolean = false;
   showPreloader: boolean = true;
   isEmojiPickerVisible: boolean = false;
   selfield: any;
+  topPosition: number = 100;
+  selectedBook: any;
+  duration:any;
+  know:boolean=false;
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -54,6 +59,7 @@ export class FeedComponent implements OnInit, DoCheck {
     this.spinner.show()
     this.getData();
 
+    this.duration='1'
     // const duration = 900;
     // setTimeout(() => {
     //   this.showPreloader = false;
@@ -70,6 +76,70 @@ export class FeedComponent implements OnInit, DoCheck {
     } else {
       this.show = false;
     }
+  }
+
+  knowBook(id:any){
+    const data={
+      id:id
+    }
+    this.http.post('http://localhost:3000/user/getuserbook',data)
+    .subscribe({
+      next:(res:any)=>{
+         this.know=true
+      },
+      error:(err:any)=>{
+        this.know=false
+      }
+    })
+  }
+  toggleBookPopup(item: any) {
+    this.selectedBook = item; 
+    console.log('selected book', this.selectedBook)
+    this.book = !this.book;
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(event: Event) {
+    this.topPosition = 120 + window.scrollY;
+  }
+  send(){
+    console.log("send button clicked")
+    const date=new Date();
+    const time=date.getTime()
+    this.selectedBook['time']=time
+    this.selectedBook['week']=this.duration
+    this.http.post("http://localhost:3000/user/sendrequest", this.selectedBook)
+    .subscribe({
+      next:(response:any)=>{
+        Swal.fire({
+          position: 'top-end',
+          title: 'Request send succesffully ',
+          icon: 'success',
+          timer: 1000,
+          showConfirmButton: false,
+          didOpen: () => {
+            const SwalIcon = Swal.getIcon();
+            if (SwalIcon) {
+             
+              SwalIcon.style.width = '80px'; 
+              SwalIcon.style.height = '80px'; 
+            }
+            const SwalTitle = Swal.getTitle();
+            if (SwalTitle) {
+      SwalTitle.style.fontSize = '20px'; 
+    }
+            const SwalModal = Swal.getPopup();
+            if (SwalModal) {
+              SwalModal.style.width = '360px'; 
+              SwalModal.style.height = '200px'; 
+            }
+          },
+        });
+        this.book=!this.book
+      }, error:(err:any)=>{
+        this.toastr.error(err.error.message)
+      }
+    })
   }
 
   check(item:string){

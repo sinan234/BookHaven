@@ -33,20 +33,24 @@ export class AdminloginComponent {
       }
       this.http.post("http://localhost:3000/admin/login" ,data)
       .subscribe({
+        
         next:(res:any)=>{
           Swal.fire({
             title: 'Login Succesful',
             text: 'Welcome'+ ' '+'Admin',
             icon: 'success',
-            timer: 1100, 
-            showConfirmButton: false 
+            timer: 700, 
+            showConfirmButton: false ,
+            customClass: {
+              popup: 'custom-swal-popup'
+            }
           });
           localStorage.setItem('admintoken', res.token)
           this.router.navigate(['home'],{
             relativeTo:this.route
           })
   
-       
+        
   
         const currentTime = new Date().getTime();
         const remainingTime = res.time - currentTime;

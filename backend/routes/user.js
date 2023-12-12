@@ -7,6 +7,7 @@ const Wishlist=require('../models/wishlistmodel')
 const Like=require('../models/likemodel')
 const Chat=require('../models/chatmodel')
 const bcrypt = require('bcrypt');
+const Request = require("../models/requestmodel");
 
 const sessionTimeout=1800000;
 
@@ -178,6 +179,7 @@ router.post('/create_post', async(req,res)=>{
       useremail:user.email,
       userimage:user.image,
       bookname:req.body.bookname,
+      status:'Available',
       author:req.body.author,
       bookcategory:req.body.bookcategory,
       image:req.body.image,
@@ -338,5 +340,48 @@ router.get('/getchat',async(req,res)=>{
 
 }})
 
+router.post('/sendrequest',async(req,res)=>{
+  try{
+    const token = req.headers.authorization.split(' ')[1];
+    const id = jwt.verify(token, "secretkey");
+    const userId = id.userId;
+    const request= new Request({
+      userId: userId,
+      postId:req.body._id,
+      bookname: req.body.bookname,
+      author: req.body.author,
+      duration:req.body.week,
+      bookcategory: req.body.bookcategory,
+      image: req.body.image,
+      time: req.body.time,
+      username: req.body.username,
+      useremail: req.body.useremail,
+      userimage: req.body.userimage,
+    })
+    await request.save()
+    return res.status(201).json({message:"Request send successfully"})
+  }catch(err){
+    return res.status(500).jsonn({message:"Unknown error occured"})
 
+  }
+})
+
+router.post('/getuserbook',async(req,res)=>{
+  try{
+    const token = req.headers.authorization.split(' ')[1];
+    const id = jwt.verify(token, "secretkey");
+    const userId = id.userId;
+    const req= await Request.findOne({userId:userId, postId:req.body.id})
+    if(!req){
+      return res.status(200).json({message:"No request"})
+    }
+    else{
+      return res.status(500).json({message:"Already request is there "})
+
+    }
+  }catch(err){
+    return res.status(500).json({message:"Unknown error occured"})
+
+  }
+})
 module.exports = router;
