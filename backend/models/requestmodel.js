@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const RequestSchema = new mongoose.Schema({
   userId: String,
+  sendername:String,
+  senderimage:String,
+  recieverId:String,
   postId: String,
   bookname: String,
   author: String,
@@ -13,6 +16,7 @@ const RequestSchema = new mongoose.Schema({
   username: String,
   useremail: String,
   userimage: String,
+  status:String
 });
 const Request= mongoose.model('Request', RequestSchema)
 

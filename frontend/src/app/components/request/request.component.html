@@ -1,0 +1,96 @@
+<app-header></app-header>
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+
+<section  id="z" class="container-fluid p-4 mt-5 ms-5"  >
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-12">
+        <div class="border-bottom pb-3 mb-3">
+          
+        </div>
+      </div>
+    </div>
+    <div class="row ms-5"id="row"  *ngIf="!show">
+      <div id="row" class="col-xxl-8 col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="mb-6">
+              <h4 class="mb-0 fw-bold">Your Book Requests</h4>
+              <p class="mt-3">Check the status of recent book requests</p>
+            </div>
+          <div >
+            <div id="za" class="mb-8" *ngFor="let item of req.reverse()" >
+             
+              
+              <div class="border-bottom mt-3 p-3 d-lg-flex align-items-center justify-content-between">
+                <div class=" align-items-center justify-content-between">
+                  <div class="d-flex">
+                    <img
+              src="../../../assets/{{ item?.senderimage }}"
+              class="rounded-circle"
+              height="50"
+              id="sse"
+              alt="Avatar"
+              loading="lazy"
+            />
+                    <span class="fw-bold ms-2 mt-2" id="ab">{{item?.sendername}} </span>
+
+                  </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <!-- <a id="ac" >Manage Order</a>
+                  <button class="invd" >View Invoice</button> -->
+                  
+                  <p class="text-primary fw-bold">{{ timeAgo(item.time) }}</p>
+                </div>
+              </div>
+              <div id="z" class="row justify-content-between align-items-center" >
+  
+  
+               
+  
+                <div class="col-lg-8 col-12">
+                  <div class="d-md-flex">
+                    <div>
+                      <img  src="../../../assets/{{item.image}}" alt="" id="imgu" class="img-4by3-xl rounded">
+                    </div>
+                    <div class="ms-md-4  mt-lg-0">
+                      <h5 id="vac" class="mb-1 mt-4">
+                       Book:  {{item.bookname}}
+                      </h5>
+                      <span id="vab" >Author: <span id="vaa" >{{item.author}}</span>
+                      </span>
+                      <div >
+                        <span id="vaa">Duration: <span id="vaa" >{{item.duration}} weeks</span>
+                        </span>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-12 d-grid" *ngIf="item.status=='Not Accepted'">
+                  <button  id="btn" (click)="accept(item)"> Accept</button>
+                  <button id="btna"> Ignore</button>
+                </div>
+                <div class="col-lg-3 col-12 d-grid" *ngIf="item.status!='Not Accepted'">
+                  <button  id="btn" > Accepted</button>
+
+                </div>
+              </div>
+              </div>
+              
+            </div>
+            </div>
+          </div>
+          
+  
+  
+  
+          
+  
+  
+        </div>
+      </div>
+    </section>
+    <div  *ngIf="show" >
+        <h4 id="sa">No Request for Books Found </h4>
+        <img class="mt" src="../../../assets/nouser.jpg"/>
+      </div>

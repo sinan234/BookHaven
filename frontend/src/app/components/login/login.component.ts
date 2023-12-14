@@ -55,10 +55,13 @@ export class LoginComponent {
             title: 'Login Succesful',
             text: 'Welcome'+ ' '+this.service.getName(),
             icon: 'success',
-            timer: 1500, 
+            timer: 800, 
             showConfirmButton: false 
           });
-          this.router.navigate(['login', 'feed'])
+          setTimeout(()=>{
+            this.router.navigate(['login', 'feed'])
+
+          },700)
           // console.log("token", res.cookie.token)
         }else{
           Swal.fire({

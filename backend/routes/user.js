@@ -188,7 +188,8 @@ router.post('/create_post', async(req,res)=>{
       time:time,
       like:0,
       comment:0,
-      wishlist:1
+      wishlist:1,
+      request:'None'
 
     })
     await post.save();
@@ -345,43 +346,86 @@ router.post('/sendrequest',async(req,res)=>{
     const token = req.headers.authorization.split(' ')[1];
     const id = jwt.verify(token, "secretkey");
     const userId = id.userId;
+    const user=await User.findOne({_id: userId})
     const request= new Request({
       userId: userId,
+      sendername:user.name,
+      senderimage:user.image,
+      recieverId:req.body.user_id,
       postId:req.body._id,
       bookname: req.body.bookname,
       author: req.body.author,
       duration:req.body.week,
       bookcategory: req.body.bookcategory,
       image: req.body.image,
+      accepted: 'No',
       time: req.body.time,
       username: req.body.username,
       useremail: req.body.useremail,
       userimage: req.body.userimage,
+      status:'Not Accepted'
     })
     await request.save()
+    const post= await Post.findOne({_id:req.body._id})
+    post.request='Request sent'
+    await post.save()
     return res.status(201).json({message:"Request send successfully"})
-  }catch(err){
-    return res.status(500).jsonn({message:"Unknown error occured"})
-
-  }
-})
-
-router.post('/getuserbook',async(req,res)=>{
-  try{
-    const token = req.headers.authorization.split(' ')[1];
-    const id = jwt.verify(token, "secretkey");
-    const userId = id.userId;
-    const req= await Request.findOne({userId:userId, postId:req.body.id})
-    if(!req){
-      return res.status(200).json({message:"No request"})
-    }
-    else{
-      return res.status(500).json({message:"Already request is there "})
-
-    }
   }catch(err){
     return res.status(500).json({message:"Unknown error occured"})
 
   }
 })
+
+router.get('/getuserbook', async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const id = jwt.verify(token, "secretkey");
+    const userId = id.userId;
+    const request = await Request.find();
+    
+    if (!request) {
+      return res.status(500).json({ message: "Request not found" });
+
+    } else {
+      return res.status(200).json({ message: " request", data: request , id:userId});
+
+    }
+  } catch (err) {
+    return res.status(500).json({ message: "Unknown error occurred" });
+  }
+});
+
+router.get('/getRequest',async(req,res)=>{
+  try{
+    const token = req.headers.authorization.split(' ')[1];
+    const id = jwt.verify(token, "secretkey");
+    const userId = id.userId;
+    const request = await Request.find({ recieverId:  userId+'' });
+    const user=await User.find()
+    return res.status(200).json({ message: " request", data: request , user:user });
+  }catch (err) {
+    return res.status(500).json({ message: "Unknown error occurred" });
+  }
+})
+
+router.post('/acceptrequest', async (req, res) => {
+  try {
+    const post = await Post.findOne({ _id: req.body.postId });
+    if (post) {
+      post.status = req.body.accepted_time;
+      post.request='Request Accepted'
+      await post.save();
+    const request=await Request.findOne({_id: req.body._id})
+    request.status='Accepted'
+    await request.save()
+      return res.status(200).json({ message: "Request updated successfully" });
+    } else {
+      return res.status(404).json({ message: "Post not found" });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: "Unknown error occurred" });
+  }
+})
+
+
 module.exports = router;

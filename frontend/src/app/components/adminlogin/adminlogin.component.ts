@@ -46,9 +46,12 @@ export class AdminloginComponent {
             }
           });
           localStorage.setItem('admintoken', res.token)
-          this.router.navigate(['home'],{
-            relativeTo:this.route
-          })
+          setTimeout(()=>{
+            this.router.navigate(['home'],{
+              relativeTo:this.route
+            })
+          },700)
+      
   
         
   

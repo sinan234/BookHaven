@@ -11,6 +11,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { PersonComponent } from './person/person.component';
 import { AuthGuard } from './services/authguard.guard';
+import { RequestComponent } from './components/request/request.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path:'login',component:LoginComponent},
   {path:'login/feed', component:FeedComponent, canActivate:[AuthGuard]},
   {path:'login/profile', component:ProfileComponent ,canActivate:[AuthGuard]},
+  {path:'login/request', component:RequestComponent ,canActivate:[AuthGuard]},
   {path:'login/profile/edit', component:EditprofileComponent, canActivate:[AuthGuard]},
   {path:'login/wishlist', component:WishlistComponent,canActivate:[AuthGuard]},
   {path:'login/chat', component:ChatComponent, 

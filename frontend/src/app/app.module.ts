@@ -28,6 +28,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { AdminModule } from './admin.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { RequestComponent } from './components/request/request.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     WishlistComponent,
     ChatComponent,
     PersonComponent,
+    RequestComponent
   ],
   imports: [
     BrowserModule,

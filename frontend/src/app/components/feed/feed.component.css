@@ -119,6 +119,12 @@
   backdrop-filter: blur(5px); 
   background-color: rgba(255, 255, 255, 0.8); 
 }
+#d{
+  color: rgb(21, 93, 226);
+}
+#du{
+  color: rgb(5, 150, 24);
+}
 #ddk{
   border:0.5px solid gray;
   border-radius: 15px;

@@ -230,19 +230,36 @@
                       <p id="xy">Wishlist</p>
                     </div>
                   </li>
-                  <li [routerLink]="['/login/chat', getid(item.username)]">
+                  <li [routerLink]="['/login/chat', getid(item.username)]" *ngIf="item.user_id != user._id">
                     <i class="bi bi-chat-dots ms-4"></i>
                     <div>
                       <p id="xyz">Chat</p>
                     </div>
                   </li>
-
-                  <li (click)="toggleBookPopup(item)" *ngIf="knowBook(item._id)">
+                  <ng-container *ngIf="item.user_id != user._id ">
+                  <ng-container *ngIf="item.status=='Available'">
+                  <li (click)="toggleBookPopup(item)"  *ngIf="!boo.includes(item.bookname)" >
                     <i class="bi ms-4 bi-journal-check"></i>
                     <div>
                       <p id="xyzd">Book</p>
                     </div>
                   </li>
+                </ng-container>
+                </ng-container>
+                <ng-container *ngIf="item.user_id != user._id">
+                  <li  *ngIf="boo.includes(item.bookname) && notaccepted.includes(item.bookname)">
+                    <i id="d" class="ms-4 bi bi-bookmark-check-fill"></i>
+                    <div>
+                      <p id="xyzd">Requested</p>
+                    </div>
+                  </li>
+                  <li  *ngIf="accepted.includes(item.bookname)">
+                    <i id="du" class="ms-4 bi bi-bookmark-check-fill"></i>
+                    <div>
+                      <p id="xyzd">Accepted</p>
+                    </div>
+                  </li>
+                </ng-container>
                 </ul>
               </div>
             </div>

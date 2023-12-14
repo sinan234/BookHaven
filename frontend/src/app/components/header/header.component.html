@@ -28,6 +28,9 @@
                 <a  class="nav-link"  routerLinkActive="active" routerLink="/login/chat"  > Chat</a>
               </li>
               <li  class="nav-item"  >
+                <a  class="nav-link"  routerLinkActive="active" routerLink="/login/request"  > Request</a>
+              </li>
+              <li  class="nav-item"  >
                 <a  class="nav-link"  routerLinkActive="active" routerLink="/login/profile" > Profile</a>
               </li>
             </ng-container>
@@ -48,8 +51,8 @@
                 </ng-container>
             </ul>
             <h5 id="a" *ngIf="show" class="text"> Welcome:{{name}} </h5>
-            <div class="search_form" *ngIf="loginService.getStatus() && !isChatPath()">
-              <input type="text" class="form-control" placeholder="Search here..." [(ngModel)]="searchText" (input)="onSearchTextChange()">
+            <div class="search_form" id="az" *ngIf="loginService.getStatus() && !isChatPath()">
+              <input type="text" id="oi" class="form-control " placeholder="Search here..." [(ngModel)]="searchText" (input)="onSearchTextChange()">
               <button class="" type="submit">
                 <i class="bi bi-search"></i>
               </button>

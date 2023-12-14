@@ -32,6 +32,8 @@ export class FeedComponent implements OnInit, DoCheck {
   m: any;
   id: any;
   alluser: any;
+  books:any[]=[];
+  boo:any[]=[]
   wish: any;
   wishlistColor: any;
   img: string = '';
@@ -47,6 +49,9 @@ export class FeedComponent implements OnInit, DoCheck {
   selectedBook: any;
   duration:any;
   know:boolean=false;
+  accepted:any[]=[]
+  notaccepted:any[]=[]
+
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -58,7 +63,7 @@ export class FeedComponent implements OnInit, DoCheck {
     this.searchText$ = this.store.select(selectSearchText);
     this.spinner.show()
     this.getData();
-
+    this.knowBook()
     this.duration='1'
     // const duration = 900;
     // setTimeout(() => {
@@ -78,19 +83,51 @@ export class FeedComponent implements OnInit, DoCheck {
     }
   }
 
-  knowBook(id:any){
-    const data={
-      id:id
-    }
-    this.http.post('http://localhost:3000/user/getuserbook',data)
+  knowBook(){
+    this.http.get('http://localhost:3000/user/getuserbook')
     .subscribe({
       next:(res:any)=>{
          this.know=true
+         console.log("res",res.data)
+          res.data.forEach((element:any) => {
+           this.books.push(
+            {
+              bookname:element.bookname,
+              senderid:element.userId,
+              currid:res.id,
+              status: element.status
+            }
+           )
+        
+        });
+        console.log("books", this.books)
+           this.books.map((element: any) => {
+            if (element.currid == element.senderid) {
+              this.boo.push(
+                {bookname:element.bookname, 
+                  status:element.status}
+                );
+            }
+            this.boo.map((element:any)=>{
+              if(element.status=='Accepted'){
+                this.accepted.push(element.bookname)
+              }
+              else{
+                this.notaccepted.push(element.bookname)
+              }
+            })
+            console.log("accepted", this.accepted)
+            console.log("not accepted", this.notaccepted)
+          });
+        console.log("bookname",this.boo)
+        
       },
       error:(err:any)=>{
+        console.log(err)
         this.know=false
       }
     })
+    return this.know
   }
   toggleBookPopup(item: any) {
     this.selectedBook = item; 
@@ -100,7 +137,7 @@ export class FeedComponent implements OnInit, DoCheck {
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll(event: Event) {
-    this.topPosition = 120 + window.scrollY;
+    this.topPosition = 70 + window.scrollY;
   }
   send(){
     console.log("send button clicked")
@@ -136,6 +173,8 @@ export class FeedComponent implements OnInit, DoCheck {
           },
         });
         this.book=!this.book
+        this.knowBook()
+
       }, error:(err:any)=>{
         this.toastr.error(err.error.message)
       }
