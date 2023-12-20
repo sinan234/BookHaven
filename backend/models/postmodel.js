@@ -14,7 +14,9 @@ wishlist:Number,
 username:String,
 useremail:String,
 userimage:String,
-request:String
+request:String,
+postdetails:String,
+bookdetails:String
 
 })
 const Post=mongoose.model('Post', Postschema)

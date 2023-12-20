@@ -23,6 +23,7 @@ const transporter = nodemailer.createTransport({
 const sessionTimeout=1800000;
 
 const otparray=[]
+
 router.post('/send-otp', (req, res) => {
   
   function generateNumericOTP(length) {
@@ -46,8 +47,7 @@ router.post('/send-otp', (req, res) => {
   const mailOptions = {
     from: 'mpsinan015@gmail.com',
     to: req.body.email,
-    title:'BookHaven Community Bookstore ',
-    subject: 'OTP for Email Verification',
+    subject: 'BookHaven Community Bookstore- Email Verification',
     text: `Your OTP for email verification is: ${otp}`
   };
 
@@ -71,6 +71,53 @@ router.post('/verify-otp', (req, res) => {
     res.status(400).json({ message: 'Invalid OTP' });
   }
 });
+
+router.post('/forgotpassword',async (req,res)=>{
+  try{
+    console.log(req.body.email)
+    const user=await User.findOne({email:req.body.email})
+    if(!user){
+      return res.status(500).json({message:"User not found with the email"})
+    }
+
+    const userId=user._id
+    
+    const mailOptions = {
+      from: 'mpsinan015@gmail.com',
+      to: req.body.email,
+      subject: 'BookHaven Community Bookstore - Password Reset',
+      text: `Your Password reset link is http://localhost:4200/resetpassword/${userId}`
+    };
+  
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Failed to send OTP' });
+      } else {
+        console.log('Email sent: ' + info.response);
+        res.status(200).json({ message: 'OTP sent successfully' });
+      }
+    });
+  }catch (err) {
+    res.status(500).json({ message: "Unknown error occured" });
+  }
+}
+)
+
+router.post('/resetpassword' ,async(req,res)=>{
+  try{
+     const user=await User.findOne({_id:req.body.userId})
+     if(!user){
+      return res.status(500).json({message:"User not found with the email"})
+    }
+    var bpassword= await bcrypt.hash(req.body.password, 10)
+    user.password=bpassword
+    await user.save()
+    res.status(200).json({message:"Password updated successfully"})
+  }catch (err) {
+    res.status(500).json({ message: "Unknown error occured" });
+  }
+})
 
 router.post("/create_user", async (req, res) => {
   try {
@@ -100,37 +147,34 @@ router.post("/create_user", async (req, res) => {
   }
 });
 
-router.post('/login',async(req,res)=>{
-    try{
-        const {email, password} =req.body
-        const user= await User.findOne({email})
-        if(!user){
-            res.status(500).json({ message: "User not found" });
-        }
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if(!isPasswordValid){
-            res.status(500).json({ message: "Password is incorrect" });
-        }
-        const session = {
-            userId: user._id,
-            expiry: Date.now() + sessionTimeout
-          };
-        
-        let token=jwt.sign(session,'secretkey')
-        const cookieValue = {
-            token,
-            sessionIndicator: true,
-            sessionEnd: session.expiry
-          };
-      
-          res.status(201).json({ message: "Authentication Successful" , name: user.name,cookie: cookieValue});
-
+router.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(500).json({ message: "User not found" });
     }
-    catch(error){
-        res.status(500).json({ message: "Unknown error occured" });
-
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(500).json({ message: "Password is incorrect" });
     }
-})
+    const session = {
+      userId: user._id,
+      expiry: Date.now() + sessionTimeout
+    };
+
+    let token = jwt.sign(session, 'secretkey');
+    const cookieValue = {
+      token,
+      sessionIndicator: true,
+      sessionEnd: session.expiry
+    };
+
+    res.status(201).json({ message: "Authentication Successful", name: user.name, cookie: cookieValue });
+  } catch (error) {
+    res.status(500).json({ message: "Unknown error occurred" });
+  }
+});
 
 router.get('/getpost', async (req, res) => {
   try {
@@ -539,7 +583,7 @@ router.post("/createwarning", async (req, res) => {
 });
 
 
-cron.schedule('0 0 * * *', async () => {
+cron.schedule('0 12 * * *', async () => {
   try {
     const itemsToUpdate = await Post.find({ status: /^Available in \d+ days$/ });
 

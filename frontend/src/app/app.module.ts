@@ -30,6 +30,7 @@ import { AdminModule } from './admin.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { RequestComponent } from './components/request/request.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
+import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
     ChatComponent,
     PersonComponent,
     RequestComponent,
-    ForgotpasswordComponent
+    ForgotpasswordComponent,
+    ResetpasswordComponent
   ],
   imports: [
     BrowserModule,

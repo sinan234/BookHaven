@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
@@ -12,8 +13,13 @@ export class ForgotpasswordComponent {
   email!:string
   constructor(
     private http:HttpClient,
-    private toastr:ToastrService
+    private toastr:ToastrService,
+    private router:Router
   ){}
+  go(){
+    console.log("clicked")
+    this.router.navigate(['login'])
+  }
   send(){
      if(this.email.length<=0){
       this.toastr.error("Email field cannot be empty")
@@ -28,10 +34,10 @@ export class ForgotpasswordComponent {
        
         Swal.fire({
           position: 'top-end',
-          title: 'The email containing instructions for password recovery has been successfully sent to your email address. ',
+          title: '<span style="font-size: 19px">The email containing instructions for password recovery has been successfully sent to your email address. </span>',
           text:'Please follow the instructions provided in the email to recover your password.',
           icon: 'success',
-          timer: 1000,
+          timer: 4000,
           showConfirmButton: false,
           didOpen: () => {
             const SwalIcon = Swal.getIcon();
@@ -46,11 +52,12 @@ export class ForgotpasswordComponent {
     }
             const SwalModal = Swal.getPopup();
             if (SwalModal) {
-              SwalModal.style.width = '320px'; 
-              SwalModal.style.height = '180px'; 
+              SwalModal.style.width = '520px'; 
+              SwalModal.style.height = '380px'; 
             }
           },
         });
+        this.email=''
       }, error:(err)=>{
         this.toastr.error(err.error.message)
       }

@@ -22,6 +22,8 @@ export class AdminhomeComponent implements OnInit{
 books:any[]=[]
 like:any[]=[]
 wish:any[]=[]
+b:any[]=[]
+
 updatedPostArray:any[]=[]
  constructor(
   private router:Router,
@@ -32,8 +34,7 @@ updatedPostArray:any[]=[]
  ngOnInit(): void {
   
    this.getData()
-   
-  
+
    this.chartOptions = {
     chart: {
       type: 'line',
@@ -67,7 +68,7 @@ updatedPostArray:any[]=[]
           tickColor: '#707073',
       
 
-        }
+        },
       },
       gridLineColor: ['green', 'blue', 'yellow', 'orange']
     },
@@ -105,13 +106,15 @@ updatedPostArray:any[]=[]
          tooltip: {
        backgroundColor: 'rgba(0, 0, 0, 0.85)',
        style: {
-         color: 'white'
+         color: 'black',
+         fontSize:'18px'           
+
        }
      },
     plotOptions: {
       series: {
         dataLabels: {
-          color: 'white',
+          color: 'black',
           fontSize:'24px'           
 
         }
@@ -125,7 +128,7 @@ updatedPostArray:any[]=[]
   
  }
 
-getData(){
+ getData(){
   this.spinner.show();
   this.http.get('http://localhost:3000/admin/getdata')
   .subscribe({
@@ -135,10 +138,11 @@ getData(){
       this.post=res.post
       this.spinner.hide()
 
-this.post.forEach((item: any) => {
-  this.books.push(item.bookname);
-});
-this.post.forEach((item: any) => {
+      this.post.slice(0, 5).forEach((item: any) => {
+        this.books.push(item.bookname);
+      });
+      
+this.post.slice(0,5).forEach((item: any) => {
   this.like.push(item.like);
 });
     
@@ -164,10 +168,10 @@ this.post.forEach((item: any) => {
       });
       
       console.log("updated", this.updatedPostArray);
-      this.updatedPostArray.forEach((item:any)=>{
+      this.updatedPostArray.slice(0,5).forEach((item:any)=>{
           this.wish.push(item.count)
       })
-      console.log("wish", this.wish)
+
     },
     error:(err:any)=>{
       console.log("error occured", err)

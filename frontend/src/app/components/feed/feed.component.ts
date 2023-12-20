@@ -75,7 +75,7 @@ export class FeedComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck(): void {
-    console.log(this.ischecked2)
+    // console.log(this.ischecked2)
     // console.log(this.searchText$)
     // console.log("book", this.details)
     // console.log("bookdetails", this.bookdetails)
@@ -404,6 +404,7 @@ export class FeedComponent implements OnInit, DoCheck {
           this.image = '';
           this.author = '';
           this.bookname = '';
+          this.fileshow=!this.fileshow
           this.getData();
         }
       },
