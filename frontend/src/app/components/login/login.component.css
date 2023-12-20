@@ -6,6 +6,11 @@
     border: 0.5px solid black;
     border-color: rgb(118, 118, 126);
 }
+.fp{
+  position: absolute;
+  margin-top: 90px;
+  left: 32%;
+}
 img{
     position: absolute;
     top: 10%;

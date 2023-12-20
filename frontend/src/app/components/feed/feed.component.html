@@ -6,9 +6,11 @@
 <app-header></app-header>
 <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
 
-<div id="nnb">
-  <input type="checkbox" [(ngModel)]="ischecked" />
-  <label id="ku" class=" fw-bold ms-2">Interested Categories</label>
+<div id="nnb" class="d-flex">
+  <input type="checkbox" [(ngModel)]="ischecked2" />
+  <label id="kus" class=" fw-bold ms-2">AvailableBooks</label> 
+  <input type="checkbox" class="ms-3" [(ngModel)]="ischecked" />
+  <label id="ku" class=" fw-bold ms-2">InterestedCategories</label>
   </div>
 <!-- <div id="preloader" *ngIf="showPreloader"></div> -->
 
@@ -140,11 +142,12 @@
       <div>
         <div *ngFor="let item of postsn.reverse()">
           <ng-container *ngIf="check(item.bookcategory)">
+            <ng-container *ngIf="!ischecked2 || (ischecked2 && item.status === 'Available')">
           <div
             class="d-flex p-3 border-bottom"
             id="mur"
             *ngIf="
-              (searchText$ | async) === '' || item.bookname.toLowerCase().includes((searchText$|async)) ||  item.author.toLowerCase().includes((searchText$|async))
+              (searchText$ | async) === '' || item.bookname.toLowerCase().includes((searchText$|async)) ||  item.author.toLowerCase().includes((searchText$|async)) ||  item.bookcategory.toLowerCase().includes((searchText$|async))
             "
           >
             <img
@@ -166,7 +169,10 @@
                   <span class="small font-weight-normal">{{
                     getTime(item.time)
                   }}</span>
-                  <span class="float-end" [ngStyle]="{color: item.status==='Available' ?'green':'red'}">{{item.status}}</span>
+                  <span *ngIf="!accepted.includes(item.bookname) && !acc.includes(item.bookname)" class="float-end" [ngStyle]="{color: item.status==='Available' ?'green':'red'}">{{item.status}}</span>
+                  <span *ngIf="accepted.includes(item.bookname) && !acc.includes(item.bookname)" class="float-end text-success" >Book Request Accepted </span>
+                  <span *ngIf="acc.includes(item.bookname) " class="float-end text-success" >  Book Handovered - Return in {{ item.status.replace('Available in', '').replace('days', '').trim() }} days</span>
+
                   <!-- <span><i class="fas fa-angle-down float-end"></i></span> -->
                 </h6>
                 <p style="line-height: 1.2">
@@ -238,7 +244,7 @@
                   </li>
                   <ng-container *ngIf="item.user_id != user._id ">
                   <ng-container *ngIf="item.status=='Available'">
-                  <li (click)="toggleBookPopup(item)"  *ngIf="!boo.includes(item.bookname)" >
+                  <li (click)="toggleBookPopup(item)"  *ngIf="(!accepted.includes(item.bookname)) && (!notaccepted.includes(item.bookname))" >
                     <i class="bi ms-4 bi-journal-check"></i>
                     <div>
                       <p id="xyzd">Book</p>
@@ -247,7 +253,7 @@
                 </ng-container>
                 </ng-container>
                 <ng-container *ngIf="item.user_id != user._id">
-                  <li  *ngIf="boo.includes(item.bookname) && notaccepted.includes(item.bookname)">
+                  <li  *ngIf="notaccepted.includes(item.bookname) && !accepted.includes(item.bookname) ">
                     <i id="d" class="ms-4 bi bi-bookmark-check-fill"></i>
                     <div>
                       <p id="xyzd">Requested</p>
@@ -264,6 +270,7 @@
               </div>
             </div>
           </div>
+        </ng-container>
           </ng-container>
           
           <div class="popup-container" *ngIf="book" [style.top.px]="topPosition" >

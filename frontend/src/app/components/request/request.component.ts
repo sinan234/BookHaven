@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { error } from 'highcharts';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-request',
@@ -15,7 +17,8 @@ export class RequestComponent implements OnInit {
   filteredUsers:any[]=[]
   constructor(
     private http:HttpClient,
-    private spinner:NgxSpinnerService
+    private spinner:NgxSpinnerService,
+    private toastr:ToastrService
   ){}
 
   ngOnInit(): void {
@@ -59,10 +62,48 @@ export class RequestComponent implements OnInit {
         this.getRequests()
 
     }, error:(err:any)=>{
-        console.log("error", err.error.message)
+        this.toastr.error(err.error.message)
     }
     })
   }
+
+ignore(book:any){
+ const data=book._id
+ this.http.delete(`http://localhost:3000/user/removerequest/${data}` )
+ .subscribe({
+  next:(response:any)=>{
+    Swal.fire({
+      position: 'top-end',
+      title: 'Request ignored successfully ',
+      icon: 'success',
+      timer: 1000,
+      showConfirmButton: false,
+      didOpen: () => {
+        const SwalIcon = Swal.getIcon();
+        if (SwalIcon) {
+         
+          SwalIcon.style.width = '70px'; 
+          SwalIcon.style.height = '70px'; 
+        }
+        const SwalTitle = Swal.getTitle();
+        if (SwalTitle) {
+  SwalTitle.style.fontSize = '20px'; 
+}
+        const SwalModal = Swal.getPopup();
+        if (SwalModal) {
+          SwalModal.style.width = '320px'; 
+          SwalModal.style.height = '180px'; 
+        }
+      },
+    });
+    this.getRequests()
+
+  },
+
+ }),(error:any)=>{
+    console.log(error)
+ }
+}
   getRequests(){
     this.http.get('http://localhost:3000/user/getRequest')
     .subscribe({

@@ -10,8 +10,8 @@ const Userschema=new mongoose.Schema({
     paymentid:String,
     image:String,
     name:String,
-    likedpost:Array
-
+    likedpost:Array,
+    warning:Number
 })
 const User=mongoose.model('User', Userschema)
 module.exports=User;

@@ -30,6 +30,7 @@ export class FeedComponent implements OnInit, DoCheck {
   bookcategory:string=''
   newimg: any;
   m: any;
+  ischecked2:boolean=false
   id: any;
   alluser: any;
   books:any[]=[];
@@ -49,8 +50,10 @@ export class FeedComponent implements OnInit, DoCheck {
   selectedBook: any;
   duration:any;
   know:boolean=false;
+  request:any[]=[]
   accepted:any[]=[]
   notaccepted:any[]=[]
+  acc:any[]=[]
 
   constructor(
     private router: Router,
@@ -72,6 +75,7 @@ export class FeedComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck(): void {
+    console.log(this.ischecked2)
     // console.log(this.searchText$)
     // console.log("book", this.details)
     // console.log("bookdetails", this.bookdetails)
@@ -129,6 +133,9 @@ export class FeedComponent implements OnInit, DoCheck {
     })
     return this.know
   }
+  // onCheckboxChange() {
+  //   this.ischecked2=!this.ischecked2
+  // }
   toggleBookPopup(item: any) {
     this.selectedBook = item; 
     console.log('selected book', this.selectedBook)
@@ -223,7 +230,14 @@ export class FeedComponent implements OnInit, DoCheck {
         this.alluser = res.alluser;
         this.postsn = this.posts;
         console.log('posts', this.postsn);
-
+        this.request=res.request
+        console.log("req",this.request)
+        this.request.forEach((item:any)=>{
+          if(item.status=='Accepted'){
+            this.acc.push(item.bookname)
+          }
+        })
+        console.log("acc", this.acc)
         this.wish = res.wish;
         console.log('wish', this.wish);
         this.m = this.wish.reduce((unique: any, item: any) => {

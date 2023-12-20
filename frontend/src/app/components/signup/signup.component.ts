@@ -1,5 +1,5 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -16,11 +16,20 @@ export class SignupComponent {
   constructor(
   private toastr: ToastrService,
   private http:HttpClient,
-  private router:Router
+  private router:Router,
+  private renderer:Renderer2
   ) {}
+  @ViewChild('otp1Input') otp1Input!: ElementRef;
+  @ViewChild('otp2Input') otp2Input!: ElementRef;
+  @ViewChild('otp3Input') otp3Input!: ElementRef;
+  @ViewChild('otp4Input') otp4Input!: ElementRef;
+  @ViewChild('otp5Input') otp5Input!: ElementRef;
+  @ViewChild('otp6Input') otp6Input!: ElementRef;
+
   name:string=''
   email: string = '';
   password: string = '';
+  otp:boolean=false
   cpassword: string = '';
   cat1: string = 'Choose your interested category1';
   cat2: string = 'Choose your interested category2';
@@ -31,11 +40,137 @@ export class SignupComponent {
   Razorpay:any;
   paymentid:any
   show: boolean = false;
+  showotp:boolean=false
+  otp1!:number
+  otp2!:number
+  otp3!:number
+  otp4!:number
+  otp5!:number
+  otp6!:number
 
   onFileChange(event: any) {
 
     this.toastr.success('File uploaded successfully', 'Success');
   }
+  
+
+    sendOtp() {
+      console.log("clicked")
+      const expirationTime = 2; 
+      Swal.fire({
+        position: 'top-end',
+        title: 'OTP has been sent ',
+        text:`It will expire in ${expirationTime} minutes`,
+        icon: 'success',
+        timer: 1000,
+        showConfirmButton: false,
+        didOpen: () => {
+          const SwalIcon = Swal.getIcon();
+          if (SwalIcon) {
+           
+            SwalIcon.style.width = '70px'; 
+            SwalIcon.style.height = '70px'; 
+          }
+          const SwalTitle = Swal.getTitle();
+          if (SwalTitle) {
+    SwalTitle.style.fontSize = '20px'; 
+  }
+          const SwalModal = Swal.getPopup();
+          if (SwalModal) {
+            SwalModal.style.width = '320px'; 
+            SwalModal.style.height = '180px'; 
+          }
+        },
+      });
+      this.showotp=true
+      if(this.email.length<=0){
+        this.toastr.error("Please enter a valid email address")
+        return
+      }
+      this.http.post('http://localhost:3000/user/send-otp', { email: this.email }).subscribe(
+        (response) => {
+          console.log(response);
+       
+        },
+        (error) => {
+          this.toastr.error(error);
+        }
+      );
+   }
+   onOtpInput(event: any, nextInputNumber: number) {
+  
+    if (event.target.value !== '') {
+      if (nextInputNumber <= 6) {
+        const nextInput = document.getElementById('otp' + nextInputNumber) as HTMLInputElement;
+        if (nextInput) {
+          nextInput.focus();
+        }
+      }
+    }
+  }
+  
+  focusNextInput(nextInput: any) {
+    if (nextInput) {
+      nextInput.focus();
+    }
+  }
+   confirmOtp(){
+      if(!this.otp1 || !this.otp2 || !this.otp3 || !this.otp4 || !this.otp5 || !this.otp6 ){
+        this.toastr.warning("OTP Fields cannot be empty")
+        return 
+      }
+      const otp= this.otp1+this.otp2+this.otp3+this.otp4+this.otp5+this.otp6
+      console.log("otp", otp)
+      const data={
+        otp:otp
+      }
+      this.http.post('http://localhost:3000/user/verify-otp', data)
+      .subscribe({
+        next:(response)=>{
+          Swal.fire({
+            position: 'top-end',
+            title: 'OTP verified successfully  ',
+            icon: 'success',
+            timer: 1000,
+            showConfirmButton: false,
+            didOpen: () => {
+              const SwalIcon = Swal.getIcon();
+              if (SwalIcon) {
+               
+                SwalIcon.style.width = '70px'; 
+                SwalIcon.style.height = '70px'; 
+              }
+              const SwalTitle = Swal.getTitle();
+              if (SwalTitle) {
+        SwalTitle.style.fontSize = '20px'; 
+      }
+              const SwalModal = Swal.getPopup();
+              if (SwalModal) {
+                SwalModal.style.width = '320px'; 
+                SwalModal.style.height = '180px'; 
+              }
+            },
+          });
+          this.showotp=!this.showotp
+          this.show=!this.show
+        }, error:(err)=>{
+          this.toastr.error(err.error.message)
+        }
+      })
+   }
+  
+   moveToNextField(event:any, nextFieldId:any) {
+    const maxLength = event.target.getAttribute('maxlength');
+    const currentLength = event.target.value.length;
+  
+    if (currentLength >= maxLength) {
+      const nextField = document.getElementById(nextFieldId);
+      if (nextField) {
+        nextField.focus();
+      }
+    }
+  }
+  
   next() {
     console.log('clicked');
     if (this.password != this.cpassword) {
@@ -104,7 +239,7 @@ export class SignupComponent {
    onsubmit(form:NgForm){
     console.log("submit button clicked")
     if(this.cat1 == this.cat2 || this.cat2 == this.cat3|| this.cat1 == this.cat3  ){
-      this.toastr.error("Ctegories cannot be same")
+      this.toastr.error("Categories cannot be same")
       return
     }
     if(this.paymentid.length<=0){

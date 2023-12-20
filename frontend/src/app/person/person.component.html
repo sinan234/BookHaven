@@ -3,8 +3,25 @@
 <div id="f"class="d-flex align-items-center">
   <img src="../../assets/{{seluser[0]?.image}}" class="rounded-circle ms-5" alt="avatar" style="width: 45px; height: 45px;" alt="hfhf">
   <h6 id="g" class="text-primary ms-5">{{ seluser[0]?.name }}</h6>
+  <i id="icon" class="bi bi-three-dots-vertical " (click)="menus()"></i>
+  
+ 
   <i id="delete" class=" bi bi-trash3-fill" (click)="deletechat(seluser[0]?._id)"></i>
-</div><div class="ds">
+</div>
+
+<div *ngIf="menu" class="report-options card">
+  <div class="card-body">
+    <h5 class="card-title">Report to Admin</h5>
+    <select class="form-select mb-3" [(ngModel)]="dis" (change)="select($event)">
+      <option value=" "   >Select any option</option>
+      <option value="fraud">Fraud</option>
+      <option value="scam">Scam</option>
+    </select>
+    
+    <button class="btn btn-primary" (click)="send(seluser[0]._id, user._id)">Send</button>
+  </div>
+</div>
+<div class="ds">
 
   <div class="pt-3 pe-3" id="aa" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
     <div id="messageContainer"class="pt-3 pe-3" data-mdb-perfect-scrollbar="true" style="position: relative; max-height: 400px; overflow-y: auto;">

@@ -27,6 +27,7 @@ export class PersonComponent implements OnInit,DoCheck,OnDestroy, OnChanges {
   messageListnew: any[] = [];
   newList: any[] = [];
   user:any
+  menu:boolean=false
   stored:any
   a:any[]=[]
   allusers:any
@@ -45,7 +46,9 @@ export class PersonComponent implements OnInit,DoCheck,OnDestroy, OnChanges {
   id:any
   day:any
   time:any
-  messages:any
+  messages:any;
+  selvalue!:string
+  dis:string=' '
   sendmessagesubscribe!:Subscription
   messages$=this.store.pipe(select(selectMessages));
   private unsubscribe$ = new Subject<void>();
@@ -150,7 +153,58 @@ ngOnChanges(): void {
       return item._id===this.recid
      })
   }
-
+  send(id:any, sender:any){
+  
+    const data={
+      userId:id,
+      senderId:sender,
+      reason:this.selvalue
+    }
+    this.http.post("http://localhost:3000/user/createwarning", data)
+    .subscribe({
+      next: (res: any) => {
+        Swal.fire({
+          position: 'top-end',
+          title: 'Report sent successfully',
+          icon: 'success',
+          timer: 1000,
+          showConfirmButton: false,
+          didOpen: () => {
+            const SwalIcon = Swal.getIcon();
+            if (SwalIcon) {
+              SwalIcon.style.width = '70px';
+              SwalIcon.style.height = '70px';
+            }
+            const SwalTitle = Swal.getTitle();
+            if (SwalTitle) {
+              SwalTitle.style.fontSize = '20px';
+            }
+            const SwalModal = Swal.getPopup();
+            if (SwalModal) {
+              SwalModal.style.width = '320px';
+              SwalModal.style.height = '180px';
+            }
+          },
+        });
+        this.menu = !this.menu;
+        this.selvalue = '';
+      },
+      error: (err: any) => {
+        this.toastr.error(err.error.message);
+        this.menu = !this.menu;
+        this.selvalue = '';
+      }
+    });
+  }  
+  menus():boolean{
+    console.log("clicked")
+    this.menu=!this.menu;
+    return this.menu
+  }
+  select(event:any){
+    this.selvalue=event.target.value
+    console.log(this.selvalue)
+  }
 
   scrollToBottom() {
     this.messagecontainer.scrollTop = this.messagecontainer.scrollHeight;

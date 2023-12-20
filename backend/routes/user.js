@@ -8,8 +8,69 @@ const Like=require('../models/likemodel')
 const Chat=require('../models/chatmodel')
 const bcrypt = require('bcrypt');
 const Request = require("../models/requestmodel");
+const Warning=require('../models/warning')
+const cron = require('node-cron');
+const nodemailer = require('nodemailer');
+const otpGenerator = require('otp-generator');
 
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'mpsinan015@gmail.com',
+    pass: 'olvv wytw yrjq eulb'
+  }
+});
 const sessionTimeout=1800000;
+
+const otparray=[]
+router.post('/send-otp', (req, res) => {
+  
+  function generateNumericOTP(length) {
+    const digits = '0123456789';
+    let OTP = '';
+    for (let i = 0; i < length; i++) {
+      OTP += digits[Math.floor(Math.random() * 10)];
+    }
+    return OTP;
+  }
+  function removeFirstOTPAfterTwoMinutes() {
+    if (otparray.length > 0) {
+      otparray.shift(); 
+    }
+  }
+  const otp = generateNumericOTP(6);
+  if (otp) {
+    otparray.push(otp);
+    setTimeout(removeFirstOTPAfterTwoMinutes, 2 * 60 * 1000);
+  }
+  const mailOptions = {
+    from: 'mpsinan015@gmail.com',
+    to: req.body.email,
+    title:'BookHaven Community Bookstore ',
+    subject: 'OTP for Email Verification',
+    text: `Your OTP for email verification is: ${otp}`
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Failed to send OTP' });
+    } else {
+      console.log('Email sent: ' + info.response);
+      res.status(200).json({ message: 'OTP sent successfully' });
+    }
+  });
+});
+
+router.post('/verify-otp', (req, res) => {
+  const userOTP = req.body.otp; 
+  console.log(otparray)
+  if (otparray.includes(userOTP.toString())) {
+    res.status(200).json({ message: 'OTP verification successful' });
+  } else {
+    res.status(400).json({ message: 'Invalid OTP' });
+  }
+});
 
 router.post("/create_user", async (req, res) => {
   try {
@@ -20,6 +81,7 @@ router.post("/create_user", async (req, res) => {
        res.status(500).json({message:"User already exists"})
     }
     const newuser = new User({
+      name:req.body.name,
       email: req.body.email,
       password: bpassword,
       category1: req.body.category1,
@@ -28,7 +90,8 @@ router.post("/create_user", async (req, res) => {
       phone: req.body.phone,
       location:req.body.location,
       image:req.body.image,
-      paymentid:req.body.paymentid
+      paymentid:req.body.paymentid,
+      warning:0
     });
     await newuser.save();
     res.status(200).json({message:"User created successfully"})
@@ -85,13 +148,15 @@ router.get('/getpost', async (req, res) => {
       res.status(500).json({ message: "Posts not found" });
     }
     const wishlist = await Wishlist.find({ userId: userId });
+    const request= await Request.find({recieverId:userId})
     
     res.status(200).json({
       message: "Details obtained successfully",
       posts: posts,
       user: user,
       wish: wishlist,
-      alluser:alluser
+      alluser:alluser,
+      request:request
     });
   } catch (err) {
     res.status(500).json({ message: "Unknown error occurred" });
@@ -416,6 +481,9 @@ router.post('/acceptrequest', async (req, res) => {
       post.request='Request Accepted'
       await post.save();
     const request=await Request.findOne({_id: req.body._id})
+    if(request.status=='Accepted'){
+      return res.status(500).json({message:"Book Already given"})
+    }
     request.status='Accepted'
     await request.save()
       return res.status(200).json({ message: "Request updated successfully" });
@@ -427,5 +495,69 @@ router.post('/acceptrequest', async (req, res) => {
   }
 })
 
+router.delete('/removerequest/:data', async (req, res) => {
+  try {
+    const id = req.params.data;
+    const deletedRequest = await Request.findOneAndDelete({ _id: id });
+
+    if (!deletedRequest) {
+      return res.status(404).json({ message: "Request not found" });
+    }
+
+    return res.status(200).json({ message: "Request deleted successfully" });
+  } catch (err) {
+    return res.status(500).json({ message: "Unknown error occurred" });
+  }
+});
+
+router.post("/createwarning", async (req, res) => {
+  try {
+    const warn = await Warning.findOne({ userId: req.body.userId, senderId: req.body.senderId });
+    if (warn) {
+      return res.status(500).json({ message: "Only one report can be sent" });
+    }
+
+    const warning = new Warning({
+      userId: req.body.userId,
+      senderId: req.body.senderId,
+      reason: req.body.reason  
+    });
+    await warning.save();
+
+    const user = await User.findOne({ _id: req.body.userId });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    user.warning = (user.warning || 0) + 1;  
+    await user.save();
+
+    return res.status(200).json({ message: "Warning saved successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Unknown error occurred" });
+  }
+});
+
+
+cron.schedule('0 0 * * *', async () => {
+  try {
+    const itemsToUpdate = await Post.find({ status: /^Available in \d+ days$/ });
+
+    itemsToUpdate.forEach(async (item) => {
+      const currentStatus = item.status;
+      const daysLeft = parseInt(currentStatus.match(/\d+/)[0]);
+      if (daysLeft > 1) {
+        item.status = `Available in ${daysLeft - 1} days`;
+      } else {
+        item.status = "Available";
+      }
+      await item.save();
+    });
+
+    console.log('Status updated successfully');
+  } catch (error) {
+    console.error('Error updating status:', error);
+  }
+});
 
 module.exports = router;

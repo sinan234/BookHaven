@@ -12,12 +12,14 @@ import { WishlistComponent } from './wishlist/wishlist.component';
 import { PersonComponent } from './person/person.component';
 import { AuthGuard } from './services/authguard.guard';
 import { RequestComponent } from './components/request/request.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: BodyComponent },
   {path:'signup', component:SignupComponent},
   {path:'login',component:LoginComponent},
+  {path:'forgotpassword', component:ForgotpasswordComponent},
   {path:'login/feed', component:FeedComponent, canActivate:[AuthGuard]},
   {path:'login/profile', component:ProfileComponent ,canActivate:[AuthGuard]},
   {path:'login/request', component:RequestComponent ,canActivate:[AuthGuard]},

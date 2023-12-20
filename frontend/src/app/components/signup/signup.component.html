@@ -11,7 +11,25 @@
             <input type="email" class="form-control" placeholder="Enter your email" required [(ngModel)]="email" name="email" />
             <input type="password" class="form-control" placeholder="Enter your password" minlength="6" required [(ngModel)]="password" name="password"/>
             <input type="password"class="form-control" placeholder="Confirm your password" minlength="6" required [(ngModel)]="cpassword" name="cpassword"/>
-             <button id="btn" class="btn btn-outline-primary" (click)="next()">Next</button>
+             <button id="btn" *ngIf="!showotp" class="btn btn-outline-primary" (click)="sendOtp()">Send OTP</button>
+             <h5 class=" mt-2 ms-3" style="color:#44b89d" *ngIf="showotp" >Enter the OTP</h5>
+             <div class="d-flex" *ngIf="showotp">
+              <input type="text" maxlength="1" [(ngModel)]="otp1" name="otp1" class="form-control" id="otp"
+              (input)="onOtpInput($event, 2)" (keyup.enter)="focusNextInput(otp2Input)" (keydown.enter)="$event.preventDefault()" #otp1Input>
+            <input type="text" maxlength="1" [(ngModel)]="otp2" name="otp2" class="form-control ms-3" id="otp"
+            (input)="onOtpInput($event, 3)" (keyup.enter)="focusNextInput(otp3Input)" (keydown.enter)="$event.preventDefault()" #otp2Input>
+            <input type="text" maxlength="1" [(ngModel)]="otp3" name="otp3" class="form-control ms-3" id="otp"
+            (input)="onOtpInput($event, 4)" (keyup.enter)="focusNextInput(otp4Input)"(keydown.enter)="$event.preventDefault()" #otp3Input>
+            <input type="text" maxlength="1" [(ngModel)]="otp4" name="otp4"class="form-control ms-3" id="otp"
+            (input)="onOtpInput($event, 5)" (keyup.enter)="focusNextInput(otp5Input)"(keydown.enter)="$event.preventDefault()" #otp4Input>
+            <input type="text" maxlength="1" [(ngModel)]="otp5"name="otp5" class="form-control ms-3" id="otp"
+            (input)="onOtpInput($event, 6)" (keyup.enter)="focusNextInput(otp6Input)"  (keydown.enter)="$event.preventDefault()"#otp5Input>
+            <input type="text" maxlength="1" [(ngModel)]="otp6" name="otp6" class="form-control ms-3" id="otp" #otp6Input>
+            </div>
+            <button id="btn" *ngIf="showotp" class="mt-4 btn btn-outline-success" (click)="confirmOtp()">Confirm OTP</button>
+            <button id="btn" *ngIf="show" class="mt-3 btn btn-outline-success" (click)="next()">Next</button>
+
+
         </form>
         <form *ngIf="show"  #a="ngForm" (ngSubmit)="onsubmit(a)" >
             <input type="number" class="form-control" placeholder="Enter your phone" required [(ngModel)]="phone" name="phone" />

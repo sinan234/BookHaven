@@ -206,7 +206,7 @@ form{
 #nnb{
   position: relative;
   margin-top: 100px;
-  margin-left: 900px;
+  margin-left: 730px;
   color: #1F456E;
   width: 240px;
   margin-bottom: 0px;
@@ -223,7 +223,11 @@ form{
 }
 #ku{
   position: relative;
-  margin-left: 0.5px;
+  margin-left: 15px;
+}
+#kuf{
+  position: absolute;
+  margin-left: 10px;
 }
 .juju{
   position: absolute;

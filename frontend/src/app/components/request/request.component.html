@@ -68,7 +68,7 @@
                 </div>
                 <div class="col-lg-3 col-12 d-grid" *ngIf="item.status=='Not Accepted'">
                   <button  id="btn" (click)="accept(item)"> Accept</button>
-                  <button id="btna"> Ignore</button>
+                  <button id="btna" (click)="ignore(item)"> Ignore</button>
                 </div>
                 <div class="col-lg-3 col-12 d-grid" *ngIf="item.status!='Not Accepted'">
                   <button  id="btn" > Accepted</button>

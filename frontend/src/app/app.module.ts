@@ -29,6 +29,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { AdminModule } from './admin.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { RequestComponent } from './components/request/request.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { RequestComponent } from './components/request/request.component';
     WishlistComponent,
     ChatComponent,
     PersonComponent,
-    RequestComponent
+    RequestComponent,
+    ForgotpasswordComponent
   ],
   imports: [
     BrowserModule,

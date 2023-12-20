@@ -40,7 +40,7 @@ updatedPostArray:any[]=[]
   
     }, 
     title: {
-      text: 'Most Liked and Wishlisted Books',
+      text: 'Top Liked and Wishlisted Books',
       style: {
         color: '#00308F'
       }
