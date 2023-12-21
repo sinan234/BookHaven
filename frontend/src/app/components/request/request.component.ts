@@ -62,8 +62,30 @@ export class RequestComponent implements OnInit {
         this.getRequests()
 
     }, error:(err:any)=>{
-        this.toastr.error(err.error.message)
-    }
+      Swal.fire({
+        position: 'top-end',
+        title: 'Book already given to another user',
+        icon: 'error',
+        timer: 1000,
+        showConfirmButton: false,
+        didOpen: () => {
+          const SwalIcon = Swal.getIcon();
+          if (SwalIcon) {
+           
+            SwalIcon.style.width = '80px'; 
+            SwalIcon.style.height = '80px'; 
+          }
+          const SwalTitle = Swal.getTitle();
+          if (SwalTitle) {
+    SwalTitle.style.fontSize = '20px'; 
+  }
+          const SwalModal = Swal.getPopup();
+          if (SwalModal) {
+            SwalModal.style.width = '360px'; 
+            SwalModal.style.height = '200px'; 
+          }
+        },
+      });    }
     })
   }
 

@@ -16,9 +16,11 @@
       <option value=" "   >Select any option</option>
       <option value="fraud">Fraud</option>
       <option value="scam">Scam</option>
+      <option value="other">Other</option>
     </select>
-    
-    <button class="btn btn-primary" (click)="send(seluser[0]._id, user._id)">Send</button>
+    <input type="text" [(ngModel)]="customOption" [hidden]="dis !== 'other'" (input)="updateReason()">
+
+    <button class="btn btn-primary" id="send" (click)="send(seluser[0]._id, user._id)">Send</button>
   </div>
 </div>
 <div class="ds">

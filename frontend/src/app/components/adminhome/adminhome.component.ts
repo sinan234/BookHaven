@@ -101,12 +101,12 @@ updatedPostArray:any[]=[]
     },{
       name: 'Likes',
       data: this.like,
-      color: '#ff0000' 
+      color: 'red' 
     }],
          tooltip: {
-       backgroundColor: 'rgba(0, 0, 0, 0.85)',
+       backgroundColor: '#f1f2f3',
        style: {
-         color: 'black',
+         color: '#00308F',
          fontSize:'18px'           
 
        }
@@ -114,7 +114,7 @@ updatedPostArray:any[]=[]
     plotOptions: {
       series: {
         dataLabels: {
-          color: 'black',
+          color: '#00308F',
           fontSize:'24px'           
 
         }

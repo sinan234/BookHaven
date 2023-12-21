@@ -22,6 +22,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 
 export class PersonComponent implements OnInit,DoCheck,OnDestroy, OnChanges {
   newMessage: any;
+  customOption!:string
  isEmojiPickerVisible: boolean=false;
   messageList: any[] = [];
   messageListnew: any[] = [];
@@ -153,6 +154,12 @@ ngOnChanges(): void {
       return item._id===this.recid
      })
   }
+
+
+
+  updateReason() {
+    this.selvalue = this.customOption;
+  }
   send(id:any, sender:any){
   
     const data={
@@ -160,6 +167,7 @@ ngOnChanges(): void {
       senderId:sender,
       reason:this.selvalue
     }
+    console.log(data)
     this.http.post("http://localhost:3000/user/createwarning", data)
     .subscribe({
       next: (res: any) => {

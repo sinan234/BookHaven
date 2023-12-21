@@ -11,7 +11,8 @@ const Userschema=new mongoose.Schema({
     image:String,
     name:String,
     likedpost:Array,
-    warning:Number
+    warning:Number,
+    active:String
 })
 const User=mongoose.model('User', Userschema)
 module.exports=User;

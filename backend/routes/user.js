@@ -138,7 +138,8 @@ router.post("/create_user", async (req, res) => {
       location:req.body.location,
       image:req.body.image,
       paymentid:req.body.paymentid,
-      warning:0
+      warning:0,
+      active:'Yes'
     });
     await newuser.save();
     res.status(200).json({message:"User created successfully"})
@@ -520,20 +521,23 @@ router.get('/getRequest',async(req,res)=>{
 router.post('/acceptrequest', async (req, res) => {
   try {
     const post = await Post.findOne({ _id: req.body.postId });
+    if(post.status!='Available'){
+      return res.status(500).json({message:"Book Already given"})
+    }
     if (post) {
       post.status = req.body.accepted_time;
       post.request='Request Accepted'
       await post.save();
+    }
     const request=await Request.findOne({_id: req.body._id})
     if(request.status=='Accepted'){
       return res.status(500).json({message:"Book Already given"})
     }
     request.status='Accepted'
     await request.save()
+   
       return res.status(200).json({ message: "Request updated successfully" });
-    } else {
-      return res.status(404).json({ message: "Post not found" });
-    }
+   
   } catch (err) {
     return res.status(500).json({ message: "Unknown error occurred" });
   }

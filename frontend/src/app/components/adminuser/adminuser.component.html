@@ -127,7 +127,8 @@
                             
                             <th> Category2</th>
                             <th> Category3</th>
-                            <th> Warnings</th>
+                            <th> Reports</th>
+                            <th> Active</th>
 
                             <th>Actions</th>
                           </tr>
@@ -147,7 +148,8 @@
                             <td>{{item.category2}}</td>
                             <td>{{item.category3}}</td>
                             <td [ngStyle]="{'color': item.warning >= 1 ? 'red' : 'inherit'}">{{item.warning}}</td>
-                           
+                            <td>{{item.active}}</td>
+
                             <td>
                               <!-- <button class="btn btn-primary edit-btn" (click)="edit(item.Product_Id)">Edit</button> -->
                               <button class="ms-2 btn btn-danger delete-btn" (click)="delete(item._id)">Delete</button>

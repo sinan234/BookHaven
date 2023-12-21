@@ -7,6 +7,10 @@
     margin-bottom: 20px;
    
 }
+#send{
+  position: relative;
+  margin-left: 10px;
+}
 .ds {
     border: 1px solid #c5c1c1; 
     padding: 35px;

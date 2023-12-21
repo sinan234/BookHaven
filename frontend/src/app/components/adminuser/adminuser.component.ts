@@ -37,7 +37,7 @@ export class AdminuserComponent implements OnInit {
   delete(id:any){
      
     Swal.fire({
-      title: '<span style="font-size: 17px">Are you sure you want to delete user?</span>',
+      title: '<span style="font-size: 17px">Are you sure you want to revoke user?</span>',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       didOpen: () => {
@@ -58,7 +58,7 @@ export class AdminuserComponent implements OnInit {
         this.http.delete(`http://localhost:3000/admin/removeUser/${id}`)
         .subscribe({
           next:(res:any)=>{
-            this.toastr.success("User deleted successfully")
+            this.toastr.success("User revoked successfully")
           }
           ,error:(err:any)=>{
             this.toastr.error(err.error.message)
