@@ -134,9 +134,10 @@ updatedPostArray:any[]=[]
   .subscribe({
     next:(res:any)=>{
       console.log(res)
+      this.spinner.hide()
+
       this.user=res.user
       this.post=res.post
-      this.spinner.hide()
 
       this.post.slice(0, 5).forEach((item: any) => {
         this.books.push(item.bookname);

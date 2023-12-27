@@ -155,6 +155,10 @@ router.post('/login', async (req, res) => {
     if (!user) {
       return res.status(500).json({ message: "User not found" });
     }
+    if(user.active=='No'){
+      return res.status(500).json({ message: "Your action is restricted within the website. Please contact the admin for more details" });
+
+    }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(500).json({ message: "Password is incorrect" });
@@ -560,25 +564,25 @@ router.delete('/removerequest/:data', async (req, res) => {
 
 router.post("/createwarning", async (req, res) => {
   try {
+
     const warn = await Warning.findOne({ userId: req.body.userId, senderId: req.body.senderId });
     if (warn) {
       return res.status(500).json({ message: "Only one report can be sent" });
     }
-
-    const warning = new Warning({
-      userId: req.body.userId,
-      senderId: req.body.senderId,
-      reason: req.body.reason  
-    });
-    await warning.save();
-
     const user = await User.findOne({ _id: req.body.userId });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
     user.warning = (user.warning || 0) + 1;  
     await user.save();
-
+    const warning = new Warning({
+      userId: req.body.userId,
+      senderId: req.body.senderId,
+      reason: req.body.reason,
+      sendername:user.name
+    });
+    await warning.save();
+    console.log(warning)
     return res.status(200).json({ message: "Warning saved successfully" });
   } catch (err) {
     console.error(err);

@@ -161,7 +161,10 @@ ngOnChanges(): void {
     this.selvalue = this.customOption;
   }
   send(id:any, sender:any){
-  
+    if(this.selvalue.length<=0){
+      this.toastr.error("You must provide an valid reason to report the user")
+      return
+    }
     const data={
       userId:id,
       senderId:sender,

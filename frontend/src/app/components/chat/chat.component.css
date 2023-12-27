@@ -16,6 +16,19 @@
         overflow: hidden;
         background: #f1f2f3;
       }
+      #sas{
+        width: 460px;
+        height: 340px;
+        position: fixed;
+        margin-left: 370px;
+        top: 25%;
+      }
+      #ss{
+        position: relative;
+        margin-left: 450px;
+        margin-top: 80px;
+        color: rgb(83, 8, 182);
+      }
       
       #preloader:before {
         content: "";

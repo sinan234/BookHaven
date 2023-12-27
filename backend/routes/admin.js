@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 const timeout= 1800000;
 const User=require('../models/usermodel')
 const Wish=require('../models/wishlistmodel')
-const Post= require('../models/postmodel')
+const Post= require('../models/postmodel');
+const Warning = require('../models/warning');
 
 router.post('/login', async(req,res)=>{
     try{
@@ -22,26 +23,55 @@ router.post('/login', async(req,res)=>{
     }
 })
 
-router.get('/getdata', async(req,res)=>{
-  try{
-    const user= await User.find()
-    const wishlist= await Wish.find()
-    const post=await Post.find();
-    if(!user || !post || !wishlist){
-      return res.status(500).json({message:"Could not find"})
+router.get('/getdata', async (req, res) => {
+  try {
+    const users = await User.find();
+    const wishlist = await Wish.find();
+    const posts = await Post.find();
+    const warnings = await Warning.find();
+
+    if (!users || !posts || !wishlist || !warnings) {
+      return res.status(500).json({ message: "Could not find data" });
     }
-    res.status(200).json({message:"Data obtained successfully", user:user, post:post, wishlist:wishlist})
+
+    res.status(200).json({
+      message: "Data obtained successfully",
+      user: users,
+      post: posts,
+      wishlist: wishlist,
+      warnings: warnings
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Unknown error occurred" });
+  }
+});
+
+router.delete('/removeUser/:id',async(req,res)=>{
+  try{
+    const id=req.params.id
+    const user=await User.findOne({_id:id})
+    if(user.active=='No'){
+      res.status(500).json({message:"User is already revoked"})
+
+    }
+    user.active='No'
+    await user.save()
+    return res.status(200).json({ message: "User's status updated successfully" });
   }catch(err){
     res.status(500).json({message:" Unknown error occured"})
 
   }
 })
 
-router.delete('/removeUser/:id',async(req,res)=>{
+router.delete('/enableUser/:id',async(req,res)=>{
   try{
     const id=req.params.id
     const user=await User.findOne({_id:id})
-    user.active='No'
+    if(user.active=='Yes'){
+      return res.status(500).json({message:"User is already active"})
+
+    }
+    user.active='Yes'
     await user.save()
     return res.status(200).json({ message: "User's status updated successfully" });
   }catch(err){

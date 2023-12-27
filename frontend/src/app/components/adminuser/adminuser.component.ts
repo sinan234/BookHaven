@@ -18,7 +18,11 @@ export class AdminuserComponent implements OnInit {
   ){}
   users:any[]=[]
   chartOptions:any
+  selu:any
   search:string=''
+  vi:boolean=false
+  warnings:any[]=[]
+  newwarnings:any[]=[]
   ngOnInit(): void {
     this.spinner.show()
 
@@ -29,11 +33,49 @@ export class AdminuserComponent implements OnInit {
     .subscribe({
       next:(res:any)=>{
         this.users=res.user
-        console.log('users', this.users)
         this.spinner.hide()
+        console.log('users', this.users)
+        this.warnings=res.warnings
+        console.log("warning", this.warnings)
+      
       }
     })
   }
+   enable(id:any){
+    Swal.fire({
+      title: '<span style="font-size: 17px">Are you sure you want to enable access to user?</span>',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      didOpen: () => {
+        const SwalModal = Swal.getPopup();
+        if (SwalModal) {
+          SwalModal.style.width = '340px'; 
+          SwalModal.style.height = '190px'; 
+          SwalModal.style.marginLeft='260px';
+
+        }
+      },
+       customClass: {
+        title: 'my-custom-title-class'
+      }
+    
+    }).then((result:any) => {
+      if (result.isConfirmed) {
+        this.http.delete(`http://localhost:3000/admin/enableUser/${id}`)
+        .subscribe({
+          next:(res:any)=>{
+            this.toastr.success("User access enabled successfully")
+            this.getUsers()
+          }
+          ,error:(err:any)=>{
+            this.toastr.error(err.error.message)
+          }
+        })
+
+
+         }})
+   }
+
   delete(id:any){
      
     Swal.fire({
@@ -59,6 +101,7 @@ export class AdminuserComponent implements OnInit {
         .subscribe({
           next:(res:any)=>{
             this.toastr.success("User revoked successfully")
+            this.getUsers()
           }
           ,error:(err:any)=>{
             this.toastr.error(err.error.message)
@@ -67,6 +110,16 @@ export class AdminuserComponent implements OnInit {
 
 
          }})
+  }
+
+  view(id:any,name:any){
+    this.selu=name
+     this.vi=true
+     console.log(id)
+     this.newwarnings= this.warnings.filter((item:any)=>{
+      return item.userId== id
+     })
+     console.log("new w", this.warnings)
   }
   logout(){
     Swal.fire({

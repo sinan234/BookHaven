@@ -34,7 +34,7 @@ export class LoginComponent {
    onsubmit(form:NgForm){
     console.log("submit button clicked")
     if(this.email.length==0 || this.password.length<6){
-        this.toastr.error("Inavlid email or password format")
+        this.toastr.error("Invalid email or password format")
         return
     }
     const data={

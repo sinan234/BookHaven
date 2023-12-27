@@ -71,12 +71,12 @@
                               </p> -->
                             </div>
                           </div>
-                          <div class="pt-1">
+                          <!-- <div class="pt-1">
                             <p class="small text-muted mb-1">Just now</p>
                             <span class="badge bg-danger rounded-pill float-end"
                               >1</span>
                             
-                          </div>
+                          </div> -->
                         </a>
                       </li>
                     </ul>
@@ -84,6 +84,11 @@
                   </div>
                 </ng-container>
                 </div>
+              </div>
+              <div *ngIf="!chat">
+
+                <img id="sas" src="../../../assets//chat.jpg"/>
+                <h5 id="ss">Select a chat to start messaging</h5>
               </div>
               <div class="col-md-6 col-lg-7 col-xl-8" >
 

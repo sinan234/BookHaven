@@ -21,6 +21,7 @@ export class ChatComponent implements OnInit, DoCheck{
   new:any
   id:any
   show:boolean=false
+  chat:boolean=false
   constructor( private http:HttpClient, private route:ActivatedRoute, private userid:UseridService){
 
   }
@@ -58,6 +59,7 @@ export class ChatComponent implements OnInit, DoCheck{
     }
     else{
       this.show=false
+      this.chat=true
     }
   }
 

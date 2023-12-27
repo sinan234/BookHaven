@@ -147,16 +147,40 @@
                             <td>{{item.category1}}</td>
                             <td>{{item.category2}}</td>
                             <td>{{item.category3}}</td>
-                            <td [ngStyle]="{'color': item.warning >= 1 ? 'red' : 'inherit'}">{{item.warning}}</td>
+                            <td > <button class="but" (click)="view(item._id,item.name)">View</button></td>
                             <td>{{item.active}}</td>
 
                             <td>
-                              <!-- <button class="btn btn-primary edit-btn" (click)="edit(item.Product_Id)">Edit</button> -->
-                              <button class="ms-2 btn btn-danger delete-btn" (click)="delete(item._id)">Delete</button>
+                              <button class="btn btn-primary edit-btn" (click)="enable(item._id)">Enable</button>
+                              <button class="ms-2 btn btn-danger delete-btn" (click)="delete(item._id)">Revoke</button>
                             </td>
                           </tr>
                           </ng-container>
                         </tbody>
+                        <div id="rp" *ngIf="vi">
+                          <div class="d-flex">
+                            <h5 class="mt-2 ms-2" id="ssd">Username:<span class="fw-bold">{{selu.split()}}</span></h5>
+                            <h5 class="mt-2 " id="sd"> TotalReports:{{newwarnings.length}} </h5>
+                            <i id="ic" class="bi bi-x-square-fill mt-2 " (click)="vi=!vi"></i>
+                          </div>
+                          <h5 *ngIf="newwarnings.length<=0" class="mt-5 ms-4 " id="ssd">The user has no reports till now.</h5>
+                          <table *ngIf="newwarnings.length>0">
+                            <thead>
+                              <tr>
+                                <th> Reported by</th>
+                                <th> Reason</th>
+                              </tr>
+                            </thead>
+                            <tbody >
+                                <ng-container *ngFor="let item of newwarnings">
+                                    <tr>
+                                 <td >{{item.sendername}}</td>
+                                 <td>{{item.reason}}</td>
+                                </tr>
+                                </ng-container>
+                            </tbody>
+                            </table>
+                        </div>
                       </table>
                
 
