@@ -30,9 +30,9 @@
               <li  class="nav-item"  >
                 <a  class="nav-link"  routerLinkActive="active" routerLink="/login/request"  > Request</a>
               </li>
-              <li  class="nav-item"  >
+              <!-- <li  class="nav-item"  >
                 <a  class="nav-link"  routerLinkActive="active" routerLink="/login/profile" > Profile</a>
-              </li>
+              </li> -->
             </ng-container>
               <ng-container *ngIf="!show">
               <li  class="nav-item" >
@@ -50,7 +50,7 @@
 
                 </ng-container>
             </ul>
-            <h5 id="a" *ngIf="show" class="text"> Welcome:{{name}} </h5>
+            <h5 id="a" *ngIf="show" class="text ms-4"> Welcome:{{name}} </h5>
             <div class="search_form" id="az" *ngIf="loginService.getStatus() && !isChatPath()">
               <input type="text" id="oi" class="form-control " placeholder="Search here..." [(ngModel)]="searchText" (input)="onSearchTextChange()">
               <button class="" type="submit">
@@ -58,7 +58,34 @@
               </button>
               
             </div>
-            <button id="btn2"  *ngIf="show"class=" btn btn-outline-danger " (click)=logout() type="button"  routerLinkActive="active"> Logout</button>
+            <!-- <button id="btn2"  *ngIf="show"class=" btn btn-outline-danger " (click)=logout() type="button"  routerLinkActive="active"> Logout</button> -->
+
+            <div class="dropdown " *ngIf="show" id="user-image" >
+
+              <!-- <button
+                class="btn btn-primary dropdown-toggle hidden-arrow"
+                type="button"
+                id="dropdownMenuButton1"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                (click)="toggleDropdown()"
+              > -->
+              <div class="d-flex" (click)="toggleDropdown()" >
+                <!-- <i id="id" class="bi bi-three-dots-vertical mt-3"></i> -->
+
+                <img src="../../../assets/{{userimage}}" alt="User Image" class="rounded-circle " height="50"  />
+
+=             
+=              </div>
+              <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1" [ngClass]="{ 'show': isDropdownOpen }">
+                <li id="lu" routerLink="/login/profile"><a class="dropdown-item text-primary" ><i id="pr" class="bi bi-person-fill pe-2"></i>My Profile</a></li>
+                <li id="lu" routerLink="/login/bookstatus" ><a class="dropdown-item text-success" ><i id="logi" class="bi bi-box-arrow-left pe-2"></i>My Books</a></li>
+
+                <li id="lu" (click)="logout()"><a class="dropdown-item text-danger" ><i id="log" class="bi bi-box-arrow-left pe-2"></i>Logout</a></li>
+              </ul>
+            </div>
+            
 
           </div>
         </nav>

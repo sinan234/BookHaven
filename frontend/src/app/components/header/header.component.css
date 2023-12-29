@@ -47,9 +47,43 @@
     max-width: 1170px;
   }
 }
+#lu{
+  border-radius: 36px;
+  background-color: white !important;
+}
+#lu :hover{
+  border-radius: 32px !important;
+  background-color: #138496 !important;
+  color: white !important;
+}
+#pr{
+  color: blue;
+}
+#pr:hover{
+  color: white;
+}
+#log:hover{
+  color: white;
+}
+#logi:hover{
+  color: white;
+}
+#id{
+  color: white;
+}
+#user-image{
+  position: absolute;
+  margin-left: 1100px;
+}
+#log{
+  color: red;
+}
+#logi{
+  color: rgb(18, 136, 54);
+}
 #az{
   position: relative;
-  margin-left: 100px;
+  margin-left: 160px;
 }
 body {
   font-family: 'Mulish', sans-serif;
@@ -171,7 +205,7 @@ a:focus {
     width: 0;
     height: 100%;
     background: transparent;
-    background-color: rgb(4, 92, 40);
+    background-color: #138496;
     transition: width 0.5s ease;
   }
   

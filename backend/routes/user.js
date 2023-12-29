@@ -477,7 +477,9 @@ router.post('/sendrequest',async(req,res)=>{
       username: req.body.username,
       useremail: req.body.useremail,
       userimage: req.body.userimage,
-      status:'Not Accepted'
+      status:'Not Accepted',
+      acceptedtime:0,
+      returned:'No'
     })
     await request.save()
     const post= await Post.findOne({_id:req.body._id})
@@ -535,10 +537,15 @@ router.post('/acceptrequest', async (req, res) => {
     }
     const request=await Request.findOne({_id: req.body._id})
     if(request.status=='Accepted'){
-      return res.status(500).json({message:"Book Already given"})
+      return res.status(500).json({message:"Request already accepted"})
     }
     request.status='Accepted'
+    request.acceptedtime=req.body.contime
     await request.save()
+
+    const returnDate = new Date(request.acceptedtime);
+    const durationInWeeks = req.body.duration; 
+    returnDate.setDate(returnDate.getDate() + (durationInWeeks * 7));
    
       return res.status(200).json({ message: "Request updated successfully" });
    
@@ -582,7 +589,7 @@ router.post("/createwarning", async (req, res) => {
       sendername:user.name
     });
     await warning.save();
-    console.log(warning)
+  
     return res.status(200).json({ message: "Warning saved successfully" });
   } catch (err) {
     console.error(err);
@@ -609,6 +616,30 @@ cron.schedule('0 12 * * *', async () => {
     console.log('Status updated successfully');
   } catch (error) {
     console.error('Error updating status:', error);
+  }
+});
+
+cron.schedule('0 12 * * *', async () => {
+  try {
+    const currentDate = new Date();
+    const acceptedRequests = await Request.find({ status: 'Accepted' });
+
+    for (const request of acceptedRequests) {
+      const acceptedTime = request.acceptedtime;
+      const duration = parseInt(request.duration);
+
+      const returnDate = new Date(acceptedTime);
+      returnDate.setDate(returnDate.getDate() + duration);
+
+      if (returnDate <= currentDate) {
+        request.returned = 'yes';
+        await request.save();
+      }
+    }
+
+    console.log('Returned key updated successfully');
+  } catch (error) {
+    console.error('Error updating returned key:', error);
   }
 });
 

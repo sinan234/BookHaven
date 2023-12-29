@@ -185,7 +185,7 @@ i{
   color: #44b89d;
 }
 #customCarousel2{
-    margin-left: 140px;
+    margin-left: 120px;
 }
 
 .slider_section .detail-box h1 {
@@ -218,8 +218,8 @@ i{
 
 .slider_section .carousel_btn_box {
   position: absolute;
-  bottom: 0;
-  left: 15px;
+  top:46%;
+  left: 91%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -231,6 +231,27 @@ i{
   -webkit-transform: translateY(50%);
           transform: translateY(50%);
   z-index: 3;
+}
+.carousel_btn_boxa {
+  position: absolute;
+  top:46%;
+  left: 91%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 105px;
+  height: 50px;
+  -webkit-transform: translateY(50%);
+          transform: translateY(50%);
+  z-index: 3;
+}
+#a{
+  position: absolute !important;
+  top:46% !important;
+  left: 5% !important;
 }
 
 .slider_section .carousel_btn_box .carousel-control-prev,

@@ -16,7 +16,9 @@ const RequestSchema = new mongoose.Schema({
   username: String,
   useremail: String,
   userimage: String,
-  status:String
+  status:String,
+  acceptedtime:Number,
+  returned:String
 });
 const Request= mongoose.model('Request', RequestSchema)
 

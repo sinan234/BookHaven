@@ -26,6 +26,8 @@
     "bootstrap-icons": "^1.11.1",
     "highcharts": "^11.2.0",
     "highcharts-angular": "^4.0.0",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.1",
     "ngx-spinner": "^16.0.2",
     "ngx-toastr": "^17.0.2",
     "razorpay": "^2.9.2",

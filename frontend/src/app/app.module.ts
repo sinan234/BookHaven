@@ -31,6 +31,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { RequestComponent } from './components/request/request.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
+import { BookstatusComponent } from './components/bookstatus/bookstatus.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { ResetpasswordComponent } from './components/resetpassword/resetpassword
     PersonComponent,
     RequestComponent,
     ForgotpasswordComponent,
-    ResetpasswordComponent
+    ResetpasswordComponent,
+    BookstatusComponent
   ],
   imports: [
     BrowserModule,

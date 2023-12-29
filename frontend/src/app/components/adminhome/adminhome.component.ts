@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import * as Highcharts from 'highcharts';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-adminhome',
   templateUrl: './adminhome.component.html',
@@ -14,7 +18,9 @@ export class AdminhomeComponent implements OnInit{
   Highcharts: typeof Highcharts = Highcharts; 
   chartOptions: any;
   chartOptions2: any;
-
+  sho:boolean=false
+  type!:string
+  count:string='Select the count'
  search!:string
  user!:string
  post:any
@@ -23,12 +29,16 @@ books:any[]=[]
 like:any[]=[]
 wish:any[]=[]
 b:any[]=[]
-
+booktable:any[]=[]
+liketable:any[]=[]
+wishtable:any[]=[]
+usertable:any[]=[]
 updatedPostArray:any[]=[]
  constructor(
   private router:Router,
   private http:HttpClient,
-  private spinner:NgxSpinnerService
+  private spinner:NgxSpinnerService,
+  private toastr:ToastrService
  ){}
  
  ngOnInit(): void {
@@ -128,6 +138,73 @@ updatedPostArray:any[]=[]
   
  }
 
+ download() {
+  const doc = new jsPDF();
+
+  const tableData = [];
+  let sortedIndices = [];
+  if (this.type === 'Like') {
+    sortedIndices = this.sortIndicesDescending(this.liketable);
+  } else if (this.type === 'Wishlist') {
+    sortedIndices = this.sortIndicesDescending(this.wishtable);
+  } else if (this.type === 'All') {
+    sortedIndices = this.sortIndicesAlphabetical(this.booktable);
+  } else {
+    sortedIndices = Array.from({ length: this.booktable.length }, (_, i) => i);
+  }
+
+  for (const index of sortedIndices) {
+    const bookName = this.booktable[index];
+    const postedBy = this.usertable[index];
+    let rowData = [bookName, postedBy];
+
+    if (this.type === 'Like') {
+      const likes = this.liketable[index];
+      rowData.push(likes);
+    } else if (this.type === 'Wishlist') {
+      const wishlistCount = this.wishtable[index];
+      rowData.push(wishlistCount);
+    } else if (this.type === 'All') {
+      const likes = this.liketable[index];
+      const wishlistCount = this.wishtable[index];
+      rowData.push(likes, wishlistCount);
+    }
+
+    tableData.push(rowData);
+  }
+
+  let columns: any[] = [];
+  if (this.type === 'Like') {
+    columns = ['Book Name', 'Posted By', 'Likes Count'];
+  } else if (this.type === 'Wishlist') {
+    columns = ['Book Name', 'Posted By', 'Wishlist Count'];
+  } else if (this.type === 'All') {
+    columns = ['Book Name', 'Posted By', 'Likes Count', 'Wishlist Count'];
+  }
+
+
+  autoTable(doc, {
+    head: [columns],
+    body: tableData,
+  });
+
+
+  doc.save('book_data.pdf');
+  this.type=''
+  this.count='Select the count'
+  this.sho=!this.sho
+}
+sortIndicesDescending(arr:any) {
+  return arr
+    .map((_:any, index:any) => index)
+    .sort((a:any, b:any) => arr[b] - arr[a]);
+}
+
+ sortIndicesAlphabetical(arr:any) {
+  return arr
+    .map((_:any, index:any) => index)
+    .sort((a:any, b:any) => arr[a].localeCompare(arr[b]));
+}
  getData(){
   this.spinner.show();
   this.http.get('http://localhost:3000/admin/getdata')
@@ -143,8 +220,13 @@ updatedPostArray:any[]=[]
         this.books.push(item.bookname);
       });
       
-this.post.slice(0,5).forEach((item: any) => {
+      this.post.slice(0,5).forEach((item: any) => {
   this.like.push(item.like);
+});
+      this.post.forEach((item: any) => {
+  this.booktable.push(item.bookname);
+  this.liketable.push(item.like)
+  this.usertable.push(item.username)
 });
     
       this.wishlist=res.wishlist
@@ -172,6 +254,9 @@ this.post.slice(0,5).forEach((item: any) => {
       this.updatedPostArray.slice(0,5).forEach((item:any)=>{
           this.wish.push(item.count)
       })
+      this.updatedPostArray.forEach((item:any)=>{
+        this.wishtable.push(item.count)
+    })
 
     },
     error:(err:any)=>{

@@ -31,6 +31,7 @@ export class RequestComponent implements OnInit {
     const time= date.getTime()
     let item = book
     item['accepted_time']=this.calculateRelativeTime(parseInt(book.duration))
+    item['contime']=time
     console.log("item", item)
     this.http.post('http://localhost:3000/user/acceptrequest' , item)
     .subscribe({

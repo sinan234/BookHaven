@@ -70,8 +70,12 @@
                   <button  id="btn" (click)="accept(item)"> Accept</button>
                   <button id="btna" (click)="ignore(item)"> Ignore</button>
                 </div>
-                <div class="col-lg-3 col-12 d-grid" *ngIf="item.status!='Not Accepted'">
+                <div class="col-lg-3 col-12 d-grid" *ngIf="(item.status!='Not Accepted' && item.returned=='No')">
                   <button  id="btn" > Accepted</button>
+
+                </div>
+                <div class="col-lg-3 col-12 d-grid" *ngIf="( item.returned!='No')">
+                  <button  id="btn" > Returned</button>
 
                 </div>
               </div>

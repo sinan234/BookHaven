@@ -9,6 +9,7 @@ import { Store, select } from '@ngrx/store';
 import { selectSearchText } from '../../store-ngrx/search.selectors';
 import { Observable, of } from 'rxjs';
 import { NgxSpinnerService } from "ngx-spinner";
+import { UsernameService } from 'src/app/services/username.service';
 
 @Component({
   selector: 'app-feed',
@@ -57,6 +58,7 @@ export class FeedComponent implements OnInit, DoCheck {
 
   constructor(
     private router: Router,
+    private userimg: UsernameService,
     private http: HttpClient,
     private toastr: ToastrService,
     private store: Store,
@@ -226,6 +228,7 @@ export class FeedComponent implements OnInit, DoCheck {
         this.spinner.hide()
 
         this.user = res.user;
+        localStorage.setItem('userimg', this.user.image)
         this.posts = res.posts;
         this.alluser = res.alluser;
         this.postsn = this.posts;

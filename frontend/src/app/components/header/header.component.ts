@@ -21,14 +21,26 @@ export class HeaderComponent implements OnInit{
 
   name=localStorage.getItem('name')?.split(' ')[0]
   searchText:string=''
+  isDropdownOpen:boolean = false;
+  userimage!:string
 
    show:any;
   ngOnInit(): void {
 
      this.show=this.loginService.getStatus();
+ 
      console.log("show", this.show)
+     this.getName()
   }
-  
+
+  getName(){
+    this.userimage=localStorage.getItem('userimg')as string; 
+    console.log("userimage", this.userimage)
+  }
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
   isadmin(): boolean {
     const currentPath = window.location.pathname;
     if(currentPath==='/home'){
@@ -80,6 +92,7 @@ export class HeaderComponent implements OnInit{
         }).then(() => {
           localStorage.removeItem('token')
           localStorage.removeItem('name')
+          localStorage.removeItem('userimg')
           this.router.navigate(['login']);
 
         });

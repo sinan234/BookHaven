@@ -141,12 +141,39 @@
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                     
+                        <button class="ms-auto btn btn-primary" (click)="sho=!sho">Download</button>
+                    </div>
+
+                    <div class="sho" *ngIf="sho" >
+                        <div class="d-flex">
+                        <h4>Download Book Data</h4>
+                        <i id="ic" class="bi bi-x-square-fill  ms-auto" (click)="sho=!sho"></i>
+
+                    </div>
+                        <div class="d-flex">
+                        <h6>Select the count</h6>
+                        <select name="count" class="ms-3 mb-2" id="count" [(ngModel)]="count">
+                            <option value="Select the count" disabled  >Select the count</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                          </select>
+                    </div>
+                    <div class="d-flex">
+                        <h6>Select the type</h6>
+                        <input type="radio" class="ms-3 mb-2" value="Like" [(ngModel)]="type"/><label class="ms-1 mt-1" > Like</label>
+                        <input type="radio" class="ms-3 mb-2" value="Wishlist"[(ngModel)]="type" /><label class="ms-1 mt-1" > Wishlist</label>
+                        <input type="radio" class="ms-3 mb-2" value="All"[(ngModel)]="type" /><label class="ms-1 mt-1" > All</label>
+
+                    </div>
+                    <button class="btn btn-success" (click)="download()">Download</button>
                     </div>
 
                     <div class="row">
 
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-3 col-md-6 mb-4" routerLink="/admin/login/users">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -200,7 +227,7 @@
                                     <div class="col mr-2">
                                         <div class="text-md font-weight-bold text-primary text-uppercase mb-1">
                                             Posts Requested</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">12</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">8</div>
                                     </div>
                                     <div class="col-auto">
                                         <i  id="iky" class="bi bi-person-fill-check"></i>

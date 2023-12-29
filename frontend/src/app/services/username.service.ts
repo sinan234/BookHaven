@@ -7,10 +7,13 @@ export class UsernameService {
 
   constructor() { }
   name:string=''
+  image:string=''
   setName(name:string){
     this.name=name
   }
   getName(){
     return this.name
   }
+
+
 }
