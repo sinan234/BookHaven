@@ -228,7 +228,6 @@ export class FeedComponent implements OnInit, DoCheck {
         this.spinner.hide()
 
         this.user = res.user;
-        localStorage.setItem('userimg', this.user.image)
         this.posts = res.posts;
         this.alluser = res.alluser;
         this.postsn = this.posts;

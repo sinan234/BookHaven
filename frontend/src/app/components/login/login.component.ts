@@ -27,6 +27,7 @@ export class LoginComponent {
     setTimeout(() => {
       localStorage.removeItem('token')
       localStorage.removeItem('name')
+      localStorage.removeItem('userimg')
        this.toastr.warning('Session ended, Please login to continue');
       this.router.navigate(['login']);
     }, remainingTime);
@@ -49,6 +50,7 @@ export class LoginComponent {
           if(res.message=='Authentication Successful'){
             localStorage.setItem('token',res.cookie.token)
             localStorage.setItem('name', res.name)
+            localStorage.setItem('userimg', res.image)
             this.sessiontime(res.cookie)
             this.service.setName(res.name)
           Swal.fire({

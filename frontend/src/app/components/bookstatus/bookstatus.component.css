@@ -15,7 +15,7 @@
     font-size: 15px;
 }
 #row{
-    margin-left: 30px;
+    margin-left: 100px;
     width: 1000px;
 }
 #btn{
@@ -52,6 +52,7 @@
     position: relative;
     margin-top:15px;
     border-radius: 5px;
+    margin-left: 40px;
     
 }
 
@@ -109,6 +110,17 @@
     color: rgb(221, 29, 45);
 }
 p{color: black;}
+
+#status{
+    position: absolute;
+    left: 70%;
+    top: 20%;
+}
+#dsa{
+    position: absolute;
+    top: 95%;
+    left: 1%;
+}
 #md{
     position: absolute;
     margin-top: 150px;

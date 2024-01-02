@@ -175,7 +175,7 @@ router.post('/login', async (req, res) => {
       sessionEnd: session.expiry
     };
 
-    res.status(201).json({ message: "Authentication Successful", name: user.name, cookie: cookieValue });
+    res.status(201).json({ message: "Authentication Successful", name: user.name, cookie: cookieValue,image:user.image });
   } catch (error) {
     res.status(500).json({ message: "Unknown error occurred" });
   }
@@ -597,6 +597,23 @@ router.post("/createwarning", async (req, res) => {
   }
 });
 
+router.get('/bookstatus', async(req,res)=>{
+  try{
+    const token = req.headers.authorization.split(' ')[1];
+    const id = jwt.verify(token, "secretkey");
+    const userId = id.userId;
+    const post=await Post.find({user_id:userId})
+    if(!post){
+      return res.status(400).json({message:"No posts found"})
+    }
+    const request= await Request.find({recieverId:userId})
+
+    res.status(200).json({message:"Posts obtained successfully", post:post , request:request})
+  }catch (err) {
+    return res.status(500).json({ message: "Unknown error occurred" });
+  }
+
+})
 
 cron.schedule('0 12 * * *', async () => {
   try {
@@ -629,7 +646,7 @@ cron.schedule('0 12 * * *', async () => {
       const duration = parseInt(request.duration);
 
       const returnDate = new Date(acceptedTime);
-      returnDate.setDate(returnDate.getDate() + duration);
+      returnDate.setDate(returnDate.getDate() + duration * 7 );
 
       if (returnDate <= currentDate) {
         request.returned = 'yes';
