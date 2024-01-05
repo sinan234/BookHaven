@@ -15,6 +15,7 @@ import { RequestComponent } from './components/request/request.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
 import { BookstatusComponent } from './components/bookstatus/bookstatus.component';
+import { ErrorComponent } from './components/error/error.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -37,6 +38,7 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./admin.module').then((m) => m.AdminModule),
   },
+  {path:'**', component:ErrorComponent}
 
 
 ];

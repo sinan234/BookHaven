@@ -134,3 +134,30 @@ p{color: black;}
 #ker{
     margin-left: 300px;
 }
+.mt{
+    position: absolute;
+    margin-top: 100px;
+    margin-left: 400px;
+    width: 600px;
+    height: 500px;
+}
+#sxa{
+    position: absolute;
+    top: 70%;
+    left: 32%;
+    font-size: 30px;
+    color: rgb(93, 83, 177);
+}
+#nofo{
+    width: 450px;
+    height: 300px;
+    position: relative;
+    left: 23%;
+}
+.bofo{
+    position: relative;
+    color: #44b89d;
+    margin-top: 13px;
+    font-size: 32px;
+    margin-left: 310px;
+}

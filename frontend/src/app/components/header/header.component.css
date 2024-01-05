@@ -83,7 +83,7 @@
 }
 #az{
   position: relative;
-  margin-left: 160px;
+  margin-left: 0px;
 }
 body {
   font-family: 'Mulish', sans-serif;
@@ -299,15 +299,17 @@ margin-left: 30px;
   font-size: 18px;
   margin-top: 10px;
   width: 75px;
-  margin-left: 10px;
+  position: relative;
+  left: 27%;
   color: #44b89d;
 }
 .search_form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin-left: 200px;
-  position: relative;
+
+  position: absolute;
+  left: 0%;
 }
 
 .search_form .form-control {

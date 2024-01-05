@@ -63,21 +63,27 @@ body {
 
 .profile-nav ul > li:last-child {
     border-bottom: none;
+
 }
 
 .profile-nav ul > li > a {
-    border-radius: 0;
+    border-radius: 15px !important;
     -webkit-border-radius: 0;
-    color: #89817f;
+    color: white;
+    background-color: rgb(131, 127, 127);
+    width: 200px;
     border-left: 5px solid #fff;
 }
 
 .profile-nav ul > li > a:hover, .profile-nav ul > li > a:focus, .profile-nav ul li.active  a {
-    background: #f8f7f5 !important;
-    border-left: 5px solid #2ddcfb;
-    color: #89817f !important;
+    background:  rgb(255, 88, 88) !important;
+    /* border-left: 5px solid #2ddcfb; */
+    border-radius: 15px;
+    color: white !important;
 }
-
+#dq{
+    color: rgb(255, 88, 88)  !important;
+}
 .profile-nav ul > li:last-child > a:last-child {
     border-radius: 0 0 4px 4px;
     -webkit-border-radius: 0 0 4px 4px;
@@ -86,7 +92,7 @@ body {
 .profile-nav ul > li > a > i{
     font-size: 16px;
     padding-right: 10px;
-    color: #bcb3aa;
+    color:  white;
 }
 
 .r-activity {
@@ -138,7 +144,7 @@ body {
     color: black;
 }
 .bio-graph-heading {
-    background: #FA8072;
+    background:  rgb(255, 88, 88);
     color: #fff;
     text-align: center;
     font-style: italic;

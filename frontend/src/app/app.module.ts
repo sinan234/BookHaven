@@ -32,6 +32,7 @@ import { RequestComponent } from './components/request/request.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
 import { BookstatusComponent } from './components/bookstatus/bookstatus.component';
+import { ErrorComponent } from './components/error/error.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { BookstatusComponent } from './components/bookstatus/bookstatus.componen
     RequestComponent,
     ForgotpasswordComponent,
     ResetpasswordComponent,
-    BookstatusComponent
+    BookstatusComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

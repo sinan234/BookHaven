@@ -1,7 +1,7 @@
 <app-header></app-header>
 <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
 
-<section  id="z" class="container-fluid p-4 mt-5 ms-5"  >
+<section  id="z" class="container-fluid p-4 mt-5 ms-auto"  >
     <div class="row">
       <div class="col-lg-12 col-md-12 col-12">
         <div class="border-bottom pb-3 mb-3">
@@ -75,7 +75,7 @@
 
                 </div>
                 <div class="col-lg-3 col-12 d-grid" *ngIf="( item.returned!='No')">
-                  <button  id="btn" > Returned</button>
+                  <button  id="btnm" > Returned</button>
 
                 </div>
               </div>
@@ -96,5 +96,5 @@
     </section>
     <div  *ngIf="show" >
         <h4 id="sa">No Request for Books Found </h4>
-        <img class="mt" src="../../../assets/nouser.jpg"/>
+        <img class="mt" src="../../../assets/niu.avif"/>
       </div>

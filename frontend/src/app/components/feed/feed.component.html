@@ -171,7 +171,8 @@
                   }}</span>
                   <span *ngIf="!accepted.includes(item.bookname) && !acc.includes(item.bookname)" class="float-end" [ngStyle]="{color: item.status==='Available' ?'green':'red'}">{{item.status}}</span>
                   <span *ngIf="accepted.includes(item.bookname) && !acc.includes(item.bookname)" class="float-end text-success" >Book Request Accepted </span>
-                  <span *ngIf="acc.includes(item.bookname) " class="float-end text-success" >  Book Handovered - Return in {{ item.status.replace('Available in', '').replace('days', '').trim() }} days</span>
+                  <span *ngIf="(acc.includes(item.bookname)) && item.status!='Available
+                  ' " class="float-end text-success" >  Book Handovered - Return in {{ item.status.replace('Available in', '').replace('days', '').trim() }} days</span>
 
                   <!-- <span><i class="fas fa-angle-down float-end"></i></span> -->
                 </h6>
@@ -322,9 +323,13 @@
             </div>
           </div>
         </div>
+      
           </div>
           
-
+          <div *ngIf="showNotFoundImage">
+            <img  id="nofo" class="img-fluid" src="../../../assets/nofo.webp"/>
+            <h4 class="bofo">Post Not Found</h4>
+          </div>
         </div>
       </div>
     </div>

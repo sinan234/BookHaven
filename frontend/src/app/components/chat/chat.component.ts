@@ -22,6 +22,8 @@ export class ChatComponent implements OnInit, DoCheck{
   id:any
   show:boolean=false
   chat:boolean=false
+  hoveredItemId!: string; 
+
   constructor( private http:HttpClient, private route:ActivatedRoute, private userid:UseridService){
 
   }
@@ -62,5 +64,11 @@ export class ChatComponent implements OnInit, DoCheck{
       this.chat=true
     }
   }
+  onMouseEnter(itemId: string) {
+    this.hoveredItemId = itemId;
+  }
 
+  onMouseLeave() {
+    this.hoveredItemId = '';
+  }
 }

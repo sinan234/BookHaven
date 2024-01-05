@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
-
+import { Validators } from '@angular/forms';
 declare var Razorpay:any
 @Component({
   selector: 'app-signup',
@@ -38,7 +38,7 @@ export class SignupComponent {
   location: string = '';
   image:string='';
   Razorpay:any;
-  paymentid:any
+  paymentid:string=''
   show: boolean = false;
   showotp:boolean=false
   otp1!:number
@@ -47,7 +47,7 @@ export class SignupComponent {
   otp4!:number
   otp5!:number
   otp6!:number
-
+  paymentInitialized: boolean = false;
   onFileChange(event: any) {
 
     this.toastr.success('File uploaded successfully', 'Success');
@@ -56,13 +56,25 @@ export class SignupComponent {
 
     sendOtp() {
       console.log("clicked")
+      if(this.email.length<=0){
+        this.toastr.error("Please enter a valid email address")
+        return
+      }
+      if(this.password!=this.cpassword){
+        this.toastr.error("Passwords donot match")
+        return
+      }
+      if(this.password.length<6){
+        this.toastr.error("Passwords must be atleast 6 characters long")
+        return
+      }
       const expirationTime = 2; 
       Swal.fire({
         position: 'top-end',
-        title: 'OTP has been sent ',
+        title: 'OTP has been sent to your email',
         text:`It will expire in ${expirationTime} minutes`,
         icon: 'success',
-        timer: 1000,
+        timer: 2300,
         showConfirmButton: false,
         didOpen: () => {
           const SwalIcon = Swal.getIcon();
@@ -77,17 +89,14 @@ export class SignupComponent {
   }
           const SwalModal = Swal.getPopup();
           if (SwalModal) {
-            SwalModal.style.width = '320px'; 
-            SwalModal.style.height = '180px'; 
+            SwalModal.style.width = '390px'; 
+            SwalModal.style.height = '270px'; 
           }
         },
       });
       this.showotp=true
-      if(this.email.length<=0){
-        this.toastr.error("Please enter a valid email address")
-        return
-      }
-      this.http.post('http://localhost:3000/user/send-otp', { email: this.email }).subscribe(
+ 
+      this.http.post('http://localhost:3000/user/send-otp', { email: this.email , name:this.name }).subscribe(
         (response) => {
           console.log(response);
        
@@ -97,14 +106,13 @@ export class SignupComponent {
         }
       );
    }
-   onOtpInput(event: any, nextInputNumber: number) {
+   onOtpInput(event: any, nextInput: any) {
+    const inputValue = event.target.value;
+    const maxLength = event.target.maxLength;
   
-    if (event.target.value !== '') {
-      if (nextInputNumber <= 6) {
-        const nextInput = document.getElementById('otp' + nextInputNumber) as HTMLInputElement;
-        if (nextInput) {
-          nextInput.focus();
-        }
+    if (inputValue !== '') {
+      if (inputValue.length === maxLength) {
+        nextInput.focus();
       }
     }
   }
@@ -154,7 +162,31 @@ export class SignupComponent {
           this.showotp=!this.showotp
           this.show=!this.show
         }, error:(err)=>{
-          this.toastr.error(err.error.message)
+          Swal.fire({
+            position: 'top-end',
+            title: 'OTP is Incorrect',
+            text:'Please check your email and try again',
+            icon: 'error',
+            timer: 1000,
+            showConfirmButton: false,
+            didOpen: () => {
+              const SwalIcon = Swal.getIcon();
+              if (SwalIcon) {
+               
+                SwalIcon.style.width = '80px'; 
+                SwalIcon.style.height = '80px'; 
+              }
+              const SwalTitle = Swal.getTitle();
+              if (SwalTitle) {
+        SwalTitle.style.fontSize = '20px'; 
+      }
+              const SwalModal = Swal.getPopup();
+              if (SwalModal) {
+                SwalModal.style.width = '390px'; 
+                SwalModal.style.height = '260px'; 
+              }
+            },
+          }); 
         }
       })
    }
@@ -176,10 +208,12 @@ export class SignupComponent {
     if (this.password != this.cpassword) {
       this.toastr.error('Passwords donot match');
       return;
-    } else if (this.email == ' ' || this.password == '') {
+    } 
+    if (this.email == ' ' || this.password == '') {
       this.toastr.error('Username or password cannot be empty');
       return;
-    } else if (this.password.length < 6) {
+    } 
+    if (this.password.length < 6) {
       this.toastr.error('Passwords must contain atleast 6 characters');
       return;
     }
@@ -209,14 +243,35 @@ export class SignupComponent {
 
         console.log('payment_id', response.razorpay_payment_id);
         this.paymentid = response.razorpay_payment_id;
+        this.paymentInitialized = true;
+  
         Swal.fire({
-          position: "top-end",
+          position: 'top-end',
           title: 'Payment Successful',
-          text: 'Please register to continue',
+          text:'Please register to continue',
           icon: 'success',
-          timer: 1000,
+          timer: 1500,
           showConfirmButton: false,
-        });
+          didOpen: () => {
+            const SwalIcon = Swal.getIcon();
+            if (SwalIcon) {
+             
+              SwalIcon.style.width = '80px'; 
+              SwalIcon.style.height = '80px'; 
+            }
+            const SwalTitle = Swal.getTitle();
+            if (SwalTitle) {
+      SwalTitle.style.fontSize = '20px'; 
+    }
+            const SwalModal = Swal.getPopup();
+            if (SwalModal) {
+              SwalModal.style.width = '360px'; 
+              SwalModal.style.height = '250px'; 
+            }
+          },
+        }); 
+
+
       },
       modal: {
         ondismiss: () => {
@@ -238,14 +293,19 @@ export class SignupComponent {
 
    onsubmit(form:NgForm){
     console.log("submit button clicked")
-    if(this.cat1 == this.cat2 || this.cat2 == this.cat3|| this.cat1 == this.cat3  ){
+    if(form.value.image.length<=0){
+      this.toastr.warning("Please select the profile picture")
+      return;
+    }
+    else   if (!this.paymentInitialized) {
+      this.toastr.warning("Please make the payment");
+      return;
+    }
+    else if(this.cat1 == this.cat2 || this.cat2 == this.cat3|| this.cat1 == this.cat3  ){
       this.toastr.error("Categories cannot be same")
-      return
+      return;
     }
-    if(this.paymentid.length<=0){
-      this.toastr.warning("Please make the payment")
-      return
-    }
+    
       const data={
         name:this.name,
         email:this.email,

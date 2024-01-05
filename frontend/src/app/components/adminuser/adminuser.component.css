@@ -60,6 +60,12 @@
 /* .chart-container {
   background-color: white !important;
 } */
+#eye{
+  color: blue;
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 20px;
+}
 .but{
   border-radius: 13px;
   background-color: #2c84db;

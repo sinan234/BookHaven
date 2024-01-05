@@ -82,7 +82,7 @@
   
                       </div>
                   </li>
-                  <li>
+                  <li [routerLink]="['/login/chat', userid]" *ngIf="item.user_id != userid">
                       <i class="bi bi-chat-dots ms-4 "></i>
                       <div>
                         <p id="xyz">Chat</p>
@@ -98,6 +98,10 @@
   
           </ng-container>
   
+        </div>
+        <div *ngIf="showNotFoundImage">
+          <img  id="nofo" class="img-fluid" src="../../../assets/nofo.webp"/>
+          <h4 class="bofo">Post Not Found</h4>
         </div>
       </div>
     </div>

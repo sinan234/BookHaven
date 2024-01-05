@@ -1,13 +1,15 @@
 img{
     position: absolute;
     top: 10%;
-    left: 10%;
+    left: 12%;
     border-radius: 15px;
-    height: 460px;
+    height: 430px;
 }
 #otp{
-
+  width: 53px !important;
+  height: 50px !important;
   color:black;
+  padding: 0px !important;
 }
 
 
@@ -28,6 +30,8 @@ img{
 #nb{
   margin-left: 23%;
   margin-top: 2%;
+  background-color: #44b89d;
+  color: white;
 }
 
 input[type=button], input[type=submit], input[type=reset]  {
@@ -93,6 +97,8 @@ input[type=button], input[type=submit], input[type=reset]  {
   }
   h2{
     color: #44b89d;
+    position: relative;
+    margin-left:40PX;
   }
   
   input[type=email]:focus {
@@ -224,7 +230,52 @@ select option:checked {
   #btn{
     position: absolute;
     margin-top: 150px;
-    left: 40%;
+    left: 34%;
+    box-shadow: 0 0 1px #ccc;
+    -webkit-transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    box-shadow:0px 0 0 #3361f8  inset;
+  }
+  #btn:hover{
+    -webkit-box-shadow: 100px 0 0 #3361f8 inset;
+
+  }
+  #btnu{
+    position: absolute;
+    margin-top: 150px;
+    left: 34%;
+    box-shadow: 0 0 1px #ccc;
+    -webkit-transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    box-shadow:0px 0 0 #44b89d  inset;
+  }
+  #btnu:hover{
+    -webkit-box-shadow: 120px 0 0 #44b89d  inset;
+
+  }
+
+  #btnk{
+    position: absolute;
+    margin-top: 75px;
+    color: blue;
+    left: 30%;
+    width: 150px;
+    -webkit-transition-duration: 0.5s ;
+    box-shadow: 0 0 1px #ccc ;
+    background-color: white  !important;
+    -webkit-transition-duration: 0.5s !important;
+    -webkit-transition-timing-function: linear !important;
+    box-shadow:0px 0 0 #3361f8  inset !important;
+  }
+  #btnk:hover{
+    -webkit-box-shadow: 150px 0 0 #3361f8 inset !important;
+    color: white !important;
+
+  }
+  .text-danger{
+    position: relative;
+    margin-top: 8px;
+    margin-left: 70px;
   }
   input[type=password] {
     background-color: #f6f6f6;

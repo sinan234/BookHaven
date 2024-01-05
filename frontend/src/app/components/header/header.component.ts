@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit{
 
   isChatPath(): boolean {
     const currentPath = window.location.pathname;
-    if(currentPath.startsWith('/login/chat') || currentPath.startsWith('/login/profile') || currentPath.startsWith('/home') ){
+    if(currentPath.startsWith('/login/chat') || currentPath.startsWith('/login/profile') || currentPath.startsWith('/home') || currentPath.startsWith('/login/request')){
       return true
     }
     else{

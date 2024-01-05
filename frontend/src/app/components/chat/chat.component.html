@@ -24,7 +24,7 @@
                   </div>
                   <ng-container  *ngFor="let item of new">
                   <div
-                    class="data-mdb-perfect-scrollbar-true"
+                    class="data-mdb-perfect-scrollbar-true my-div"
                     style="
                       position: relative;
                       display: flex;
@@ -32,8 +32,10 @@
                       border-radius: 13px;
                       margin-top: 5px;
                     "
-                   [ngStyle]="{'background-color': id===item._id && !show ? 'lightblue' : '#ffffff'}"
-                   
+                   [ngStyle]="{'background-color': (id === item._id && !show) ||(item._id == hoveredItemId) ? 'lightblue' : '#ffffff'
+                  }"
+                   (mouseenter)="onMouseEnter(item._id)"
+                   (mouseleave)="onMouseLeave()"
 
                   >
                   <ng-container *ngIf="search=='' || item.name.toLowerCase().includes(search.toLowerCase())">

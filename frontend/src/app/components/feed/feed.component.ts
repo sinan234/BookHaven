@@ -55,6 +55,8 @@ export class FeedComponent implements OnInit, DoCheck {
   accepted:any[]=[]
   notaccepted:any[]=[]
   acc:any[]=[]
+  showNotFoundImage: boolean = false; 
+  searchText!: string;
 
   constructor(
     private router: Router,
@@ -70,6 +72,10 @@ export class FeedComponent implements OnInit, DoCheck {
     this.getData();
     this.knowBook()
     this.duration='1'
+    this.searchText$.subscribe(text => {
+      this.searchText = text;
+      this.updateNotFoundFlag();
+    });
     // const duration = 900;
     // setTimeout(() => {
     //   this.showPreloader = false;
@@ -89,6 +95,12 @@ export class FeedComponent implements OnInit, DoCheck {
     }
   }
 
+  updateNotFoundFlag() {
+    this.showNotFoundImage = this.posts.length > 0 && this.posts.every((item:any) =>
+      !item.bookname.toLowerCase().includes(this.searchText.toLowerCase()) &&
+      !item.author.toLowerCase().includes(this.searchText.toLowerCase())
+    );
+  }
   knowBook(){
     this.http.get('http://localhost:3000/user/getuserbook')
     .subscribe({
@@ -235,7 +247,7 @@ export class FeedComponent implements OnInit, DoCheck {
         this.request=res.request
         console.log("req",this.request)
         this.request.forEach((item:any)=>{
-          if(item.status=='Accepted'){
+          if(item.status=='Accepted' && item.returned!='Yes'){
             this.acc.push(item.bookname)
           }
         })

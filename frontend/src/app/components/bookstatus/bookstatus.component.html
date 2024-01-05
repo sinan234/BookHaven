@@ -1,7 +1,7 @@
 <app-header></app-header>
 <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
 
-<section  id="z" class="container-fluid p-4 mt-5 "  >
+<section  id="z" class="container-fluid p-4 mt-5 " *ngIf="!show" >
     <div class="row">
       <div class="col-lg-12 col-md-12 col-12">
         <div class="border-bottom pb-3 mb-3">
@@ -19,10 +19,11 @@
             </div>
           <div >
             <div id="za" class="mb-8" *ngFor="let item of req;let i = index" >
-           
-              <div id="z" class="row justify-content-between align-items-center" >
-                <div class="col-lg-8 col-12">
-                  <div class="d-md-flex">
+              <!-- <h3>{{searchText$|async}}</h3> -->
+              <ng-container *ngIf="(searchText$ | async) === '' || item.bookname.toLowerCase().includes((searchText$|async)) ||  item.author.toLowerCase().includes((searchText$|async))  ">
+              <div id="z" class="row justify-content-between align-items-center " >
+                <div class="col-lg-8 col-12 d-md-flex">
+                  <!-- <div class="d-md-flex"> -->
                     <div>
                       <img  src="../../../assets/{{item.image}}" alt="" id="imgu" class="img-4by3-xl rounded">
                     </div>
@@ -46,12 +47,18 @@
     
 
                     </div>
-                  </div>
+                  <!-- </div> -->
                 </div>
                
               </div>
+            </ng-container>
+  
               </div>
-              
+                  
+              <div *ngIf="showNotFoundImage">
+                <img  id="nofo" class="img-fluid" src="../../../assets/nofo.webp"/>
+                <h4 class="bofo">Book Not Found</h4>
+              </div>
             </div>
             </div>
           </div>
@@ -65,3 +72,8 @@
         </div>
       </div>
     </section>
+    <div  *ngIf="show" >
+      
+      <img class="mt" src="../../../assets/buk.jpg"/>
+      <h4 id="sxa">You have not posted any books yet..</h4>
+    </div>

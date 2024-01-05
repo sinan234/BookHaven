@@ -20,6 +20,10 @@ export class WishlistComponent implements OnInit {
   filteredposts:any
   display:boolean=false
   val:any
+  showNotFoundImage: boolean = false; 
+searchText!: string;
+userid!:string
+
   constructor(private http:HttpClient, 
     private store:Store,
     private toastr:ToastrService,
@@ -34,6 +38,10 @@ export class WishlistComponent implements OnInit {
     // }, duration);
     this.spinner.show()
     this.getProducts()
+    this.searchText$.subscribe(text => {
+      this.searchText = text;
+      this.updateNotFoundFlag();
+    });
   }
    
   getProducts(){
@@ -44,6 +52,7 @@ export class WishlistComponent implements OnInit {
         console.log("response from server" , res)
         this.products=res.products
         this.allproducts=res.allproduct
+        this.userid=res.userid
         console.log("products",this.products)
          this.filteredposts = this.allproducts.filter((item: any) => {
           return this.products.some((newitem: any) => {
@@ -60,6 +69,12 @@ export class WishlistComponent implements OnInit {
         console.log("error occured", err)
        }
     })
+  }
+  updateNotFoundFlag() {
+    this.showNotFoundImage = this.filteredposts.length > 0 && this.filteredposts.every((item:any) =>
+      !item.bookname.toLowerCase().includes(this.searchText.toLowerCase()) &&
+      !item.author.toLowerCase().includes(this.searchText.toLowerCase())
+    );
   }
   getTime(time: any) {
    

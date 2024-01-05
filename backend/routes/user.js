@@ -48,7 +48,54 @@ router.post('/send-otp', (req, res) => {
     from: 'mpsinan015@gmail.com',
     to: req.body.email,
     subject: 'BookHaven Community Bookstore- Email Verification',
-    text: `Your OTP for email verification is: ${otp}`
+    // text: `Your OTP for email verification is: ${otp}`
+    html: `
+    <html>
+      <head>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+          }
+          .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+          }
+          .logo {
+            text-align: center;
+            margin-bottom: 20px;
+          }
+          .content {
+            color: #333;
+          }
+          .otp {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+          }
+       
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWQuXx6VelnEOU7yG16vGbhHFWWG6Pi7ynyGlVYhfq-wCHlyHkgS9wYOqkjk6xf_16sY8&usqp=CAU" alt="BookHaven Community Bookstore">
+          </div>
+          <div class="content">
+            <p>Dear ${req.body.name},</p>
+            <p>Thank you for choosing BookHaven Community Bookstore. To complete your email verification, please use the OTP provided below.</p>
+            <div class="otp">
+              Your OTP for email verification is: ${otp}
+            </div>
+          </div>
+        </div>
+      </body>
+    </html>
+  `
+
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -86,7 +133,52 @@ router.post('/forgotpassword',async (req,res)=>{
       from: 'mpsinan015@gmail.com',
       to: req.body.email,
       subject: 'BookHaven Community Bookstore - Password Reset',
-      text: `Your Password reset link is http://localhost:4200/resetpassword/${userId}`
+      html: `
+        <html>
+          <head>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+              }
+              .container {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                border: 1px solid #e0e0e0;
+                border-radius: 5px;
+              }
+              .logo {
+                text-align: center;
+                margin-bottom: 20px;
+              }
+              .content {
+                color: #333;
+              }
+              .reset-link {
+                margin-top: 20px;
+                text-align: center;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="logo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWQuXx6VelnEOU7yG16vGbhHFWWG6Pi7ynyGlVYhfq-wCHlyHkgS9wYOqkjk6xf_16sY8&usqp=CAU" alt="BookHaven Community Bookstore">
+              </div>
+              <div class="content">
+                <p>Dear ${user.name},</p>
+                <p>We received a request to reset your password for your BookHaven Community Bookstore account.</p>
+                <p>To reset your password, please click the link below:</p>
+                <div class="reset-link">
+                  <a href="http://localhost:4200/resetpassword/${userId}">Reset Password</a>
+                </div>
+                <p>If the link above doesn't work, you can copy and paste the following URL into your browser:</p>
+                <p>http://localhost:4200/resetpassword/${userId}</p>
+              </div>
+            </div>
+          </body>
+        </html>
+      `
     };
   
     transporter.sendMail(mailOptions, (error, info) => {
@@ -121,32 +213,39 @@ router.post('/resetpassword' ,async(req,res)=>{
 
 router.post("/create_user", async (req, res) => {
   try {
-    var{name,password}=req.body
-    var bpassword= await bcrypt.hash(password, 10)
-    const exist= await User.findOne({name, bpassword})
-    if(exist){
-       res.status(500).json({message:"User already exists"})
+    const { email, password, name, category1, category2, category3, phone, location, image, paymentid } = req.body;
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists with the same email" });
     }
-    const newuser = new User({
-      name:req.body.name,
-      email: req.body.email,
-      password: bpassword,
-      category1: req.body.category1,
-      category2: req.body.category2,
-      category3: req.body.category3,
-      phone: req.body.phone,
-      location:req.body.location,
-      image:req.body.image,
-      paymentid:req.body.paymentid,
-      warning:0,
-      active:'Yes'
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      category1,
+      category2,
+      category3,
+      phone,
+      location,
+      image,
+      paymentid,
+      warning: 0,
+      active: 'Yes'
     });
-    await newuser.save();
-    res.status(200).json({message:"User created successfully"})
+
+    await newUser.save();
+
+    res.status(200).json({ message: "User created successfully" });
   } catch (err) {
-    res.status(500).json({ message: "Unknown error occured" });
+    console.error(err);
+    res.status(500).json({ message: "Unknown error occurred" });
   }
 });
+
 
 router.post('/login', async (req, res) => {
   try {
@@ -405,7 +504,8 @@ router.get('/getwishlist', async(req,res)=>{
     res.status(200).json({
       message:"Products obtained successfully",
       products:product,
-      allproduct:allproduct
+      allproduct:allproduct,
+      userid:user._id
     })
   }catch(err){
     return res.status(500).json({ message: "Unknown error occurred" });
@@ -580,13 +680,14 @@ router.post("/createwarning", async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+    const sender=await User.findOne({_id:req.body.senderId})
     user.warning = (user.warning || 0) + 1;  
     await user.save();
     const warning = new Warning({
       userId: req.body.userId,
       senderId: req.body.senderId,
       reason: req.body.reason,
-      sendername:user.name
+      sendername:sender.name
     });
     await warning.save();
   
