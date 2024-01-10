@@ -86,7 +86,9 @@
  } */
 #main{
     margin-top: 10px;
-    margin-left: 320px;
+    position: absolute;
+    left: 22%;
+    /* margin-left: 320px; */
 }
 .profile-nav, .profile-info{
     margin-top:30px;   

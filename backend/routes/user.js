@@ -5,7 +5,7 @@ const User = require("../models/usermodel");
 const Post = require("../models/postmodel");
 const Wishlist=require('../models/wishlistmodel')
 const Like=require('../models/likemodel')
-const Chat=require('../models/chatmodel')
+const NChat=require('../models/chatmodel')
 const bcrypt = require('bcrypt');
 const Request = require("../models/requestmodel");
 const Warning=require('../models/warning')
@@ -316,12 +316,14 @@ router.get('/getchating', async(req,res)=>{
     const token = req.headers.authorization.split(' ')[1];
     const id = jwt.verify(token, "secretkey");
     const userId = id.userId;
+    const chat = await NChat.find()
     const user = await User.findOne({ _id: userId });
     const alluser=await User.find()
     if (!user) {
       res.status(500).json({ message: "User not found" });
     }
-    return res.status(200).json({message:"Successful",user:user, alluser:alluser})
+    return res.status(200).json({message:"Successful",user:user, alluser:alluser, chat:chat    
+  })
   }catch (err) {
     res.status(500).json({ message: "Unknown error occurred" });
   }
@@ -530,21 +532,30 @@ router.delete('/removewishlist/:id', async(req,res)=>{
 
 }})
 
-router.post('/addchat', async(req,res)=>{
-  try{
-     const{message,senderid,receigverid,time}=req.body
-     const newChat = new Chat({ 
-      message:message,
-      senderid:senderid,
-      receigverid:receigverid,
-      time:time
-     });
-    await newChat.save()
-    return res.status(201).json({message:"Post saved successfully"})
-  }catch(err){
-    return res.status(500).jsonn({message:"Unknown error occured"})
+router.post('/addchat', async (req, res) => {
+  try {
+    console.log(req.body)
+    const { message, senderid, receigverid, time } = req.body;
+
+    const chat = await NChat.findOne({ message, senderid, receigverid, time });
+    if (chat) {
+      return res.status(401).json({ message: "Chat already exists" });
+    }
+
+    const newChat = new NChat({
+      message,
+      senderid,
+      receigverid,
+      time
+    });
+
+    await newChat.save();
+    return res.status(201).json({ message: "Chat saved successfully" });
+  } catch (err) {
+    console.error(err); 
+    return res.status(500).json({ message: "Internal server error occurred" });
   }
-})
+});
 
 router.get('/getchat',async(req,res)=>{
   try{
@@ -741,7 +752,7 @@ cron.schedule('0 12 * * *', async () => {
   try {
     const currentDate = new Date();
     const acceptedRequests = await Request.find({ status: 'Accepted' });
-
+    
     for (const request of acceptedRequests) {
       const acceptedTime = request.acceptedtime;
       const duration = parseInt(request.duration);
@@ -750,7 +761,7 @@ cron.schedule('0 12 * * *', async () => {
       returnDate.setDate(returnDate.getDate() + duration * 7 );
 
       if (returnDate <= currentDate) {
-        request.returned = 'yes';
+        request.returned = 'Yes';
         await request.save();
       }
     }

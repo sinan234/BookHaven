@@ -47,10 +47,11 @@
                         class="p-2 border-bottom"
                         style="margin: 0; padding: 0"
                       >
-                        <a
+                        <a id="al"
                           class="d-flex justify-content-between"
                           style="align-items: center; margin: 0; padding: 0"
                           [routerLink]="['/login/chat', item._id]"
+                          [ngStyle]="{'color':(id === item._id && !show)?'#002147':'#0892d0'}"
                         >
                           <div
                             class="d-flex flex-row"

@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
     private http:HttpClient
   ){}
    ngOnInit(): void {
-    const duration = 300;
+    const duration = 600;
     setTimeout(() => {
       this.showPreloader = false;
     }, duration);

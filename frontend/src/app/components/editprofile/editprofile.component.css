@@ -15,7 +15,7 @@ body {
 }
 
 .profile-nav .user-heading {
-    background:rgb(255, 88, 88);
+    background:#1b5583;
     color: #fff;
     border-radius: 4px 4px 0 0;
     -webkit-border-radius: 4px 4px 0 0;
@@ -75,8 +75,9 @@ body {
 }
 
 .profile-nav ul > li > a:hover, .profile-nav ul > li > a:focus, .profile-nav ul li.active  a {
-    background:  rgb(255, 88, 88) !important;
-    /* border-left: 5px solid #2ddcfb; */
+    background:  #1b5583 !important;
+    text-decoration: none;
+  
     border-radius: 15px;
     color: white !important;
 }
@@ -86,9 +87,11 @@ body {
     -webkit-border-radius: 0 0 4px 4px;
 }
 
-.profile-nav ul > li > a > i{
+.profile-nav ul > li > a {
     font-size: 16px;
     padding-right: 10px;
+    text-decoration: none;
+    background-color: #73c2fb;
     color: white;
 }
 

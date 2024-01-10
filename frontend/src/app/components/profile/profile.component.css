@@ -15,7 +15,7 @@ body {
 }
 
 .profile-nav .user-heading {
-    background: rgb(255, 88, 88);
+    background: #1b5583;
     color: #fff;
     border-radius: 4px 4px 0 0;
     -webkit-border-radius: 4px 4px 0 0;
@@ -70,19 +70,20 @@ body {
     border-radius: 15px !important;
     -webkit-border-radius: 0;
     color: white;
-    background-color: rgb(131, 127, 127);
+    text-decoration: none;
+    background-color: #73c2fb;
     width: 200px;
     border-left: 5px solid #fff;
 }
 
 .profile-nav ul > li > a:hover, .profile-nav ul > li > a:focus, .profile-nav ul li.active  a {
-    background:  rgb(255, 88, 88) !important;
+    background:  #1b5583 !important;
     /* border-left: 5px solid #2ddcfb; */
     border-radius: 15px;
     color: white !important;
 }
 #dq{
-    color: rgb(255, 88, 88)  !important;
+    color: #1b5583  !important;
 }
 .profile-nav ul > li:last-child > a:last-child {
     border-radius: 0 0 4px 4px;
@@ -94,7 +95,9 @@ body {
     padding-right: 10px;
     color:  white;
 }
-
+#ku{
+    text-decoration: ;
+}
 .r-activity {
     margin: 6px 0 0;
     font-size: 12px;
@@ -144,7 +147,7 @@ body {
     color: black;
 }
 .bio-graph-heading {
-    background:  rgb(255, 88, 88);
+    background:  #1b5583;
     color: #fff;
     text-align: center;
     font-style: italic;

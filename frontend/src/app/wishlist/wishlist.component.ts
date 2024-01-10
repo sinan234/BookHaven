@@ -52,7 +52,8 @@ userid!:string
         console.log("response from server" , res)
         this.products=res.products
         this.allproducts=res.allproduct
-        this.userid=res.userid
+        this.userid=res.userid.toString()
+        console.log("userid", this.userid)
         console.log("products",this.products)
          this.filteredposts = this.allproducts.filter((item: any) => {
           return this.products.some((newitem: any) => {

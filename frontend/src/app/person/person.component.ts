@@ -52,6 +52,7 @@ export class PersonComponent implements OnInit,DoCheck,OnDestroy, OnChanges {
   dis:string=' '
   sendmessagesubscribe!:Subscription
   messages$=this.store.pipe(select(selectMessages));
+  chat:any
   private unsubscribe$ = new Subject<void>();
   private isSubscribed: boolean = false;
 
@@ -82,6 +83,25 @@ export class PersonComponent implements OnInit,DoCheck,OnDestroy, OnChanges {
        this.userId=this.user._id
        console.log("userid",this.userId)
        this.allusers=res.alluser
+       this.chat=res.chat
+       console.log("chat",this.chat)
+       console.log("message list", this.messageList)
+       this.chat.forEach((item: any) => {
+        const exists = this.messageList.some((newitem: any) => {
+          return item.senderid === newitem.senderid && item.receigverid === newitem.receigverid && item.time === newitem.time && item.message===newitem.message;
+        });
+        console.log("exists", exists)
+      
+        if (!exists) {
+          this.messageList.push({
+            message: item.message,
+            senderid: item.senderid,
+            receigverid: item.receigverid,
+            time: item.time
+          });
+        }
+      });
+      
        this.seluser=this.allusers?.filter((item:any)=>{
         return item._id===this.recid
        })
@@ -109,18 +129,14 @@ export class PersonComponent implements OnInit,DoCheck,OnDestroy, OnChanges {
         return item!=''
       })
     this.messageList.push(message)
+ 
     const uniqueMessages = Array.from(new Set(this.messageList));
     this.messageList = uniqueMessages;
-    // this.messages=this.messageList.reduce((acc:any,item:any)=>{
-    //   if(!acc.includes(item)){
-    //     acc.push(item)
-    //   }
-    //   return acc
-    //  })
-    //  console.log("messages", this.messages)
+
+   
     localStorage.setItem('messageList', JSON.stringify(this.messageList));
     console.log("messagelist", this.messageList)
-
+   
   })
 
 
@@ -134,18 +150,6 @@ ngOnChanges(): void {
   ngDoCheck(): void {
     const uniqueMessages = Array.from(new Set(this.messageList));
     this.messageList = uniqueMessages;
-    //   this.messages=this.messageList.reduce((acc:any,item:any)=>{
-    //   if(!acc.includes(item)){
-    //     acc.push(item)
-    //   }
-    //   return acc
-    //  })
-    // this.updatechat()
-
-    // const storedMessageList = localStorage.getItem('messageList');
-    // if (storedMessageList) {
-    //   this.messageList = JSON.parse(storedMessageList);
-    // }  
     this.messagecontainer = document.getElementById("messageContainer");
     this.scrollToBottom();
     this.recid=this.route.snapshot.paramMap.get('userid')
@@ -207,11 +211,13 @@ ngOnChanges(): void {
       }
     });
   }  
+
   menus():boolean{
     console.log("clicked")
     this.menu=!this.menu;
     return this.menu
   }
+
   select(event:any){
     this.selvalue=event.target.value
     console.log(this.selvalue)
@@ -221,13 +227,12 @@ ngOnChanges(): void {
     this.messagecontainer.scrollTop = this.messagecontainer.scrollHeight;
   }
   
-
- 
     public addEmoji(event: any) {
       const emoji = event.emoji.native || '';
       this.newMessage = (this.newMessage || '').replace('undefined', '') + emoji;
       this.isEmojiPickerVisible = false;
     }
+
   updatechat(){
      this.stored = localStorage.getItem('messageList');
     if ( this.stored) {
@@ -286,6 +291,7 @@ ngOnChanges(): void {
       
     
   }
+
   getChat(){
   
     this.store.dispatch(loadMessages());    
@@ -315,6 +321,7 @@ ngOnChanges(): void {
     this.time = time + ' ' + day.toUpperCase();
     return this.time
   }
+
   sendMessage() {
     const data={
       message:this.newMessage,
@@ -322,18 +329,19 @@ ngOnChanges(): void {
       receigverid:this.recid,
       time:this.updateTimeAndUserData()
     }
-    // this.http.post('http://localhost:3000/user/addchat' , data)
-    // .subscribe({
-    //   next:(response:any)=>{
-    //     console.log(response.message)
-    //   },
-    //   error:(err:any)=>{
-    //     console.log("error",err.error.message)
-    //   }
-    // })
+    this.http.post('http://localhost:3000/user/addchat' , data)
+    .subscribe({
+      next:(response:any)=>{
+        console.log(response.message)
+      },
+      error:(err:any)=>{
+        console.log("error",err.error.message)
+      }
+    })
     // this.getChat()
     this.sendmessagesubscribe=this.chatService.sendMessage(data).subscribe();
     this.newMessage = '';
+    
   }
 
   ngOnDestroy(): void {

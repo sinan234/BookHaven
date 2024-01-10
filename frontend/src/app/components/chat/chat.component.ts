@@ -29,7 +29,7 @@ export class ChatComponent implements OnInit, DoCheck{
   }
 
   ngOnInit(){
-    const duration = 400;
+    const duration = 800;
     setTimeout(() => {
       this.showPreloader = false;
     }, duration);

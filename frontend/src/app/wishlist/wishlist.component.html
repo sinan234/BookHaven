@@ -33,7 +33,7 @@
                     <span class="small text-muted font-weight-normal"> • </span>
                     <span class="small  font-weight-normal">{{getTime(item.time)}}</span>
                     <!-- <span><i class="fas fa-angle-down float-end"></i></span> -->
-                    <span  class="float-end" [ngStyle]="{color: item.status==='Available' ?'green':'red'}">{{item.status}}</span>
+                    <span  class="float-end" *ngIf="item.user_id != userid" [ngStyle]="{color: item.status==='Available' ?'green':'red'}">{{item.status}}</span>
 
                   </h6>
                 <p style="line-height: 1.2">

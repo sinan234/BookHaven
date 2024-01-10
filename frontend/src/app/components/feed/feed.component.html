@@ -169,10 +169,9 @@
                   <span class="small font-weight-normal">{{
                     getTime(item.time)
                   }}</span>
-                  <span *ngIf="!accepted.includes(item.bookname) && !acc.includes(item.bookname)" class="float-end" [ngStyle]="{color: item.status==='Available' ?'green':'red'}">{{item.status}}</span>
-                  <span *ngIf="accepted.includes(item.bookname) && !acc.includes(item.bookname)" class="float-end text-success" >Book Request Accepted </span>
-                  <span *ngIf="(acc.includes(item.bookname)) && item.status!='Available
-                  ' " class="float-end text-success" >  Book Handovered - Return in {{ item.status.replace('Available in', '').replace('days', '').trim() }} days</span>
+                  <span *ngIf="(!accepted.includes(item.bookname) && !acc.includes(item.bookname)) || (item.status=='Available')" class="float-end" [ngStyle]="{color: item.status==='Available' ?'green':'red'}">{{item.status}}</span>
+                  <span *ngIf="(accepted.includes(item.bookname) && !acc.includes(item.bookname)) && (item.status!='Available')" class="float-end text-success" >Book Request Accepted </span>
+                  <span *ngIf="(acc.includes(item.bookname)) && item.status!='Available' " class="float-end text-success" >  Book Handovered - Return in {{ item.status.replace('Available in', '').replace('days', '').trim() }} days </span>
 
                   <!-- <span><i class="fas fa-angle-down float-end"></i></span> -->
                 </h6>
@@ -245,7 +244,7 @@
                   </li>
                   <ng-container *ngIf="item.user_id != user._id ">
                   <ng-container *ngIf="item.status=='Available'">
-                  <li (click)="toggleBookPopup(item)"  *ngIf="(!accepted.includes(item.bookname)) && (!notaccepted.includes(item.bookname))" >
+                  <li (click)="toggleBookPopup(item)"  *ngIf="(!accepted.includes(item.bookname)) && (!notaccepted.includes(item.bookname)) ||(item.status=='Available')" >
                     <i class="bi ms-4 bi-journal-check"></i>
                     <div>
                       <p id="xyzd">Book</p>
@@ -260,7 +259,7 @@
                       <p id="xyzd">Requested</p>
                     </div>
                   </li>
-                  <li  *ngIf="accepted.includes(item.bookname)">
+                  <li  *ngIf="(accepted.includes(item.bookname)) && (item.status!='Available')">
                     <i id="du" class="ms-4 bi bi-bookmark-check-fill"></i>
                     <div>
                       <p id="xyzd">Accepted</p>
@@ -328,7 +327,7 @@
           
           <div *ngIf="showNotFoundImage">
             <img  id="nofo" class="img-fluid" src="../../../assets/nofo.webp"/>
-            <h4 class="bofo">Post Not Found</h4>
+            <h4 class="bofo">Book Not Found</h4>
           </div>
         </div>
       </div>

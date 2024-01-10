@@ -52,7 +52,6 @@ import { ErrorComponent } from './components/error/error.component';
     ForgotpasswordComponent,
     ResetpasswordComponent,
     BookstatusComponent,
-    ErrorComponent
   ],
   imports: [
     BrowserModule,
