@@ -6,7 +6,10 @@
             <h2>Log in to your account</h2>
             <form #a="ngForm" id="frm" (ngSubmit)="onsubmit(a)">
             <input type="email" class="form-control" placeholder="Enter your email" required [(ngModel)]="email" name="email" />
-            <input type="password" class="form-control" placeholder="Enter your password" minlength="6" required [(ngModel)]="password" name="password"/>
+            <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control" placeholder="Enter your password" minlength="6" required [(ngModel)]="password" name="password" id="password-input"/>
+            <span *ngIf="password.length>0" class="password-toggle" (click)="togglePasswordVisibility()">
+                <i [ngClass]="eyeIconClass"  id="eye-icon"></i>
+              </span>
             <button type="submit" class="btn btn-outline-success">Log in</button>
             <a href="/forgotpassword" class="fp">Forgot Password ?</a>
         </form>

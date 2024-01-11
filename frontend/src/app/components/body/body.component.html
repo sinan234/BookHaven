@@ -267,21 +267,21 @@
               Contact Us
             </h2>
           </div>
-          <form action="#">
+          <form #a="ngForm" (ngSubmit)="submit(a)">
             <div>
-              <input type="text" placeholder="Name" />
+              <input type="text" placeholder="Name" name="name" [(ngModel)]="name"/>
             </div>
             <div>
-              <input type="text" placeholder="Email" />
+              <input type="text" placeholder="Email" name="email" [(ngModel)]="email"/>
             </div>
             <div>
-              <input type="text" placeholder="Phone Number" />
+              <input type="text" placeholder="Phone Number" name="phone" [(ngModel)]="phone"/>
             </div>
             <div>
-              <input type="text" class="message-box" placeholder="Message" />
+              <input type="text" class="message-box" placeholder="Message" name="message" [(ngModel)]="message" />
             </div>
             <div class="btn-box">
-              <button>
+              <button >
                 SEND
               </button>
             </div>

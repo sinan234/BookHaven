@@ -18,7 +18,12 @@ export class SignupComponent {
   private http:HttpClient,
   private router:Router,
   private renderer:Renderer2
-  ) {}
+  ) {
+    this.showPassword = false;
+    this.eyeIconClass = 'bi bi-eye';
+    this.showPassword2 = false;
+    this.eyeIconClass2 = 'bi bi-eye';
+  }
   @ViewChild('otp1Input') otp1Input!: ElementRef;
   @ViewChild('otp2Input') otp2Input!: ElementRef;
   @ViewChild('otp3Input') otp3Input!: ElementRef;
@@ -48,6 +53,10 @@ export class SignupComponent {
   otp5!:number
   otp6!:number
   paymentInitialized: boolean = false;
+  showPassword!: boolean;
+  eyeIconClass!: string;
+  showPassword2!: boolean;
+  eyeIconClass2!: string;
   onFileChange(event: any) {
 
     this.toastr.success('File uploaded successfully', 'Success');
@@ -117,6 +126,17 @@ export class SignupComponent {
     }
   }
   
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+    this.eyeIconClass = this.showPassword ? 'bi bi-eye-slash' : 'bi bi-eye';
+  
+  }
+
+  togglePasswordVisibilityb() {
+    this.showPassword2 = !this.showPassword2;
+    this.eyeIconClass2 = this.showPassword2 ? 'bi bi-eye-slash' : 'bi bi-eye';
+  }
+
   focusNextInput(nextInput: any) {
     if (nextInput) {
       nextInput.focus();

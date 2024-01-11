@@ -16,9 +16,15 @@ export class LoginComponent {
      private http:HttpClient,
      private service:UsernameService, 
      private router:Router
-   ){}
+   ){
+    this.showPassword = false;
+    this.eyeIconClass = 'bi bi-eye';
+   }
    email:string=''
    password:string=''
+   showPassword!: boolean;
+   eyeIconClass!: string;
+ 
 
    sessiontime(cookie: any) {
     const sessionend = cookie.sessionEnd;
@@ -32,6 +38,13 @@ export class LoginComponent {
       this.router.navigate(['login']);
     }, remainingTime);
   }
+  
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+    this.eyeIconClass = this.showPassword ? 'bi bi-eye-slash' : 'bi bi-eye';
+  }
+
+
    onsubmit(form:NgForm){
     console.log("submit button clicked")
     if(this.email.length==0 || this.password.length<6){
@@ -86,4 +99,6 @@ export class LoginComponent {
       }
     )
    }
+
+  
 }

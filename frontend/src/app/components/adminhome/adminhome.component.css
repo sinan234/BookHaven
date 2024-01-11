@@ -1,65 +1,4 @@
-/* .nav {
-    position: fixed; 
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 16%;
-    background-color: #AFEEEE;
-    padding: 20px;
-  }
-  
-  .list {
-    position: absolute;
-    margin-top: 100px; 
-  }
-  
-  ul {
-    list-style-type: none; 
-    padding: 0;
-  }
 
-  
-  
-  li {
-    
-    height: 50px;
-    width: 200px;
-    border-radius: 10px;
-    margin-bottom: 10px; 
-  }
-  i{
-    position: relative;
-    color: white;
-    top: 10px;
-    margin-left: 50px;
-  }
-  a {
-    display: inline;
-
-    text-decoration: none;
-    color: white;
-    position: relative;
-    top: 10px;
-
-    margin-left: 10px;
-    
-  }
-  .lactive  {
-    
-    background-color: rgb(2, 74, 133);
-  }
-  #v{
-    color: white;
-
-}
-
-.active{
-  background-color: rgb(0, 101, 126);
-} */
-
-/* .chart-container {
-  background-color: white !important;
-} */
 #ic{
   color: #1F456E;
 
@@ -124,7 +63,7 @@ th {
   color: #4CAF50;
 }
 .active{
-  background-color: rgb(2, 74, 133);
+  background-color: #0066B2;
  
 }
 #btn{
@@ -291,7 +230,7 @@ th {
   }
   
   a:hover {
-    color: #224abe;
+    color: #0066B2;
     text-decoration: underline;
   }
   
@@ -4215,7 +4154,7 @@ th {
     margin-top: 10px;
   }
   #s :hover{
-    background-color: rgb(2, 74, 133);
+    background-color:#0066B2;
   }
   
   .nav-justified > .nav-link,
@@ -11413,4 +11352,7 @@ th {
   }
   .chart-container .highcharts-xaxis-line:first-child {
     display: none;
+  }
+  #accordionSidebar{
+    background-color: #4B9CD3;
   }

@@ -12,6 +12,7 @@ const Warning=require('../models/warning')
 const cron = require('node-cron');
 const nodemailer = require('nodemailer');
 const otpGenerator = require('otp-generator');
+const Inquiry = require("../models/inquirymodel");
 
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -534,7 +535,7 @@ router.delete('/removewishlist/:id', async(req,res)=>{
 
 router.post('/addchat', async (req, res) => {
   try {
-    console.log(req.body)
+    
     const { message, senderid, receigverid, time } = req.body;
 
     const chat = await NChat.findOne({ message, senderid, receigverid, time });
@@ -727,6 +728,45 @@ router.get('/bookstatus', async(req,res)=>{
 
 })
 
+router.post('/sendinquiry', async(req,res)=>{
+  try{
+    const {name,email,phone,message}=req.body
+    const newinquiry=new Inquiry({name,email,phone,message})
+    await newinquiry.save()
+    return res.status(200).json({message:"Inquiry send successfully"});
+  }catch (err) {
+    return res.status(500).json({ message: "Unknown error occurred" });
+  }
+})
+
+router.post('/updateinquiry', async(req,res)=>{
+  try{
+    const {id}=req.body
+    const newinquiry=await Inquiry.findOne({_id:id})
+    if(!newinquiry){
+      return res.status(400).json({message:"No inquiry found"})
+
+    }
+    newinquiry.resolved=true;
+    await newinquiry.save()
+    return res.status(200).json({message:"Inquiry saved successfully"});
+  }catch (err) {
+    return res.status(500).json({ message: "Unknown error occurred" });
+  }
+})
+
+router.get('/getinquiry' ,async(req,res)=>{
+  try{
+    const data=await Inquiry.find()
+    if(!data){
+      return res.status(400).json({message:"No inquiry found"})
+    }
+    return res.status(200).json({message:"Inquiry obtained successfully", data:data});
+
+  }catch (err) {
+    return res.status(500).json({ message: "Unknown error occurred" });
+  }
+})
 cron.schedule('0 12 * * *', async () => {
   try {
     const itemsToUpdate = await Post.find({ status: /^Available in \d+ days$/ });
