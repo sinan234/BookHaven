@@ -38,8 +38,7 @@ router.get('/getdata', async (req, res) => {
     const wishlist = await Wish.find();
     const posts = await Post.find();
     const warnings = await Warning.find();
-
-    if (!users || !posts || !wishlist || !warnings) {
+    if (!users || !posts || !wishlist || !warnings ) {
       return res.status(500).json({ message: "Could not find data" });
     }
 
@@ -48,7 +47,8 @@ router.get('/getdata', async (req, res) => {
       user: users,
       post: posts,
       wishlist: wishlist,
-      warnings: warnings
+      warnings: warnings,
+
     });
   } catch (err) {
     res.status(500).json({ message: "Unknown error occurred" });

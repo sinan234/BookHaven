@@ -1,16 +1,47 @@
 <app-header></app-header>
 <div class="container" id="aot">
-    <div class="d-flex">
-        <img class="img-fluid rounded float-left" src="../../../assets/main.png">
-        <div id="aot2">
-            <h2>Log in to your account</h2>
-            <form #a="ngForm" id="frm" (ngSubmit)="onsubmit(a)">
-            <input type="email" class="form-control" placeholder="Enter your email" required [(ngModel)]="email" name="email" />
-            <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control" placeholder="Enter your password" minlength="6" required [(ngModel)]="password" name="password" id="password-input"/>
-            <span *ngIf="password.length>0" class="password-toggle" (click)="togglePasswordVisibility()">
-                <i [ngClass]="eyeIconClass"  id="eye-icon"></i>
-              </span>
-            <button type="submit" class="btn btn-outline-success">Log in</button>
-            <a href="/forgotpassword" class="fp">Forgot Password ?</a>
-        </form>
+  <div class="d-flex">
+    <img class="img-fluid rounded float-left" src="../../../assets/main.png" />
+    <div id="aot2">
+      <h2>Log in to your account</h2>
+      <form #a="ngForm" id="frm" (ngSubmit)="onsubmit(a)">
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Enter your email"
+          required
+          [(ngModel)]="email"
+          name="email"
+          #emailInput="ngModel"
+          [email]="true"
+        />
+        <div
+        class="text-danger "
+        *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
+      >
+        <div *ngIf="emailInput.errors?.['required']">Email is required.</div>
+        <div *ngIf="emailInput.errors?.['email']">Invalid email format.</div>
+      </div>
+        <input
+          type="{{ showPassword ? 'text' : 'password' }}"
+          class="form-control"
+          placeholder="Enter your password"
+          minlength="6"
+          required
+          [(ngModel)]="password"
+          name="password"
+          id="password-input"
+        />
+        <span
+          *ngIf="password.length > 0"
+          class="password-toggle"
+          (click)="togglePasswordVisibility()"
+        >
+          <i [ngClass]="eyeIconClass" id="eye-icon"></i>
+        </span>
+        <button type="submit" class="btn btn-outline-success">Log in</button>
+        <a href="/forgotpassword" class="fp">Forgot Password ?</a>
+      </form>
+    </div>
+  </div>
 </div>

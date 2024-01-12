@@ -24,6 +24,7 @@ export class AdminhomeComponent implements OnInit{
  search!:string
  user!:string
  post:any
+ request:any[]=[]
  wishlist:any[]=[]
 books:any[]=[]
 like:any[]=[]
@@ -212,10 +213,10 @@ sortIndicesDescending(arr:any) {
     next:(res:any)=>{
       console.log(res)
       this.spinner.hide()
-
       this.user=res.user
       this.post=res.post
-
+      this.request=[...this.post,...this.user]
+      // this.request=res.request
       this.post.slice(0, 5).forEach((item: any) => {
         this.books.push(item.bookname);
       });

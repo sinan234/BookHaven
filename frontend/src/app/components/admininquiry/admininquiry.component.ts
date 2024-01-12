@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./admininquiry.component.css']
 })
 export class AdmininquiryComponent implements OnInit {
-   search!:string
+   search:string=''
    inquiries:any[]=[]
   constructor(private router:Router, private http:HttpClient, private toastr:ToastrService){}
 

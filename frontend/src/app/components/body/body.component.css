@@ -53,8 +53,29 @@
   }
 }
 #um{
-  width: 610px;
+  width: 780px;
   mix-blend-mode: multiply;
+  animation: up-down 2s ease-in-out infinite alternate-reverse both;
+
+}
+#um2{
+  position: relative;
+  margin-left: 50px;
+  width: 460px;
+  mix-blend-mode: multiply;
+  animation: up-down 2s ease-in-out infinite alternate-reverse both;
+
+}
+@keyframes up-down {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 body {
   font-family: 'Mulish', sans-serif;

@@ -51,6 +51,8 @@ export class LoginComponent {
         this.toastr.error("Invalid email or password format")
         return
     }
+    if(form.valid)
+    {
     const data={
       email:form.value.email,
       password:form.value.password
@@ -99,6 +101,8 @@ export class LoginComponent {
       }
     )
    }
-
-  
+  else{
+    this.toastr.error("Invalid email format. Please try again using your correct email address.")
+  }
+   } 
 }

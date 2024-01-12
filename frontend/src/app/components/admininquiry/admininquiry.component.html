@@ -29,7 +29,7 @@
 
             <hr class="sidebar-divider my-0">
 
-            <li class="nav-item ">
+            <li id="s" class="nav-item ">
                 <a class="nav-link" routerLink="/admin/login/home" >
                   <i class="bi bi-house-door-fill me-2"></i>
                   <span>Dashboard</span></a>
@@ -38,7 +38,7 @@
            
 
             <li id="s" class="nav-item ">
-                <a class="nav-link" routerLink="/admin/login/home/users"  >
+                <a class="nav-link" routerLink="/admin/login/users"  >
                   <i class="bi bi-people-fill"></i>              
                         <span class="ms-2">Users</span></a>
             </li>
@@ -122,6 +122,7 @@
 
                     <div class="container mt-4">
                         <div *ngFor="let inquiry of inquiries.reverse()" class="card mb-3">
+                            <ng-container *ngIf="search==='' || inquiry.name.toLowerCase().includes(search.toLowerCase())">
                           <div class="card-header">
                             <h5 class="card-title">Username: {{ inquiry.name }}</h5>
                             <p class="card-subtitle text-muted">Email: {{ inquiry.email }}</p>
@@ -134,6 +135,7 @@
                             <button class="btn btn-success ms-auto" *ngIf="!inquiry.resolved" (click)="resolve(inquiry._id)">Resolve</button>
                             <button class="btn btn-success ms-auto " *ngIf="inquiry.resolved">Resolved</button>
                           </div>
+                        </ng-container>
                         </div>
                       </div>
                     

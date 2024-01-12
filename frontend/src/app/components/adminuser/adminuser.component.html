@@ -29,7 +29,7 @@
 
             <hr class="sidebar-divider my-0">
 
-            <li class="nav-item ">
+            <li id="s" class="nav-item ">
                 <a class="nav-link" routerLink="/admin/login/home" >
                   <i class="bi bi-house-door-fill me-2"></i>
                   <span>Dashboard</span></a>
@@ -123,7 +123,7 @@
 
                     <table>
                         <thead>
-                          <tr>
+                          <tr [ngStyle]="{'color':'black'}">
                             <th> Name</th>
                             <th> Email</th>
                             <th> Phone</th>
@@ -140,10 +140,10 @@
                         </thead>
                         
 
-                        <tbody class="p-2">
+                        <tbody class="p-2" >
                             <ng-container *ngFor="let item of users">
 
-                                <tr *ngIf="search === '' || item.name.toLowerCase().includes(search)" >
+                                <tr *ngIf="search === '' || item.name.toLowerCase().includes(search)" id="tb">
 
                             <td>{{item.name}}</td>
                             <td>{{item.email}}</td>
@@ -165,8 +165,9 @@
                         </tbody>
                         <div id="rp" *ngIf="vi">
                           <div class="d-flex">
-                            <h5 class="mt-2 ms-2 text-primary" id="ssd">Username:<span class="fw-bold">{{selu.split()}}</span></h5>
-                            <h5 class="mt-2 text-primary" id="sd"> TotalReports:{{newwarnings.length}} </h5>
+                            <h5 class="mt-2 ms-2 " id="ssd">Username: 
+                                <span class="fw-bold">{{selu.split()}}</span></h5>
+                            <h5 class="mt-2" id="sd"> TotalReports: {{newwarnings.length}} </h5>
                             <i id="ic" class="bi bi-x-square-fill mt-2 " (click)="vi=!vi"></i>
                           </div>
                           <h5 *ngIf="newwarnings.length<=0" class="mt-5 ms-4 " id="ssd">The user has no reports till now.</h5>

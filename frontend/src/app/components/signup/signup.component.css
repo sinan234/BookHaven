@@ -21,6 +21,18 @@ img{
     border-radius: 15px;
     border: 0.5px solid black;
     border-color: rgb(118, 118, 126);
+    opacity: 0;
+    animation: fade-in 1s ease-in-out forwards;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 #aot2{
     position: relative;
@@ -237,7 +249,7 @@ select option:checked {
     box-shadow:0px 0 0 #3361f8  inset;
   }
   #btn:hover{
-    -webkit-box-shadow: 100px 0 0 #3361f8 inset;
+    -webkit-box-shadow: 100px 0 0 #1e90ff inset;
 
   }
   #btnu{

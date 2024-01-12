@@ -5,6 +5,18 @@
     border-radius: 15px;
     border: 0.5px solid black;
     border-color: rgb(118, 118, 126);
+    opacity: 0;
+    animation: fade-in 1s ease-in-out forwards;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .fp{
   position: absolute;
@@ -128,15 +140,28 @@ input[type=email] {
   button{
     width: 110px;
     margin-top: 30px;
-    margin-left: 210px;
+    margin-left: 200px;
+    box-shadow: 0 0 1px #ccc;
+    -webkit-transition-duration: 0.5s;
+    -webkit-transition-timing-function: linear;
+    box-shadow:0px 0 0 #44b89d  inset !important;
+  }
+  button:hover{
+    -webkit-box-shadow: 110px 0 0 #44b89d inset !important;
+
   }
 
   .password-toggle {
     position: absolute;
-    top: 58%;
+    top: 55%;
     left: 66%;
     transform: translateY(-50%);
     cursor: pointer;
     color:  #01796f;
     font-size: 20px;
+  }
+  .text-danger{
+    position: relative;
+    margin-top: 8px;
+    margin-left: 60px;
   }
