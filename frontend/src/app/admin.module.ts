@@ -10,13 +10,15 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { AdminuserComponent } from "./components/adminuser/adminuser.component";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { AdmininquiryComponent } from "./components/admininquiry/admininquiry.component";
+import { AdmincategoryComponent } from "./components/admincategory/admincategory.component";
 
 @NgModule({
     declarations:[
         AdminloginComponent,
         AdminhomeComponent,
         AdminuserComponent,
-        AdmininquiryComponent
+        AdmininquiryComponent,
+        AdmincategoryComponent
     ],
     imports:[
         FormsModule,

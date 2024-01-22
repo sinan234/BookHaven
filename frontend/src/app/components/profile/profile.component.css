@@ -56,8 +56,8 @@ body {
 }
 
 .profile-nav ul > li {
-    border-bottom: 1px solid #ebeae6;
-    margin-top: 0;
+    /* border-bottom: 1px solid #ebeae6; */
+    margin-top: 10;
     line-height: 30px;
 }
 
@@ -75,7 +75,10 @@ body {
     width: 200px;
     border-left: 5px solid #fff;
 }
-
+.auth{
+    position: absolute;
+    left: 70%;
+}
 .profile-nav ul > li > a:hover, .profile-nav ul > li > a:focus, .profile-nav ul li.active  a {
     background:  #1b5583 !important;
     /* border-left: 5px solid #2ddcfb; */
@@ -96,7 +99,7 @@ body {
     color:  white;
 }
 #ku{
-    text-decoration: ;
+    text-decoration:none ;
 }
 .r-activity {
     margin: 6px 0 0;
@@ -464,12 +467,19 @@ ul.summary-list > li:last-child  {
     display: flex;
     align-items: center;
     padding: 10px;
-    border-bottom: 1px solid #ccc;
+    /* border-bottom: 1px solid #ccc; */
   }
   
   .nav.nav-pills.nav-stacked #j {
     position: absolute;
     top: 60px;
+    bottom: 0;
+    left: 0;
+    width: 80%;
+  }
+  .nav.nav-pills.nav-stacked #ju {
+    position: absolute;
+    top: 100px;
     bottom: 0;
     left: 0;
     width: 100%;

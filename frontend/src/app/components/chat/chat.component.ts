@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router,NavigationStart  } from '@angular/router';
+import { ChatlengthService } from 'src/app/services/chatlength.service';
 import { UseridService } from 'src/app/services/userid.service';
+
 
 
 @Component({
@@ -23,13 +25,16 @@ export class ChatComponent implements OnInit, DoCheck{
   show:boolean=false
   chat:boolean=false
   hoveredItemId!: string; 
+  chatid:any
+  cu:any
 
-  constructor( private http:HttpClient, private route:ActivatedRoute, private userid:UseridService){
+  constructor( private http:HttpClient,private router:Router, private route:ActivatedRoute, private userid:UseridService , public chaty:ChatlengthService ){
 
   }
 
   ngOnInit(){
-    const duration = 800;
+   
+    const duration = 720;
     setTimeout(() => {
       this.showPreloader = false;
     }, duration);

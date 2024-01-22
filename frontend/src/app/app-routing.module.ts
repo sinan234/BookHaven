@@ -16,6 +16,7 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
 import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
 import { BookstatusComponent } from './components/bookstatus/bookstatus.component';
 import { ErrorComponent } from './components/error/error.component';
+import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -30,6 +31,7 @@ const routes: Routes = [
   {path:'login/request', component:RequestComponent ,canActivate:[AuthGuard]},
   {path:'login/profile/edit', component:EditprofileComponent, canActivate:[AuthGuard]},
   {path:'login/wishlist', component:WishlistComponent,canActivate:[AuthGuard]},
+  {path:'login/profile/changepassword' , component:ChangepasswordComponent,canActivate:[AuthGuard] },
   {path:'login/chat', component:ChatComponent, 
    children:[
     {path:':userid', component:PersonComponent}

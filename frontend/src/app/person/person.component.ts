@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UseridService } from '../services/userid.service';
 import { Subject } from 'rxjs';
 import { NgxSpinnerService } from "ngx-spinner";
+import { ChatlengthService } from '../services/chatlength.service';
 
 @Component({
   selector: 'app-person',
@@ -62,7 +63,8 @@ export class PersonComponent implements OnInit,DoCheck,OnDestroy, OnChanges {
       private store:Store,
       private toastr:ToastrService,
       private userid:UseridService,
-      private spinner:NgxSpinnerService
+      private spinner:NgxSpinnerService,
+      private chatlength:ChatlengthService
           ){
        
   }
@@ -99,9 +101,11 @@ export class PersonComponent implements OnInit,DoCheck,OnDestroy, OnChanges {
             receigverid: item.receigverid,
             time: item.time
           });
+          // this.chatlength.make(item.senderid, 1)
         }
       });
-      
+      // console.log("chatlength",this.chatlength.getLength())
+
        this.seluser=this.allusers?.filter((item:any)=>{
         return item._id===this.recid
        })

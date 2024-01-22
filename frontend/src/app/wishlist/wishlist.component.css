@@ -8,8 +8,19 @@
     overflow: hidden;
     background: #f1f2f3;
   }
+  i{
+    cursor: pointer;
+  }
   #sse{
     width: 60px;
+  }
+  .lo{
+    position: absolute;
+    margin-left: 5px !important;
+  }
+  .lok{
+    position: relative;
+    margin-left: 52px !important;
   }
   
   #preloader:before {

@@ -240,9 +240,13 @@ select option:checked {
     color: #cccccc;
   }
   #btn{
-    position: absolute;
-    margin-top: 150px;
-    left: 34%;
+    /* position: fixed;
+    margin-top: 100px;
+    left:68%; */
+    display: flex;
+    justify-content: center;  
+    margin-top: 40px;
+    margin-left: 210px;
     box-shadow: 0 0 1px #ccc;
     -webkit-transition-duration: 0.5s;
     -webkit-transition-timing-function: linear;
@@ -289,6 +293,10 @@ select option:checked {
     margin-top: 8px;
     margin-left: 70px;
   }
+  .id{
+    position: relative;
+    margin-top: 1px !important;
+  }
   input[type=password] {
     background-color: #f6f6f6;
     border: none;
@@ -322,7 +330,7 @@ select option:checked {
   }
   .password-toggle {
     position: absolute;
-    top: 70%;
+   margin-top: 42px;
     left: 66%;
     transform: translateY(-50%);
     cursor: pointer;
@@ -331,10 +339,16 @@ select option:checked {
   }
   .password-toggleb {
     position: absolute;
-    top: 91%;
+    margin-top: 40px;
     font-size: 20px;
     left: 66%;
     transform: translateY(-50%);
     cursor: pointer;
     color:  #01796f;
+  }
+  .fpa{
+    position: absolute;
+    margin-top: 20px;
+    left: 26%;
+    color: #44b89d;
   }

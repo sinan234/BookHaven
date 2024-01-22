@@ -50,10 +50,16 @@
 #lu{
   border-radius: 36px;
   background-color: white !important;
+  cursor: pointer;
+
 }
 #lu :hover{
   border-radius: 32px !important;
   background-color: #138496 !important;
+  color: white !important;
+}
+#lu :hover i{
+
   color: white !important;
 }
 #pr{
@@ -73,7 +79,7 @@
 }
 #user-image{
   position: absolute;
-  margin-left: 1100px;
+  margin-left: 1060px;
 }
 #log{
   color: red;
@@ -184,8 +190,14 @@ a:focus {
   background-color: transparent}
 
   .active{
-    background-color: #44b89d;
-    border-radius: 10px;
+    border-bottom: 4px solid #44b89d;
+    border-radius: 0px;
+    color: wheat;
+    margin-left: 0px;
+  }
+  .activen{
+    background-color:  #44b89d !important;
+    border-radius: 0px;
     color: wheat;
     margin-left: 0px;
   }
@@ -193,7 +205,7 @@ a:focus {
     position: relative;
     overflow: hidden;
     margin-left: 16px;
-    border-radius: 10px;
+    border-radius: 1px;
   }
   
   li::before {
@@ -238,10 +250,14 @@ a:focus {
   
 
   #btn{
+    border: 0.5px solid #008080 !important;
     border-radius: 10px;
     color: white;
     position: relative;
     margin-left: 480px;
+    -webkit-transition-duration: 0.5s ;
+    -webkit-transition-duration: 0.5s !important;
+    -webkit-transition-timing-function: linear !important;
   }
   
   #btn2{
@@ -251,27 +267,42 @@ a:focus {
     margin-left: 1140px;
   }
   #btn3{
+    border: 0.5px solid #008080 !important;
     border-radius: 10px;
     color: white;
     position: relative;
     margin-left: 30px;
+    -webkit-transition-duration: 0.5s ;
+    -webkit-transition-duration: 0.5s !important;
+    -webkit-transition-timing-function: linear !important;
+  }
+  #btn3:hover{
+    -webkit-box-shadow: 100px 0 0 #138496 inset !important;
+  }
+  #btn:hover{
+    -webkit-box-shadow: 100px 0 0 #138496 inset !important;
+ 
+
   }
   #btnab{
+    border: 0.5px solid #008080 !important;
     font-family: "Jost", sans-serif;
 font-weight: 500;
 font-size: 16px;
 letter-spacing: 1px;
 color: white;
-border-radius: 30px;
+border-radius: 10px;
 
 transition: 0.3s;
 position: relative;
 margin-left: 30px;
-
+-webkit-transition-duration: 0.9s ;
+-webkit-transition-duration: 0.9s !important;
+-webkit-transition-timing-function: linear !important;
 
   }
   #btnab:hover{
-    background-color: #754ffe;
+    -webkit-box-shadow: 150px 0 0  #138496 inset !important;
     color: white;
   }
   #btn:hover{
@@ -295,14 +326,7 @@ margin-left: 30px;
       -ms-flex-align: center;
           align-items: center;
 }
-#a{
-  font-size: 18px;
-  margin-top: 10px;
-  width: 75px;
-  position: relative;
-  left: 27%;
-  color: #44b89d;
-}
+
 .search_form {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -11026,3 +11050,49 @@ margin-left: 30px;
       border-color: #dee2e6;
     }
   }
+.logoimg{
+  position: absolute;
+  margin-bottom: 30px;
+  top: 0%;
+  width: 140px;
+  height:80px;
+  left: 1%;
+}
+#navbarSupportedContent{
+  margin-left: 120px;
+}
+.sticky{
+  height: 100px;
+}
+
+#a{
+  font-size: 18px;
+  margin-top: 10px;
+  width: 75px;
+  position: relative;
+  left: 27%;
+  color: #44b89d;
+  
+}
+#a::after {
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+   
+   
+  overflow-x: auto;
+  content: attr(title);
+  position: absolute;
+
+  background-color: #f1f2f3;
+  color: black;
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* #a:hover::after {
+  opacity: 1;
+} */

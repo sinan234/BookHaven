@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./forgotpassword.component.css']
 })
 export class ForgotpasswordComponent {
-  email!:string
+  email:string=''
   constructor(
     private http:HttpClient,
     private toastr:ToastrService,
@@ -21,7 +21,8 @@ export class ForgotpasswordComponent {
     this.router.navigate(['login'])
   }
   send(){
-     if(this.email.length<=0){
+    console.log("clicked")
+    if(this.email.length<=0){
       this.toastr.error("Email field cannot be empty")
       return
      }

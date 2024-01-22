@@ -68,21 +68,21 @@
                   class="list-unstyled d-flex justify-content-start mb-0 ms-2 pe-xl-5"
                 >
                   <li>
-                      <i id="idu" class="bi bi-hand-thumbs-up-fill" [ngStyle]="{'color': item.like>=1? 'rgb(0, 110, 255)': '#d1d1d1'}" ></i>
+                      <i id="idu" class="bi bi-hand-thumbs-up-fill"  (click)="like(item._id)" [ngStyle]="{'color': item.like>=1? 'rgb(0, 110, 255)': '#d1d1d1'}" ></i>
                       <span class="small ps-2">{{item.like}}</span>
                       <div>
                         <p id="x">Like</p>
   
                       </div>
                   </li>
-                  <li>
+                  <li class="lo">
                       <i  class="bi bi-heart-fill ms-5" [ngStyle]="{'color': item.wishlist>=1? 'red': '#d1d1d1'}"(click)="wishlist(item._id)"></i>   
                       <div>
                         <p id="xy">Wishlist</p>
   
                       </div>
                   </li>
-                  <li [routerLink]="['/login/chat', userid]" *ngIf="item.user_id != userid">
+                  <li class="lok" [routerLink]="['/login/chat', userid]" *ngIf="item.user_id != userid">
                       <i class="bi bi-chat-dots ms-4 "></i>
                       <div>
                         <p id="xyz">Chat</p>

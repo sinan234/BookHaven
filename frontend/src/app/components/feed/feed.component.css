@@ -8,6 +8,29 @@
     overflow: hidden;
     background: #f1f2f3;
   }
+
+  textarea#form143 {
+    resize: none;
+    overflow: auto;
+
+  }
+  .btnold{
+    border: none;
+    position:relative;
+    left: 37%;
+    width: 240px;
+    margin-top: 20px;
+    background-color:  #44b89d;
+    padding: 5px;
+    border-radius: 15px;
+    color: white;
+    font-size: 16px;
+  }
+  
+  .lastdiv{
+    position: relative;
+    margin-bottom: 40px;
+  }
   #AAB{
     position: relative;
     margin-left: 40PX;
@@ -36,13 +59,14 @@
     }
   }
   #idu {
-    transition: transform 0.3s;
-    color: #d1d1d1;
+    transition: transform 0.3s !important;
+  
   }
   
   #idu:hover {
-    transform: scale(3.8);
-    color: rgb(0, 110, 255);
+    font-size: 20px;
+    transform: scale(1.1) !important;
+    color: rgb(0, 110, 255) !important;
 
   }
   .custom-popup-class {
@@ -56,34 +80,30 @@
  #sse{
   width: 60px;
  }
-  #x{
+ .like-container {
+  display: flex;
+  align-items: center;
+}
+
+   #xy{
     position: relative;
-    margin-top: 2px;
-  }
-  #xy{
-    position: relative;
-    margin-top: 2px;
-    margin-left: 35px;
-  }
+
+    margin-left: 16px;
+  } 
   #xyz{
     position: relative;
-    margin-top: 2px;
-    margin-left: 20px;
+    margin-left: 12px;
   }
   #xyzd{
     position: relative;
-    margin-top: 2px;
-    margin-left: 22px;
-  }
+
+    margin-left: 16px;
+  } 
   #df{
     width: 100px;
     height: 120px;
   }
- /* .popup-container{
-  position: fixed;
 
-  margin-top: 100px;
- } */
 #main{
     margin-top: 10px;
     position: absolute;
@@ -205,9 +225,13 @@ form{
     }
   }
 }
+i{
+  cursor: pointer !important;
+
+}
 #nnb{
   position: relative;
-  margin-top: 100px;
+  margin-top: 120px;
   margin-left: 730px;
   color: #1F456E;
   width: 240px;
@@ -225,7 +249,7 @@ form{
 }
 #ku{
   position: relative;
-  margin-left: 15px;
+  margin-left: 0px;
 }
 #kuf{
   position: absolute;
@@ -253,3 +277,130 @@ form{
   font-size: 32px;
   margin-left: 310px;
 }
+
+.dots-container {
+
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1400px;
+  width: 100%;
+  background-color: #f1f2f3;
+
+}
+
+.dot {
+  height: 20px;
+  width: 20px;
+  position: relative;
+  top: 20%;
+  margin-right: 10px;
+  border-radius: 10px;
+  background-color: #b3d4fc;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.dot:last-child {
+  margin-right: 0;
+}
+
+.dot:nth-child(1) {
+  animation-delay: -0.3s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: -0.1s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    background-color: #b3d4fc;
+    box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: #44b89d;
+    box-shadow: 0 0 0 10px rgba(178, 212, 252, 0);
+  }
+
+  100% {
+    transform: scale(0.8);
+    background-color: #84dab9;
+    box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+  }
+}
+
+
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+ }
+ 
+ .container {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  margin-top: 3px;
+
+  font-size: 20px;
+  user-select: none;
+ }
+ 
+ .checkmark {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: .9em;
+  width: 1em;
+  border: 0.5px solid rgb(99, 99, 99);
+  background: #f1f2f3;
+  border-radius: 5px;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.30), 0px 1px 1px rgba(0,5);
+ }
+ 
+ .container input:checked ~ .checkmark {
+  background-image: linear-gradient(#44b89d,#7ddf71)
+ }
+ 
+ .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+ }
+ 
+ .container input:checked ~ .checkmark:after {
+  display: block;
+ }
+ 
+ .container .checkmark:after {
+  left: 0.35em;
+  top: 0.15em;
+  width: 0.25em;
+  height: 0.5em;
+  border: solid white;
+  border-width: 0 0.15em 0.15em 0;
+  transform: rotate(45deg);
+ }
+
+#icu {
+  margin-left: 30px !important;
+  transition: color 0.3s;
+}
+
+#icu:hover {
+  font-size: 18px;
+  transform: scale(1.2) !important;
+  color: red !important;
+}
+

@@ -17,7 +17,7 @@ export class ResetpasswordComponent {
   ){}
   save(){
     if(this.pass1.length<6 || this.pass2.length<6){
-      this.toastr.warning("Passwords must be atleast 6 characters")
+      this.toastr.warning("Passwords must be atleast 8 characters")
       return
     }
     else if(this.pass1!=this.pass2){

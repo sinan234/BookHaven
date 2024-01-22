@@ -17,6 +17,7 @@ import { UsernameService } from 'src/app/services/username.service';
   styleUrls: ['./feed.component.css'],
 })
 export class FeedComponent implements OnInit, DoCheck {
+  older!:number
   user: any;
   posts: any;
   postsn: any[] = [];
@@ -57,6 +58,7 @@ export class FeedComponent implements OnInit, DoCheck {
   acc:any[]=[]
   showNotFoundImage: boolean = false; 
   searchText!: string;
+  showold:boolean=false
 
   constructor(
     private router: Router,
@@ -69,6 +71,7 @@ export class FeedComponent implements OnInit, DoCheck {
   ngOnInit(): void {
     this.searchText$ = this.store.select(selectSearchText);
     this.spinner.show()
+    this.older=1
     this.getData();
     this.knowBook()
     this.duration='1'
@@ -83,12 +86,15 @@ export class FeedComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck(): void {
+    // if(this.ischecked || this.ischecked2){
+    //   this.updateNotFoundFlag()
+    // }
     // console.log(this.ischecked2)
     // console.log(this.searchText$)
     // console.log("book", this.details)
     // console.log("bookdetails", this.bookdetails)
     // console.log("check", this.ischecked)
-    if (this.details.length > 30) {
+    if (this.details.length) {
       this.show = true;
     } else {
       this.show = false;
@@ -96,11 +102,19 @@ export class FeedComponent implements OnInit, DoCheck {
   }
 
   updateNotFoundFlag() {
-    this.showNotFoundImage = this.posts.length > 0 && this.posts.every((item:any) =>
-      !item.bookname.toLowerCase().includes(this.searchText.toLowerCase()) &&
-      !item.author.toLowerCase().includes(this.searchText.toLowerCase())
-    );
+    this.showNotFoundImage = this.posts.length > 0 && this.posts.every((item: any) =>
+  (
+    !item.bookname.toLowerCase().includes(this.searchText.toLowerCase()) &&
+    !item.author.toLowerCase().includes(this.searchText.toLowerCase())
+  ) ||
+  (
+    !item.bookcategory.toLowerCase().includes(this.user.category1.toLowerCase()) &&
+    !item.bookcategory.toLowerCase().includes(this.user.category2.toLowerCase()) &&
+    !item.bookcategory.toLowerCase().includes(this.user.category3.toLowerCase())
+  )
+);
   }
+  
   knowBook(){
     this.http.get('http://localhost:3000/user/getuserbook')
     .subscribe({
@@ -147,9 +161,7 @@ export class FeedComponent implements OnInit, DoCheck {
     })
     return this.know
   }
-  // onCheckboxChange() {
-  //   this.ischecked2=!this.ischecked2
-  // }
+
   toggleBookPopup(item: any) {
     this.selectedBook = item; 
     console.log('selected book', this.selectedBook)
@@ -234,12 +246,14 @@ export class FeedComponent implements OnInit, DoCheck {
     }
     this.isEmojiPickerVisible = false;
   }
+
   getData() {
-    this.http.get('http://localhost:3000/user/getpost').subscribe({
+    this.http.get(`http://localhost:3000/user/getpost/${this.older}`).subscribe({
       next: (res: any) => {
         this.spinner.hide()
 
         this.user = res.user;
+        console.log("user", this.user)
         this.posts = res.posts;
         this.alluser = res.alluser;
         this.postsn = this.posts;
@@ -267,6 +281,16 @@ export class FeedComponent implements OnInit, DoCheck {
       },
     });
   }
+
+  olderUpdate(){
+    this.showold=true
+    setTimeout(()=>{
+      this.showold=!this.showold
+    },1000)
+    this.older=this.older+1
+    this.getData()
+  }
+
   getTime(time: any) {
     const currentDate = new Date();
 
@@ -291,11 +315,11 @@ export class FeedComponent implements OnInit, DoCheck {
     this.http.put('http://localhost:3000/user/updatelike', data).subscribe({
       next: (res: any) => {
         console.log(res);
-        if (res.message == 'Post liked successfully') {
-          this.toastr.success('Post liked ');
-        } else {
-          this.toastr.warning('Post disliked ');
-        }
+        // if (res.message == 'Post liked successfully') {
+        //   this.toastr.success('Post liked ');
+        // } else {
+        //   this.toastr.warning('Post disliked ');
+        // }
         this.getData();
       },
       error: (err: any) => {
@@ -325,29 +349,30 @@ export class FeedComponent implements OnInit, DoCheck {
       .post('http://localhost:3000/user/create_wishlist', data)
       .subscribe({
         next: (res: any) => {
-          Swal.fire({
-            position: 'top-end',
-            title: 'Post wishlisted successfully',
-            icon: 'success',
-            timer: 1000,
-            showConfirmButton: false,
-            didOpen: () => {
-              const SwalIcon = Swal.getIcon();
-              if (SwalIcon) {
-                SwalIcon.style.width = '80px';
-                SwalIcon.style.height = '80px';
-              }
-              const SwalTitle = Swal.getTitle();
-              if (SwalTitle) {
-                SwalTitle.style.fontSize = '20px';
-              }
-              const SwalModal = Swal.getPopup();
-              if (SwalModal) {
-                SwalModal.style.width = '360px';
-                SwalModal.style.height = '200px';
-              }
-            },
-          });
+          // Swal.fire({
+          //   position: 'top-end',
+          //   title: 'Post wishlisted successfully',
+          //   icon: 'success',
+          //   timer: 1000,
+          //   showConfirmButton: false,
+          //   didOpen: () => {
+          //     const SwalIcon = Swal.getIcon();
+          //     if (SwalIcon) {
+          //       SwalIcon.style.width = '60px';
+          //       SwalIcon.style.height = '60px';
+          //     }
+          //     const SwalTitle = Swal.getTitle();
+          //     if (SwalTitle) {
+          //       SwalTitle.style.fontSize = '18px';
+          //     }
+          //     const SwalModal = Swal.getPopup();
+          //     if (SwalModal) {
+          //       SwalModal.style.width = '280px';
+          //       SwalModal.style.height = '200px';
+          //     }
+          //   },
+          // });
+          this.toastr.success("Post wishlisted successfully")
           this.getData();
         },
         error: (err: any) => {

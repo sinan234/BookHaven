@@ -20,8 +20,14 @@
 }
 .fp{
   position: absolute;
-  margin-top: 90px;
-  left: 32%;
+  margin-top: 100px;
+  left: 9%;
+  color: #44b89d;
+}
+.fpa{
+  position: absolute;
+  margin-top: 110px;
+  left: 26%;
   color: #44b89d;
 }
 img{
@@ -139,7 +145,7 @@ input[type=email] {
   }
   button{
     width: 110px;
-    margin-top: 30px;
+    margin-top: 50px;
     margin-left: 200px;
     box-shadow: 0 0 1px #ccc;
     -webkit-transition-duration: 0.5s;
@@ -152,9 +158,9 @@ input[type=email] {
   }
 
   .password-toggle {
-    position: absolute;
+    position: relative;
     top: 55%;
-    left: 66%;
+    right: 7%;
     transform: translateY(-50%);
     cursor: pointer;
     color:  #01796f;

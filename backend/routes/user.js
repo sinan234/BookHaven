@@ -13,6 +13,7 @@ const cron = require('node-cron');
 const nodemailer = require('nodemailer');
 const otpGenerator = require('otp-generator');
 const Inquiry = require("../models/inquirymodel");
+const cache = require('memory-cache');
 
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -281,36 +282,99 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.get('/getpost', async (req, res) => {
+router.get('/getpost/:id', async (req, res) => {
   try {
+
     const token = req.headers.authorization.split(' ')[1];
     const id = jwt.verify(token, "secretkey");
     const userId = id.userId;
-    const alluser=await User.find()
+    const weeks= req.params.id*7
+
+    const cacheKey = `getpost_${userId}`;
+    const cachedData = cache.get(cacheKey);
+
+    if (cachedData) {
+      const cachedWeeks = cachedData.weeks;
+      if (weeks > cachedWeeks || weeks<cachedWeeks) {
+        cache.del(cacheKey);
+      } else {
+        return res.status(200).json(cachedData.data);
+      }
+    }
+    const alluser = await User.find();
     const user = await User.findOne({ _id: userId });
-   
+
     if (!user) {
-      res.status(500).json({ message: "User not found" });
+      return res.status(500).json({ message: "User not found" });
     }
-    const posts = await Post.find();
+     
+    const currentTime = Date.now();
+    const timeThreshold =currentTime - weeks * 7 * 24 * 60 * 60 * 1000;
+
+    const posts = await Post.find({ time: { $gte: timeThreshold } });
     if (!posts) {
-      res.status(500).json({ message: "Posts not found" });
+      return res.status(500).json({ message: "Posts not found" });
     }
+
     const wishlist = await Wishlist.find({ userId: userId });
-    const request= await Request.find({recieverId:userId})
-    
-    res.status(200).json({
+    const request = await Request.find({ recieverId: userId });
+
+    const responseData = {
       message: "Details obtained successfully",
       posts: posts,
       user: user,
       wish: wishlist,
-      alluser:alluser,
-      request:request
-    });
+      alluser: alluser,
+      request: request
+    };
+
+    cache.put(cacheKey,  { weeks: weeks, data: responseData }, 1800000);
+
+    res.status(200).json(responseData);
   } catch (err) {
     res.status(500).json({ message: "Unknown error occurred" });
   }
 });
+
+function updateCache(userId) {
+  const cacheKey = `getpost_${userId}`;
+  cache.del(cacheKey); 
+}
+
+function updateCacheWish(userId) {
+  const cacheKey = `getwish_${userId}`;
+  cache.del(cacheKey); 
+}
+// router.get('/getpost', async (req, res) => {
+//   try {
+//     const token = req.headers.authorization.split(' ')[1];
+//     const id = jwt.verify(token, "secretkey");
+//     const userId = id.userId;
+//     const alluser=await User.find()
+//     const user = await User.findOne({ _id: userId });
+   
+//     if (!user) {
+//       res.status(500).json({ message: "User not found" });
+//     }
+//     const posts = await Post.find();
+//     if (!posts) {
+//       res.status(500).json({ message: "Posts not found" });
+//     }
+//     const wishlist = await Wishlist.find({ userId: userId });
+//     const request= await Request.find({recieverId:userId})
+    
+//     res.status(200).json({
+//       message: "Details obtained successfully",
+//       posts: posts,
+//       user: user,
+//       wish: wishlist,
+//       alluser:alluser,
+//       request:request
+//     });
+//   } catch (err) {
+//     res.status(500).json({ message: "Unknown error occurred" });
+//   }
+// });
 
 router.get('/getchating', async(req,res)=>{
   try {
@@ -377,6 +441,30 @@ router.put('/profile/update', async(req,res)=>{
   }
 })
 
+router.put('/profile/changepassword', async(req,res)=>{
+  try{
+    const{oldpass,newpass}=req.body
+    const token = req.headers.authorization.split(' ')[1];
+    const id = jwt.verify(token, "secretkey");
+    const userId = id.userId;
+    const user = await User.findOne({ _id: userId });
+    const isPasswordValid = await bcrypt.compare(oldpass, user.password);
+    if (!isPasswordValid) {
+      return res.status(500).json({ message: "Password is incorrect. Please check your old password and try again" });
+    }
+    else{
+      user.password= await bcrypt.hash(newpass, 10)
+      await user.save()
+      res.status(200).json({
+        message: "Password updated successfully",
+      });
+    }
+  }catch(err){
+    res.status(500).json({ message: "Unknown error occurred" });
+
+  }
+})
+
 router.post('/create_post', async(req,res)=>{
   try{
     const token = req.headers.authorization.split(' ')[1];
@@ -409,6 +497,7 @@ router.post('/create_post', async(req,res)=>{
 
     })
     await post.save();
+    updateCache(userId)
     res.status(201).json({message:"Post saved succesffully"})
   }catch(err){
     res.status(500).json({ message: "Unknown error occurred" });
@@ -439,15 +528,17 @@ router.put('/updatelike', async (req, res) => {
       await Like.deleteOne({ userId: userId, postId: req.body.postId }); 
       post.like -= 1;
       await post.save();
-
+      updateCache(userId)
       return res.status(200).json({ message: 'Like removed successfully' });
     } else {
       const newLike = new Like({
         userId: userId,
         postId: req.body.postId
       });
-
+      updateCache(userId)
       await newLike.save();
+     
+
       post.like += 1;
       await post.save();
 
@@ -482,7 +573,7 @@ router.post('/create_wishlist', async (req, res) => {
       userId: userId,
       productId: req.body.postId
     });
-
+    updateCache(userId)
     await wish.save();
     return res.status(200).json({ message: 'Product wishlisted successfully' });
 
@@ -496,6 +587,13 @@ router.get('/getwishlist', async(req,res)=>{
     const token = req.headers.authorization.split(' ')[1];
     const id = jwt.verify(token, "secretkey");
     const userId = id.userId;
+
+    const cacheKey = `getwish_${userId}`;
+    const cachedData = cache.get(cacheKey);
+    if (cachedData) {
+      return res.status(200).json(cachedData);
+    }
+
     const user = await User.findOne({ _id: userId });
 
     if (!user) {
@@ -504,12 +602,15 @@ router.get('/getwishlist', async(req,res)=>{
 
     const product=await Wishlist.find({userId:userId})
     const allproduct=await Post.find()
-    res.status(200).json({
+
+    const response={
       message:"Products obtained successfully",
       products:product,
       allproduct:allproduct,
       userid:user._id
-    })
+    }
+    cache.put(cacheKey, response, 1800000);
+    res.status(200).json(response)
   }catch(err){
     return res.status(500).json({ message: "Unknown error occurred" });
 
@@ -527,6 +628,8 @@ router.delete('/removewishlist/:id', async(req,res)=>{
       userId:userId,
       productId:productId
     })
+    updateCache(userId)
+    updateCacheWish(userId)
     res.status(201).json({message:"Product deleted successfully"})
 }catch(err){
   return res.status(500).json({ message: "Unknown error occurred" });
@@ -767,6 +870,7 @@ router.get('/getinquiry' ,async(req,res)=>{
     return res.status(500).json({ message: "Unknown error occurred" });
   }
 })
+
 cron.schedule('0 12 * * *', async () => {
   try {
     const itemsToUpdate = await Post.find({ status: /^Available in \d+ days$/ });

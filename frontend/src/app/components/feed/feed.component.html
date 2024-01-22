@@ -7,12 +7,19 @@
 <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
 
 <div id="nnb" class="d-flex">
-  <input type="checkbox" [(ngModel)]="ischecked2" />
-  <label id="kus" class=" fw-bold ms-2">AvailableBooks</label> 
-  <input type="checkbox" class="ms-3" [(ngModel)]="ischecked" />
-  <label id="ku" class=" fw-bold ms-2">InterestedCategories</label>
+  <!-- <input type="checkbox" [(ngModel)]="ischecked2" /> -->
+  <label class="container">
+    <input checked="checked" type="checkbox" [(ngModel)]="ischecked2">
+    <div class="checkmark"></div>
+  </label>
+  <label id="kus" class=" fw-bold ">AvailableBooks</label> 
+  <!-- <input type="checkbox" class="ms-3" [(ngModel)]="ischecked" /> -->
+  <label class="container">
+    <input checked="checked" type="checkbox" [(ngModel)]="ischecked">
+    <div class="checkmark"></div>
+  </label>
+  <label id="ku" class=" fw-bold ">InterestedCategories</label>
   </div>
-<!-- <div id="preloader" *ngIf="showPreloader"></div> -->
 
 
 <div id="main" class="card" style="width: 48rem">
@@ -33,17 +40,18 @@
             />
             <div class="d-flex align-items-center w-100 ps-3">
               <div class="w-100">
-                <input
+                <textarea
                   type="text"
                   #myInput
                   id="form143"
+                  [ngStyle]="{'width':''}"
                   class="form-control form-status border-0 py-1 px-0"
                   placeholder="Write about a book that you have.."
                   [(ngModel)]="details"
                   name="details"
                   (focus)="onInputFocus(myInput.name)"
                   required
-                />
+                ></textarea>
                 <div *ngIf="show">
                   <input
                     type="text"
@@ -69,7 +77,7 @@
                     name="bookcategory"
                     required
                   />
-                  <input
+                  <textarea
                     type="text"
                     #myInputn
                     id="form143"
@@ -79,7 +87,7 @@
                     name="bookdetails"
                     (focus)="onInputFocus(myInputn.name)"
                     required
-                  />
+                  ></textarea>
                 </div>
               </div>
             </div>
@@ -118,11 +126,11 @@
                 (emojiSelect)="addEmoji($event)"
                 title="Choose your emoji"
               ></emoji-mart>
-              <li>
+              <!-- <li>
                 <a
                   ><i id="ur" class="bi bi-calendar-check-fill px-2 ms-2"></i
                 ></a>
-              </li>
+              </li> -->
 
             </ul>
             <p class="juju"  *ngIf="fileshow">Selected Image: <span class="dsd">{{fileName}}</span></p>
@@ -209,45 +217,55 @@
                 <ul
                   class="list-unstyled d-flex justify-content-start mb-0 ms-2 pe-xl-5"
                 >
-                  <li>
-                    <i
-                      id="idu"
-                      class="bi bi-hand-thumbs-up-fill"
-                      [ngStyle]="{
-                        color: item.like >= 1 ? 'rgb(0, 110, 255)' : '#d1d1d1'
-                      }"
-                      (click)="like(item._id)"
+                <li>
+                  <div class="like-container">
+                    <i id="idu"
+                       class="bi bi-hand-thumbs-up-fill like-icon"
+                       [ngStyle]="{
+                          color: item.like >= 1 ? 'rgb(0, 110, 255)' : '#d1d1d1'
+                       }"
+                       (click)="like(item._id)"
                     ></i>
                     <span class="small ps-2">{{ item.like }}</span>
-                    <div>
-                      <p id="x">Like</p>
-                    </div>
-                  </li>
-                  <li>
+                  </div>
+                  <div>
+                    <p class="x mb-1" >Like</p>
+                  </div>
+                </li>
+                  <li class="lu">
+                    <div class="like-container">
+
                     <i
                       class="bi bi-heart-fill ms-5"
+                      id="icu"
                       [ngStyle]="{
                         color: m.includes(item._id) ? 'red' : '#d1d1d1'
                       }"
                       (click)="wishlist(item._id)"
                     ></i>
-
+                    </div>
                     <div>
-                      <p id="xy">Wishlist</p>
+                      <p id="xy" class="mb-3">Wishlist</p>
                     </div>
                   </li>
                   <li [routerLink]="['/login/chat', getid(item.username)]" *ngIf="item.user_id != user._id">
-                    <i class="bi bi-chat-dots ms-4"></i>
+                    <div class="like-container">
+
+                    <i id="idu" class="bi bi-chat-dots ms-3" ></i>
+                    </div>
                     <div>
-                      <p id="xyz">Chat</p>
+                      <p id="xyz"class="mb-3">Chat</p>
                     </div>
                   </li>
                   <ng-container *ngIf="item.user_id != user._id ">
                   <ng-container *ngIf="item.status=='Available'">
                   <li (click)="toggleBookPopup(item)"  *ngIf="(!accepted.includes(item.bookname)) && (!notaccepted.includes(item.bookname)) ||(item.status=='Available')" >
-                    <i class="bi ms-4 bi-journal-check"></i>
+                    <div class="like-container">
+
+                    <i id="idu" class="bi ms-3 bi-journal-check"></i>
+                    </div>
                     <div>
-                      <p id="xyzd">Book</p>
+                      <p id="xyzd" class="mb-3">Book</p>
                     </div>
                   </li>
                 </ng-container>
@@ -321,16 +339,31 @@
               </div>
             </div>
           </div>
+
+
         </div>
       
           </div>
-          
-          <div *ngIf="showNotFoundImage">
+          <div *ngIf="postsn.length<8 && !showNotFoundImage " class="lastdiv">
+          <button  type="button" class="btnold" (click)="olderUpdate()">See Older Posts <i class="bi bi-caret-down-square-fill ms-2"></i>
+          </button>
+        </div>
+          <div *ngIf="(searchText$ | async) != ''&& showNotFoundImage  ">
             <img  id="nofo" class="img-fluid" src="../../../assets/nofo.webp"/>
             <h4 class="bofo">Book Not Found</h4>
           </div>
         </div>
+        
       </div>
+      
     </div>
+    
   </div>
 
+  <section *ngIf="showold " class="dots-container">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </section>

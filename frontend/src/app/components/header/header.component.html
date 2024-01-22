@@ -3,9 +3,8 @@
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container  " >
           <a class="navbar-brand" >
-            <span>
-              BookHaven 
-            </span>
+            <img class="logoimg rounded-lg" src="../../../assets/booklogo.png" alt="BookHaven Community Bookstore">
+
           </a>
         
           <div class="collapse navbar-collapse " id="navbarSupportedContent">
@@ -17,7 +16,7 @@
              <ng-container *ngIf="loginService.getStatus()">
               <li class="nav-item" >
                 <div class="nav-link-container" >
-                  <a class="nav-link" routerLink="/login/feed" routerLinkActive="active" >Feed</a>
+                  <a class="nav-link " routerLink="/login/feed" routerLinkActive="active" >Feed</a>
                 </div>
               </li>
               
@@ -43,14 +42,14 @@
                 <a id="s" class="nav-link" [routerLink]="['/']" fragment="contact">Contact </a>
               </li>
 
-                 <button id="btn"  class="btn btn-outline-success " type="button" routerLink="/signup" routerLinkActive="active">Sign Up</button>
+                 <button id="btn"  class="btn" type="button" routerLink="/signup" routerLinkActive="activen">Sign Up</button>
               
-                  <button id="btn3"  class=" btn btn-outline-success "  type="button" routerLink="/login" routerLinkActive="active"> Login</button>
-                  <button id="btnab"  class="btn btn-outline-primary  " *ngIf="isadmin()" type="button" routerLink="/admin/login"  routerLinkActive="active" >Admin Login</button>
+                  <button id="btn3"  class=" btn"  type="button" routerLink="/login" routerLinkActive="activen"> Login</button>
+                  <button id="btnab"  class="btn  " *ngIf="isadmin()" type="button" routerLink="/admin/login"  routerLinkActive="active" >Admin Login</button>
 
                 </ng-container>
             </ul>
-            <h5 id="a" *ngIf="show" class="text ms-4"> Welcome:{{name}} </h5>
+            <h5 [ngStyle]="{'cursor':'pointer'}" id="a" *ngIf="show" class="text ms-4 " [title]="fullname"  > Welcome:{{name}} </h5>
             <div class="search_form" id="az" *ngIf="loginService.getStatus() && !isChatPath()">
               <input type="text" id="oi" class="form-control " placeholder="Search here..." [(ngModel)]="searchText" (input)="onSearchTextChange()">
               <button class="" type="submit">
@@ -71,10 +70,10 @@
                 aria-expanded="false"
                 (click)="toggleDropdown()"
               > -->
-              <div class="d-flex" (click)="toggleDropdown()" >
+              <div [ngStyle]="{'cursor':'pointer'}" class="d-flex" (click)="toggleDropdown()" (mouseenter)="toggleDropdown()" ((mouseleave))="toggleDropdown()" >
                 <!-- <i id="id" class="bi bi-three-dots-vertical mt-3"></i> -->
 
-                <img src="../../../assets/{{userimage}}" alt="User Image" class="rounded-circle " height="50"  />
+                <img src="../../../assets/{{userimage}}" alt="User Image" class="rounded-circle ms-5 " height="50"   />
 
 =             
 =              </div>

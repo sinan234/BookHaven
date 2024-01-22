@@ -57,6 +57,8 @@ export class SignupComponent {
   eyeIconClass!: string;
   showPassword2!: boolean;
   eyeIconClass2!: string;
+  passwordError1!: string;
+  passwordError2!: string;
   onFileChange(event: any) {
 
     this.toastr.success('File uploaded successfully', 'Success');
@@ -83,7 +85,7 @@ export class SignupComponent {
         title: 'OTP has been sent to your email',
         text:`It will expire in ${expirationTime} minutes`,
         icon: 'success',
-        timer: 2300,
+        timer: 3200,
         showConfirmButton: false,
         didOpen: () => {
           const SwalIcon = Swal.getIcon();
@@ -126,6 +128,17 @@ export class SignupComponent {
     }
   }
   
+
+  checkPasswordValidity(): void {
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
+    if (!regex.test(this.password)) {
+      this.passwordError1 = 'Password must contain at least 8 characters including at';
+      this.passwordError2='least one letter, one number, and one special character.'
+    } else {
+      this.passwordError1 = '';
+    }
+  }
+
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
     this.eyeIconClass = this.showPassword ? 'bi bi-eye-slash' : 'bi bi-eye';

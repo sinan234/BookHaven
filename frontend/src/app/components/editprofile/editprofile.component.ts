@@ -29,7 +29,11 @@ export class EditprofileComponent implements OnInit {
     setTimeout(() => {
       this.showPreloader = false;
     }, duration);
-      this.http.get('http://localhost:3000/user/getprofile')
+      this.getData()
+   }
+
+   getData(){
+    this.http.get('http://localhost:3000/user/getprofile')
       .subscribe({
         next:(res:any)=>{
            this.user=res.user
@@ -65,13 +69,32 @@ export class EditprofileComponent implements OnInit {
     .subscribe({
       next:(res:any)=>{
         Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Your profile has been updated",
+          position: 'top-end',
+          title: 'Your profile has been updated',
+          icon: 'success',
+          timer: 1000,
           showConfirmButton: false,
-          timer: 1500
+          didOpen: () => {
+            const SwalIcon = Swal.getIcon();
+            if (SwalIcon) {
+              SwalIcon.style.width = '60px';
+              SwalIcon.style.height = '60px';
+            }
+            const SwalTitle = Swal.getTitle();
+            if (SwalTitle) {
+              SwalTitle.style.fontSize = '20px';
+            }
+            const SwalModal = Swal.getPopup();
+            if (SwalModal) {
+              SwalModal.style.width = '300px';
+              SwalModal.style.height = '200px';
+            }
+          },
         });
-        this.router.navigate(['login','profile'])
+        setTimeout(()=>{
+          this.router.navigate(['login','profile'])
+
+        },1000)
       },
       error:(err:any)=>{
         console.log("error occured", err)

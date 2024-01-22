@@ -99,36 +99,55 @@ userid!:string
      this.http.delete(`http://localhost:3000/user/removewishlist/${id}`)
      .subscribe({
          next:(res:any)=>{
-          Swal.fire({
-            position: 'top-end',
-            title: 'Post removed from wishlist ',
-            icon: 'success',
-            timer: 1000,
-            showConfirmButton: false,
-            didOpen: () => {
-              const SwalIcon = Swal.getIcon();
-              if (SwalIcon) {
+          this.toastr.success("Post removed from wishlist")
+      //     Swal.fire({
+      //       position: 'top-end',
+      //       title: 'Post removed from wishlist ',
+      //       icon: 'success',
+      //       timer: 1000,
+      //       showConfirmButton: false,
+      //       didOpen: () => {
+      //         const SwalIcon = Swal.getIcon();
+      //         if (SwalIcon) {
                
-                SwalIcon.style.width = '80px'; 
-                SwalIcon.style.height = '80px'; 
-              }
-              const SwalTitle = Swal.getTitle();
-              if (SwalTitle) {
-        SwalTitle.style.fontSize = '20px'; 
-      }
-              const SwalModal = Swal.getPopup();
-              if (SwalModal) {
-                SwalModal.style.width = '360px'; 
-                SwalModal.style.height = '200px'; 
-              }
-            },
-          });
+      //           SwalIcon.style.width = '60px'; 
+      //           SwalIcon.style.height = '60px'; 
+      //         }
+      //         const SwalTitle = Swal.getTitle();
+      //         if (SwalTitle) {
+      //   SwalTitle.style.fontSize = '20px'; 
+      // }
+      //         const SwalModal = Swal.getPopup();
+      //         if (SwalModal) {
+      //           SwalModal.style.width = '260px'; 
+      //           SwalModal.style.height = '190px'; 
+      //         }
+      //       },
+      //     });
           this.getProducts()
          },
          error:(err:any)=>{
             this.toastr.error(err.error.message)
          }
      })
+  }
+
+  like(id: any) {
+    console.log("clicked")
+    const data = {
+      postId: id,
+    };
+    this.http.put('http://localhost:3000/user/updatelike', data).subscribe({
+      next: (res: any) => {
+        console.log(res)
+
+        this.getProducts()
+      },
+      error: (err: any) => {
+        this.toastr.error(err.error.message);
+        console.log('error occured', err);
+      },
+    });
   }
 
 }

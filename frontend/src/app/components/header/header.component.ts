@@ -19,11 +19,11 @@ export class HeaderComponent implements OnInit{
       private store:Store, 
       public user:UsernameService){}
 
-  name=localStorage.getItem('name')?.split(' ')[0]
+  fullname=localStorage.getItem('name')
   searchText:string=''
   isDropdownOpen:boolean = false;
   userimage!:string
-
+  name=localStorage.getItem('name')?.split(' ')[0].substring(0,5)
    show:any;
   ngOnInit(): void {
 

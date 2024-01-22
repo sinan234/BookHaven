@@ -38,17 +38,18 @@
            
 
             <li id="s" class="nav-item ">
-                <a class="nav-link" routerLink="/admin/login/users"  >
+                <a class="nav-link" routerLink="/admin/login/home/users" routerLinkActive="active"  >
                   <i class="bi bi-people-fill"></i>              
                         <span class="ms-2">Users</span></a>
             </li>
-            <li id="s" class="nav-item">
+            <li id="s" class="nav-item active">
                 <a class="nav-link" routerLink="/admin/login/category" >
                     <i class="bi bi-tag-fill"></i>                       <span class="ms-2">Category</span></a>
             </li>
          
-            <li id="s" class="nav-item active">
-                <a class="nav-link" routerLink="/admin/login/inquiry" routerLinkActive="active"  >
+
+            <li id="s" class="nav-item">
+                <a class="nav-link" routerLink="/admin/login/inquiry" >
                     <i class="bi bi-journal-check"></i>                        <span class="ms-2">Inquiry</span></a>
             </li>
           
@@ -68,17 +69,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" name="search" aria-describedby="basic-addon2" [(ngModel)]="search">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="bi bi-search"></i>                                </button>
-                            </div>
-                        </div>
-                    </form>
+                
 
                     <ul class="navbar-nav ml-auto">
 
@@ -117,32 +108,15 @@
                 <div class="container-fluid">
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Inquiries</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Category</h1>
                      
                     </div>
 
                    
                     <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
 
-                    <div class="container mt-4">
-                        <div *ngFor="let inquiry of inquiries.reverse()" class="card mb-3">
-                            <ng-container *ngIf="search==='' || inquiry.name.toLowerCase().includes(search.toLowerCase())">
-                          <div class="card-header">
-                            <h5 class="card-title">Username: {{ inquiry.name }}</h5>
-                            <p class="card-subtitle text-muted">Email: {{ inquiry.email }}</p>
-                            <p class="card-subtitle text-muted">Phone: {{ inquiry.phone }}</p>
 
-                          </div>
-                          <div class="card-body d-flex">
-                            <p class="card-text">{{ inquiry.message }}</p>
-                            <!-- <button class="btn btn-primary me-2" >View</button> -->
-                            <button class="btn btn-success ms-auto" *ngIf="!inquiry.resolved" (click)="resolve(inquiry._id)">Resolve</button>
-                            <button class="btn btn-success ms-auto " *ngIf="inquiry.resolved">Resolved</button>
-                          </div>
-                        </ng-container>
-                        </div>
-                      </div>
-                    
+                   
                
 
                       
