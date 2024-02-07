@@ -3,6 +3,14 @@
   color: #1F456E;
 
 }
+#wel{
+font-size: 20px;
+font-weight: 600;
+color: #37517e ;
+position: relative;
+margin-top: 10px;
+margin-right: 25px;
+}
 #count{
   background-color: whitesmoke;
   border-radius: 10px;
@@ -11355,4 +11363,9 @@ th {
   }
   #accordionSidebar{
     background-color: #4B9CD3;
+  }
+  #nua{
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
   }

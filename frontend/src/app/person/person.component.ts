@@ -290,6 +290,15 @@ ngOnChanges(): void {
             this.updatechat()
             
          }
+         this.http.delete(`http://localhost:3000/user/chat/delete/${recieverid}`)
+         .subscribe({
+          next:(res:any)=>{
+            console.log("response from server", res)
+          }
+          ,error:(err:any)=>{
+            console.log("error from server", err)
+          }
+         })
 
          }})
       

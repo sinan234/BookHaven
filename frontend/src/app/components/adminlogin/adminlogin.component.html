@@ -13,7 +13,14 @@
     <form #a="ngForm" (ngSubmit)="onsubmit(a)">
 
       <input type="text" id="login" class="fadeIn second" name="email" placeholder="email" [(ngModel)]="email">
-      <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" [(ngModel)]="password">
+      <input   type="{{ showPassword ? 'text' : 'password' }}" id="password" class="fadeIn third" name="password" placeholder="password" [(ngModel)]="password">
+      <span
+          *ngIf="password.length > 0"
+          class="password-toggle"
+          (click)="togglePasswordVisibility()"
+        >
+          <i [ngClass]="eyeIconClass" id="eye-icon"></i>
+        </span>
       <input type="submit" class="fadeIn fourth" value="Log In" [disabled]="!a.valid">
       <p>Only Admins can login to the page</p>
     </form>

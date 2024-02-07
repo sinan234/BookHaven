@@ -140,16 +140,36 @@ updatedPostArray:any[]=[]
  }
 
  download() {
+  if(this.count=='Select the count'){
+    this.toastr.error("Please select a count");
+    return;
+  }
+  else if(!this.type){
+    this.toastr.error("Please select a type")
+    return;
+  }
   const doc = new jsPDF();
 
   const tableData = [];
   let sortedIndices = [];
-  if (this.type === 'Like') {
+  let heading: string = "";
+  let subheading:string='';
+  let headingColor = '';
+    if (this.type === 'Like') {
     sortedIndices = this.sortIndicesDescending(this.liketable);
+    heading = 'BookHaven Community BookStore';
+    subheading='Book Data - Likes'
+    headingColor = 'red';
   } else if (this.type === 'Wishlist') {
     sortedIndices = this.sortIndicesDescending(this.wishtable);
+    heading = 'BookHaven Community BookStore';
+    subheading='Book Data - Wishlist'
+    headingColor = 'blue';
   } else if (this.type === 'All') {
     sortedIndices = this.sortIndicesAlphabetical(this.booktable);
+    heading = 'BookHaven Community BookStore';
+    subheading='Book Data '
+    headingColor = 'green';
   } else {
     sortedIndices = Array.from({ length: this.booktable.length }, (_, i) => i);
   }
@@ -183,12 +203,21 @@ updatedPostArray:any[]=[]
     columns = ['Book Name', 'Posted By', 'Likes Count', 'Wishlist Count'];
   }
 
-
-  autoTable(doc, {
+  const tableStartY = 26; 
+  const tableOptions = {
+    startY: tableStartY,
     head: [columns],
     body: tableData,
-  });
+  };
+  autoTable(doc, tableOptions);
+   
+  doc.setFontSize(22);
+  doc.setTextColor('blue')
+  doc.text(heading, 47, 12);
+  doc.setFontSize(18);
+  doc.setTextColor('red')
 
+  doc.text(subheading, 13,22);
 
   doc.save('book_data.pdf');
   this.type=''

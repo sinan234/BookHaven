@@ -3,7 +3,7 @@
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container  " >
           <a class="navbar-brand" >
-            <img class="logoimg rounded-lg" src="../../../assets/booklogo.png" alt="BookHaven Community Bookstore">
+            <img  routerLink="/home" [ngStyle]="{'cursor':'pointer'}" class="logoimg rounded-lg" src="../../../assets/image.png" alt="BookHaven Community Bookstore">
 
           </a>
         
@@ -11,7 +11,7 @@
             <ul class="navbar-nav " >
          
                 <li class="nav-item ">
-                <a  class="nav-link " routerLink="/home" routerLinkActive="active" >Home </a>
+                <a  class="nav-link " routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home </a>
               </li>
              <ng-container *ngIf="loginService.getStatus()">
               <li class="nav-item" >
@@ -35,18 +35,30 @@
             </ng-container>
               <ng-container *ngIf="!show">
               <li  class="nav-item" >
-                <a id="s" class="nav-link" [routerLink]="['/']"  fragment="about" > About</a>
+                <a id="s" class="nav-link" [routerLink]="['/']"  fragment="about"  routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" > About</a>
               </li>
             
               <li  class="nav-item" >
-                <a id="s" class="nav-link" [routerLink]="['/']" fragment="contact">Contact </a>
+                <a id="s" class="nav-link" [routerLink]="['/']" fragment="contact" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Contact </a>
               </li>
-
-                 <button id="btn"  class="btn" type="button" routerLink="/signup" routerLinkActive="activen">Sign Up</button>
-              
-                  <button id="btn3"  class=" btn"  type="button" routerLink="/login" routerLinkActive="activen"> Login</button>
-                  <button id="btnab"  class="btn  " *ngIf="isadmin()" type="button" routerLink="/admin/login"  routerLinkActive="active" >Admin Login</button>
-
+              <li class="nav-item" id="signup" >
+                <div class="nav-link-container" >
+                  <a class="nav-link " routerLink="/signup" routerLinkActive="active" >Signup</a>
+                </div>
+              </li>
+                 <!-- <button id="btn"  class="btn" type="button" routerLink="/signup" routerLinkActive="activen">Sign Up</button> -->
+                 <li class="nav-item" id="login" >
+                  <div class="nav-link-container" >
+                    <a class="nav-link " routerLink="/login" routerLinkActive="active" >Login</a>
+                  </div>
+                </li>
+                  <!-- <button id="btn3"  class=" btn"  type="button" routerLink="/login" routerLinkActive="activen"> Login</button> -->
+                  <!-- <button id="btnab"  class="btn  " *ngIf="isadmin()" type="button" routerLink="/admin/login"  routerLinkActive="active" >Admin Login</button> -->
+                  <li class="nav-item" id="adminlogin"  *ngIf="isadmin()">
+                    <div class="nav-link-container" >
+                      <a class="nav-link " routerLink="/admin/login" routerLinkActive="active" >Admin Login</a>
+                    </div>
+                  </li>
                 </ng-container>
             </ul>
             <h5 [ngStyle]="{'cursor':'pointer'}" id="a" *ngIf="show" class="text ms-4 " [title]="fullname"  > Welcome:{{name}} </h5>
@@ -70,14 +82,14 @@
                 aria-expanded="false"
                 (click)="toggleDropdown()"
               > -->
-              <div [ngStyle]="{'cursor':'pointer'}" class="d-flex" (click)="toggleDropdown()" (mouseenter)="toggleDropdown()" ((mouseleave))="toggleDropdown()" >
+              <div [ngStyle]="{'cursor':'pointer'}" class="d-flex" (click)="toggleDropdown()" (mouseenter)="toggleDropdown()" (mouseleave)="toggleDropdown()"  >
                 <!-- <i id="id" class="bi bi-three-dots-vertical mt-3"></i> -->
 
                 <img src="../../../assets/{{userimage}}" alt="User Image" class="rounded-circle ms-5 " height="50"   />
 
 =             
 =              </div>
-              <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1" [ngClass]="{ 'show': isDropdownOpen }">
+              <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1" [ngClass]="{ 'show': isDropdownOpen }" (mouseenter)="toggleDropdown()" (mouseleave)="toggleDropdown()">
                 <li id="lu" routerLink="/login/profile"><a class="dropdown-item text-primary" ><i id="pr" class="bi bi-person-fill pe-2"></i>My Profile</a></li>
                 <li id="lu" routerLink="/login/bookstatus" ><a class="dropdown-item text-success" ><i id="logi" class="bi bi-book-fill pe-2"></i>My Books</a></li>
 

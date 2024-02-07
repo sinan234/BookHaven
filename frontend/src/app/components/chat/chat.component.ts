@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { ActivatedRoute, Router,NavigationStart  } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ChatlengthService } from 'src/app/services/chatlength.service';
 import { UseridService } from 'src/app/services/userid.service';
 
@@ -28,19 +29,21 @@ export class ChatComponent implements OnInit, DoCheck{
   chatid:any
   cu:any
 
-  constructor( private http:HttpClient,private router:Router, private route:ActivatedRoute, private userid:UseridService , public chaty:ChatlengthService ){
+  constructor( private http:HttpClient,private router:Router,private spinner:NgxSpinnerService, private route:ActivatedRoute, private userid:UseridService , public chaty:ChatlengthService ){
 
   }
 
   ngOnInit(){
-   
-    const duration = 720;
-    setTimeout(() => {
-      this.showPreloader = false;
-    }, duration);
+    
+    // const duration = 720;
+    // setTimeout(() => {
+    //   this.showPreloader = false;
+    // }, duration);
+    this.spinner.show()
     this.http.get('http://localhost:3000/user/getchating')
     .subscribe({
       next:(res:any)=>{
+        this.spinner.hide()
          this.user=res.user
          this.allusers=res.alluser
          console.log("user", this.user)

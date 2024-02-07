@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService, Spinner } from 'ngx-spinner';
 
 @Component({
   selector: 'app-profile',
@@ -11,17 +12,20 @@ export class ProfileComponent implements OnInit {
   showPreloader:boolean=true;
 
   constructor(
-    private http:HttpClient
+    private http:HttpClient,
+    private spinner:NgxSpinnerService
   ){}
    ngOnInit(): void {
-    const duration = 600;
-    setTimeout(() => {
-      this.showPreloader = false;
-    }, duration);
+    // const duration = 600;
+    // setTimeout(() => {
+    //   this.showPreloader = false;
+    // }, duration);
+    this.spinner.show()
       this.http.get('http://localhost:3000/user/getprofile')
       .subscribe({
         next:(res:any)=>{
            this.user=res.user
+           this.spinner.hide()
            console.log(this.user)
         },
         error:(err:any)=>{

@@ -1,5 +1,5 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -12,7 +12,7 @@ declare var Razorpay:any
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit{
   constructor(
   private toastr: ToastrService,
   private http:HttpClient,
@@ -20,9 +20,9 @@ export class SignupComponent {
   private renderer:Renderer2
   ) {
     this.showPassword = false;
-    this.eyeIconClass = 'bi bi-eye';
+    this.eyeIconClass = 'bi bi-eye-slash';
     this.showPassword2 = false;
-    this.eyeIconClass2 = 'bi bi-eye';
+    this.eyeIconClass2 = 'bi bi-eye-slash';
   }
   @ViewChild('otp1Input') otp1Input!: ElementRef;
   @ViewChild('otp2Input') otp2Input!: ElementRef;
@@ -32,6 +32,7 @@ export class SignupComponent {
   @ViewChild('otp6Input') otp6Input!: ElementRef;
 
   name:string=''
+  cat:any[]=[]
   email: string = '';
   password: string = '';
   otp:boolean=false
@@ -59,6 +60,19 @@ export class SignupComponent {
   eyeIconClass2!: string;
   passwordError1!: string;
   passwordError2!: string;
+
+ngOnInit(): void {
+  this.http.get('http://localhost:3000/admin/getcategory')
+  .subscribe({
+    next:(res:any)=>{
+       this.cat=res;
+   },
+    error:(err:any)=>{
+      console.log("error ocuured", err)
+    }
+  })
+}
+
   onFileChange(event: any) {
 
     this.toastr.success('File uploaded successfully', 'Success');
@@ -136,18 +150,19 @@ export class SignupComponent {
       this.passwordError2='least one letter, one number, and one special character.'
     } else {
       this.passwordError1 = '';
+      this.passwordError2='';
     }
   }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
-    this.eyeIconClass = this.showPassword ? 'bi bi-eye-slash' : 'bi bi-eye';
+    this.eyeIconClass = this.showPassword ? 'bi bi-eye' : 'bi bi-eye-slash';
   
   }
 
   togglePasswordVisibilityb() {
     this.showPassword2 = !this.showPassword2;
-    this.eyeIconClass2 = this.showPassword2 ? 'bi bi-eye-slash' : 'bi bi-eye';
+    this.eyeIconClass2 = this.showPassword2 ? 'bi bi-eye' : 'bi bi-eye-slash';
   }
 
   focusNextInput(nextInput: any) {

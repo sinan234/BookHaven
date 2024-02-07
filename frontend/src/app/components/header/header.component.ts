@@ -1,5 +1,5 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { LoginService } from 'src/app/services/login.service';
 import { UsernameService } from 'src/app/services/username.service';
@@ -17,7 +17,8 @@ export class HeaderComponent implements OnInit{
       public loginService:LoginService,
       private router:Router,
       private store:Store, 
-      public user:UsernameService){}
+      public user:UsernameService,
+      private route:ActivatedRoute){}
 
   fullname=localStorage.getItem('name')
   searchText:string=''
@@ -40,6 +41,7 @@ export class HeaderComponent implements OnInit{
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
+
 
   isadmin(): boolean {
     const currentPath = window.location.pathname;

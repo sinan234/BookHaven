@@ -248,7 +248,10 @@ a:focus {
     justify-content: start;
   }
   
-
+#signup{
+  position: relative;
+  margin-left: 480px;
+}
   #btn{
     border: 0.5px solid #008080 !important;
     border-radius: 10px;
@@ -266,12 +269,16 @@ a:focus {
     position: absolute;
     margin-left: 1140px;
   }
+  #login{
+    position: relative;
+    margin-left: 10px;
+  }
   #btn3{
     border: 0.5px solid #008080 !important;
     border-radius: 10px;
     color: white;
     position: relative;
-    margin-left: 30px;
+    margin-left: 20px;
     -webkit-transition-duration: 0.5s ;
     -webkit-transition-duration: 0.5s !important;
     -webkit-transition-timing-function: linear !important;
@@ -283,6 +290,10 @@ a:focus {
     -webkit-box-shadow: 100px 0 0 #138496 inset !important;
  
 
+  }
+  .adminlogin{
+    position: relative;
+margin-left: 10px;
   }
   #btnab{
     border: 0.5px solid #008080 !important;
@@ -311,6 +322,7 @@ margin-left: 30px;
 
 
 .header_section {
+  height: 95px !important;
   background-color: #063547;
   padding: 15px 0;
 }
@@ -11054,8 +11066,8 @@ margin-left: 30px;
   position: absolute;
   margin-bottom: 30px;
   top: 0%;
-  width: 140px;
-  height:80px;
+  width: 120px;
+  height:70px;
   left: 1%;
 }
 #navbarSupportedContent{

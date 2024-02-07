@@ -14,6 +14,8 @@ const nodemailer = require('nodemailer');
 const otpGenerator = require('otp-generator');
 const Inquiry = require("../models/inquirymodel");
 const cache = require('memory-cache');
+const Category = require('../models/admincategory');
+
 
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -288,7 +290,7 @@ router.get('/getpost/:id', async (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     const id = jwt.verify(token, "secretkey");
     const userId = id.userId;
-    const weeks= req.params.id*7
+    const weeks= req.params.id*10
 
     const cacheKey = `getpost_${userId}`;
     const cachedData = cache.get(cacheKey);
@@ -318,14 +320,17 @@ router.get('/getpost/:id', async (req, res) => {
 
     const wishlist = await Wishlist.find({ userId: userId });
     const request = await Request.find({ recieverId: userId });
-
+    const category= await Category.find()
+    const like = await Like.find()
     const responseData = {
       message: "Details obtained successfully",
       posts: posts,
       user: user,
       wish: wishlist,
       alluser: alluser,
-      request: request
+      request: request,
+      category:category,
+      like:like
     };
 
     cache.put(cacheKey,  { weeks: weeks, data: responseData }, 1800000);
@@ -390,6 +395,20 @@ router.get('/getchating', async(req,res)=>{
     return res.status(200).json({message:"Successful",user:user, alluser:alluser, chat:chat    
   })
   }catch (err) {
+    res.status(500).json({ message: "Unknown error occurred" });
+  }
+})
+
+router.delete('/chat/delete/:id', async(req,res)=>{
+   try{
+    const token = req.headers.authorization.split(' ')[1];
+    const id = jwt.verify(token, "secretkey");
+    const userId = id.userId;
+    await NChat.deleteMany({
+      senderid: req.params.id,
+      receigverid:userId
+    })
+   }catch (err) {
     res.status(500).json({ message: "Unknown error occurred" });
   }
 })

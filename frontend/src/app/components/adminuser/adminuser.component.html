@@ -24,33 +24,33 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3"> Admin</div>
+                <!-- <div class="sidebar-brand-text mx-3"> Admin</div> -->
             </a>
 
             <hr class="sidebar-divider my-0">
 
             <li id="s" class="nav-item ">
                 <a class="nav-link" routerLink="/admin/login/home" >
-                  <i class="bi bi-house-door-fill me-2"></i>
-                  <span>Dashboard</span></a>
+                  <i class="bi bi-house-door-fill ms-3"id="nua"></i>
+                  <span id="nua" class="ms-2">Dashboard</span></a>
             </li>
 
            
 
             <li id="s" class="nav-item active">
                 <a class="nav-link" routerLink="/admin/login/home/users" routerLinkActive="active"  >
-                  <i class="bi bi-people-fill"></i>              
-                        <span class="ms-2">Users</span></a>
+                  <i class="bi bi-people-fill ms-3" id="nua"></i>              
+                        <span id="nua"class="ms-2">Users</span></a>
             </li>
             <li id="s" class="nav-item">
                 <a class="nav-link" routerLink="/admin/login/category" >
-                    <i class="bi bi-tag-fill"></i>                       <span class="ms-2">Category</span></a>
+                    <i class="bi bi-tag-fill ms-3"id="nua"></i>                       <span id="nua"class="ms-2">Category</span></a>
             </li>
          
 
             <li id="s" class="nav-item">
                 <a class="nav-link" routerLink="/admin/login/inquiry" >
-                    <i class="bi bi-journal-check"></i>                        <span class="ms-2">Inquiry</span></a>
+                    <i class="bi bi-journal-check ms-3"id="nua"></i>                        <span id="nua"class="ms-2">Inquiry</span></a>
             </li>
           
 
@@ -108,6 +108,7 @@
                         
 
                         <div class="topbar-divider d-none d-sm-block "></div>
+                        <h3 id="wel">Welcome Sinan</h3>
                         <button id="btn" class="btn btn-danger " (click)="logout()"> Logout</button>
                      
 
@@ -118,7 +119,7 @@
                 <div class="container-fluid">
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Users</h1>
+                        <h1 class="h3 mb-0 " [ngStyle]="{'color':'#37517e'}">Users</h1>
                      
                     </div>
 
@@ -157,13 +158,13 @@
                             <td>{{item.category1}}</td>
                             <td>{{item.category2}}</td>
                             <td>{{item.category3}}</td>
-                            <i class="bi bi-eye-fill" id="eye" (click)="view(item._id,item.name)"></i>
+                            <i class="bi bi-eye-fill" id="eye" (click)="view(item._id,item.name.split(' '))"></i>
 
                             <td>{{item.active}}</td>
 
                             <td>
-                              <button class="btn btn-primary edit-btn" (click)="enable(item._id)">Enable</button>
-                              <button class="ms-2 btn btn-danger delete-btn" (click)="delete(item._id)">Revoke</button>
+                              <button class="button-29 edit-btn"  (click)="enable(item._id)">Enable</button>
+                              <button class="ms-2 btn  delete-btn" id="delete" (click)="delete(item._id)">Block</button>
                             </td>
                           </tr>
                           </ng-container>
@@ -171,9 +172,9 @@
                         <div id="rp" *ngIf="vi">
                           <div class="d-flex">
                             <h5 class="mt-2 ms-2 " id="ssd">Username: 
-                                <span class="fw-bold">{{selu.split()}}</span></h5>
-                            <h5 class="mt-2" id="sd"> TotalReports: {{newwarnings.length}} </h5>
-                            <i id="ic" class="bi bi-x-square-fill mt-2 " (click)="vi=!vi"></i>
+                                <span class="fw-bold">{{selu}}</span></h5>
+                            <h5 class="mt-2 me-2" id="sd"> TotalReports:{{newwarnings.length}} </h5>
+                            <i id="ic" class="bi bi-x-square-fill mt-2 me-1" (click)="vi=!vi"></i>
                           </div>
                           <h5 *ngIf="newwarnings.length<=0" class="mt-5 ms-4 " id="ssd">The user has no reports till now.</h5>
                           <table *ngIf="newwarnings.length>0">

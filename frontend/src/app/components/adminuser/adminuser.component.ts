@@ -79,7 +79,7 @@ export class AdminuserComponent implements OnInit {
   delete(id:any){
      
     Swal.fire({
-      title: '<span style="font-size: 17px">Are you sure you want to revoke user?</span>',
+      title: '<span style="font-size: 17px">Are you sure you want to block user?</span>',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       didOpen: () => {
@@ -113,7 +113,7 @@ export class AdminuserComponent implements OnInit {
   }
 
   view(id:any,name:any){
-    this.selu=name
+    this.selu=name[0]
      this.vi=true
      console.log(id)
      this.newwarnings= this.warnings.filter((item:any)=>{

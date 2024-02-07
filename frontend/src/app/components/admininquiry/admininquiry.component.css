@@ -1,4 +1,16 @@
-
+#wel{
+  font-size: 20px;
+  font-weight: 600;
+  color: #37517e ;
+  position: relative;
+  margin-top: 10px;
+  margin-right: 25px;
+  }
+  #nua{
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+  }
 #eye{
     color: blue;
     position: absolute;

@@ -63,12 +63,12 @@
   
   }
   
-  #idu:hover {
+  /* #idu:hover {
     font-size: 20px;
     transform: scale(1.1) !important;
     color: rgb(0, 110, 255) !important;
 
-  }
+  } */
   .custom-popup-class {
     width: 100px; 
     height: 150px;
@@ -229,10 +229,24 @@ i{
   cursor: pointer !important;
 
 }
+
+#like{
+  position: relative;
+  margin-left: 10px;
+  width: 90px;
+  height: 45px;
+  background-color: none;
+}
+#like:hover{
+  border: 0.2px solid #f7f8f9 !important;
+  border-radius: 8px !important;
+  background-color: #f1f2f3 !important;
+  cursor: pointer;
+}
 #nnb{
   position: relative;
   margin-top: 120px;
-  margin-left: 730px;
+  margin-left: 716px;
   color: #1F456E;
   width: 240px;
   margin-bottom: 0px;
@@ -248,8 +262,19 @@ i{
   margin-top: 35px;
 }
 #ku{
+  cursor: pointer;
   position: relative;
-  margin-left: 0px;
+  color: #1F456E;
+  height: 27px;
+  width: 370px;
+  padding: 0px !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+
+  /* margin-bottom: 10px; */
+  font-size: 15px;
+  font-weight: 650;
+  border: 1.5PX SOLID gray;
 }
 #kuf{
   position: absolute;
@@ -284,7 +309,7 @@ i{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 1400px;
+  height: 100%;
   width: 100%;
   background-color: #f1f2f3;
 
@@ -394,13 +419,13 @@ i{
  }
 
 #icu {
-  margin-left: 30px !important;
+  margin-left: 5px !important;
   transition: color 0.3s;
 }
 
-#icu:hover {
+/* #icu:hover {
   font-size: 18px;
   transform: scale(1.2) !important;
   color: red !important;
 }
-
+ */

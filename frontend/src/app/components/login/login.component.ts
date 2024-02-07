@@ -18,7 +18,7 @@ export class LoginComponent {
      private router:Router
    ){
     this.showPassword = false;
-    this.eyeIconClass = 'bi bi-eye';
+    this.eyeIconClass = 'bi bi-eye-slash';
    }
    email:string=''
    password:string=''
@@ -41,7 +41,7 @@ export class LoginComponent {
   
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
-    this.eyeIconClass = this.showPassword ? 'bi bi-eye-slash' : 'bi bi-eye';
+    this.eyeIconClass = this.showPassword ? 'bi bi-eye' : 'bi bi-eye-slash';
   }
 
 

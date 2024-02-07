@@ -7,6 +7,7 @@ const User=require('../models/usermodel')
 const Wish=require('../models/wishlistmodel')
 const Post= require('../models/postmodel');
 const Warning = require('../models/warning');
+const Category = require('../models/admincategory');
 
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -160,6 +161,67 @@ router.delete('/enableUser/:id',async(req,res)=>{
   }catch(err){
     res.status(500).json({message:" Unknown error occured"})
 
+  }
+})
+
+router.post('/addcategory', async(req,res)=>{
+ try{
+   const {category}=req.body
+   const existingcategory=await Category.findOne({category: category})
+   if(existingcategory){
+    return res.status(401).json({message:"Category existing"})
+
+   }
+   const newcategory=new Category({category})
+   await newcategory.save()
+   return res.status(200).json({ message: "Category added successfully" });
+
+   
+ }catch(err){
+    res.status(500).json({message:" Unknown error occured"})
+
+  }
+})
+
+router.put('/updatecategory', async(req,res)=>{
+  try{
+   const{id,category}=req.body
+   const cat= await Category.findById(id)
+   if(!cat){
+    return res.status(401).json({message:"Category not found"})
+
+   }
+   cat.category=category;
+   await cat.save()
+   return res.status(200).json({ message: "Category updated successfully" });
+
+  }catch(err){
+    res.status(500).json({message:" Unknown error occured"})
+
+  }
+})
+
+router.get('/getcategory',async(req,res)=>{
+  try{
+     const category=await Category.find()
+     res.json(category)
+  }catch(err){
+    res.status(500).json({message:" Unknown error occured"})
+
+  }
+})
+
+router.delete('/removecategory/:id', async(req,res)=>{
+  try{
+    const id=req.params.id
+    const existingcategory=await Category.deleteOne({_id:id})
+    if(!existingcategory){
+     return res.status(401).json({message:"Category existing"})
+    } 
+    return res.status(200).json({ message: "Category deleted successfully" });
+
+  }catch(err){
+    res.status(500).json({message:" Unknown error occured"})
   }
 })
 module.exports=router

@@ -17,10 +17,10 @@ show:boolean=false
 @ViewChild('categorySection') categorySection!: ElementRef;
 @ViewChild('contactSection') contactSection!:ElementRef;
   content:any;
-  name!:string;
-  email!:string;
-  phone!:string;
-  message!:string
+  name:string='';
+  email:string='';
+  phone:string='';
+  message:string=''
   constructor(private route: ActivatedRoute,
     private toastr:ToastrService,
     private http:HttpClient) { }

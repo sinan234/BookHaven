@@ -12,9 +12,9 @@ import Swal from 'sweetalert2';
 })
 export class ChangepasswordComponent implements OnInit{
 user:any
-oldpass!:string
-newpass1!:string
-newpass2!:string
+oldpass:string=''
+newpass1:string=''
+newpass2:string=''
 
 constructor(
   private http:HttpClient,

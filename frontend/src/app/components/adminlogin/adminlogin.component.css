@@ -116,7 +116,15 @@ html {
     -ms-transform: scale(0.95);
     transform: scale(0.95);
   }
-  
+  .password-toggle {
+    position: relative;
+    top: 55%;
+    right: 7%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color:  #01796f;
+    font-size: 20px;
+  }
   input[type=text] {
     background-color: #f6f6f6;
     border: none;

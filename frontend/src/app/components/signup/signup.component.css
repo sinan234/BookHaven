@@ -250,10 +250,12 @@ select option:checked {
     box-shadow: 0 0 1px #ccc;
     -webkit-transition-duration: 0.5s;
     -webkit-transition-timing-function: linear;
-    box-shadow:0px 0 0 #3361f8  inset;
+    border:1px solid #44b89d !important;
+    box-shadow:0px 0 0 #44b89d   inset;
   }
   #btn:hover{
-    -webkit-box-shadow: 100px 0 0 #1e90ff inset;
+    
+    -webkit-box-shadow: 100px 0 0 #44b89d  inset;
 
   }
   #btnu{

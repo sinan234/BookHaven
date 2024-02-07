@@ -70,11 +70,11 @@
         >
           <i [ngClass]="eyeIconClass2" id="eye-icon"></i>
         </span>
-        <div *ngIf='cpassword&& password!=cpassword' class="text-danger">Password must be same</div>
+        <div *ngIf='cpassword && password!=cpassword' class="text-danger">Password must be same</div>
         <button
           id="btn"
           *ngIf="!showotp"
-          class="btn btn-outline-primary"
+          class="btn btn-outline-success"
           (click)="sendOtp()"
         >
           Send OTP
@@ -200,12 +200,12 @@
           <option [value]="'Choose your interested category1'" disabled>
             Choose your interested category 1
           </option>
-          <option [value]="'Adventure'">Adventure</option>
-          <option [value]="'Fiction'">Fiction</option>
+          <option *ngFor="let item of cat" [value]=item.category>{{item.category}}</option>
+          <!-- <option [value]="'Fiction'">Fiction</option>
           <option [value]="'Thriller'">Thriller</option>
           <option [value]="'Biography'">Biography</option>
           <option [value]="'Mystery'">Mystery</option>
-          <option [value]="'Romance'">Romance</option>
+          <option [value]="'Romance'">Romance</option> -->
         </select>
         <select
           id="product_categorie"
@@ -217,12 +217,7 @@
           <option [value]="'Choose your interested category2'">
             Choose your interested category 2
           </option>
-          <option [value]="'Adventure'">Adventure</option>
-          <option [value]="'Fiction'">Fiction</option>
-          <option [value]="'Thriller'">Thriller</option>
-          <option [value]="'Biography'">Biography</option>
-          <option [value]="'Mystery'">Mystery</option>
-          <option [value]="'Romance'">Romance</option>
+          <option *ngFor="let item of cat" [value]=item.category>{{item.category}}</option>
         </select>
 
         <select
@@ -235,12 +230,7 @@
           <option [value]="'Choose your interested category 3'">
             Choose your interested category 3
           </option>
-          <option [value]="'Adventure'">Adventure</option>
-          <option [value]="'Fiction'">Fiction</option>
-          <option [value]="'Thriller'">Thriller</option>
-          <option [value]="'Biography'">Biography</option>
-          <option [value]="'Mystery'">Mystery</option>
-          <option [value]="'Romance'">Romance</option>
+          <option *ngFor="let item of cat" [value]=item.category>{{item.category}}</option>
         </select>
         <label class="ms-5 mt-3">Choose your Profile picture</label>
         <input

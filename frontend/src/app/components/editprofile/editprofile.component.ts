@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 @Component({
@@ -22,20 +23,23 @@ export class EditprofileComponent implements OnInit {
   constructor(
     private http:HttpClient,
     private toastr:ToastrService,
-    private router:Router
+    private router:Router,
+    private spinner:NgxSpinnerService
   ){}
    ngOnInit(): void {
-    const duration = 300;
-    setTimeout(() => {
-      this.showPreloader = false;
-    }, duration);
+    // const duration = 300;
+    // setTimeout(() => {
+    //   this.showPreloader = false;
+    // }, duration);
       this.getData()
    }
 
    getData(){
+    this.spinner.show()
     this.http.get('http://localhost:3000/user/getprofile')
       .subscribe({
         next:(res:any)=>{
+          this.spinner.hide()
            this.user=res.user
            console.log("user",this.user)
            this.name=this.user.name;

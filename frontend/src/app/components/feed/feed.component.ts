@@ -29,7 +29,7 @@ export class FeedComponent implements OnInit, DoCheck {
   bookname: string = '';
   ischecked:boolean=false;
   author: string = '';
-  bookcategory:string=''
+  bookcategory:string='Enter the category of the book'
   newimg: any;
   m: any;
   ischecked2:boolean=false
@@ -55,6 +55,10 @@ export class FeedComponent implements OnInit, DoCheck {
   request:any[]=[]
   accepted:any[]=[]
   notaccepted:any[]=[]
+  category:any[]=[]
+  likes:any[]=[]
+  liked:any[]=[]
+  cat:string='Interested category'
   acc:any[]=[]
   showNotFoundImage: boolean = false; 
   searchText!: string;
@@ -94,6 +98,8 @@ export class FeedComponent implements OnInit, DoCheck {
     // console.log("book", this.details)
     // console.log("bookdetails", this.bookdetails)
     // console.log("check", this.ischecked)
+    console.log("checked category" , this.cat)
+    console.log(this.bookcategory)
     if (this.details.length) {
       this.show = true;
     } else {
@@ -214,14 +220,24 @@ export class FeedComponent implements OnInit, DoCheck {
     })
   }
 
-  check(item:string){
-     if(!this.ischecked){
-      return true
-     }
-     else if((this.user.category1+this.user.category2+this.user.category3).toLowerCase().includes(item.toLowerCase())){
-      return true
-     }
-     return false
+  check(item: string) {
+    if (!this.ischecked) {
+      return true;
+    } else if (this.cat === 'all' && this.ischecked) {
+      if (
+        this.user.category1.toLowerCase().includes(item.toLowerCase()) ||
+        this.user.category2.toLowerCase().includes(item.toLowerCase()) ||
+        this.user.category3.toLowerCase().includes(item.toLowerCase())
+      ) {
+        return true;
+      }
+    } else {
+      if(item.toLowerCase() == this.cat.toLowerCase()){
+        return true
+      }
+    }
+  
+    return false;
   }
 
   onFileChange(event: any) {
@@ -251,15 +267,21 @@ export class FeedComponent implements OnInit, DoCheck {
     this.http.get(`http://localhost:3000/user/getpost/${this.older}`).subscribe({
       next: (res: any) => {
         this.spinner.hide()
-
+        
         this.user = res.user;
         console.log("user", this.user)
         this.posts = res.posts;
+        this.category=res.category
         this.alluser = res.alluser;
         this.postsn = this.posts;
         console.log('posts', this.postsn);
         this.request=res.request
         console.log("req",this.request)
+        this.likes=res.like
+        this.likes.forEach((item:any)=>{
+          this.liked.push(item.postId)
+        })
+        console.log("liked", this.liked)
         this.request.forEach((item:any)=>{
           if(item.status=='Accepted' && item.returned!='Yes'){
             this.acc.push(item.bookname)
@@ -286,7 +308,7 @@ export class FeedComponent implements OnInit, DoCheck {
     this.showold=true
     setTimeout(()=>{
       this.showold=!this.showold
-    },1000)
+    },1400)
     this.older=this.older+1
     this.getData()
   }
@@ -320,6 +342,7 @@ export class FeedComponent implements OnInit, DoCheck {
         // } else {
         //   this.toastr.warning('Post disliked ');
         // }
+        this.liked.splice(0,this.liked.length)
         this.getData();
       },
       error: (err: any) => {
@@ -372,7 +395,7 @@ export class FeedComponent implements OnInit, DoCheck {
           //     }
           //   },
           // });
-          this.toastr.success("Post wishlisted successfully")
+          // this.toastr.success("Post wishlisted successfully")
           this.getData();
         },
         error: (err: any) => {

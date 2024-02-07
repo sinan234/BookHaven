@@ -24,32 +24,32 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3"> Admin</div>
+                <!-- <div class="sidebar-brand-text mx-3"> Admin</div> -->
             </a>
 
             <hr class="sidebar-divider my-0">
 
             <li id="s" class="nav-item ">
                 <a class="nav-link" routerLink="/admin/login/home" >
-                  <i class="bi bi-house-door-fill me-2"></i>
-                  <span>Dashboard</span></a>
+                  <i class="bi bi-house-door-fill ms-3" id="nua"></i>
+                  <span class="ms-2" id="nua">Dashboard</span></a>
             </li>
 
            
 
             <li id="s" class="nav-item ">
                 <a class="nav-link" routerLink="/admin/login/users"  >
-                  <i class="bi bi-people-fill"></i>              
-                        <span class="ms-2">Users</span></a>
+                  <i class="bi bi-people-fill ms-3" id="nua"></i>              
+                        <span class="ms-2" id="nua">Users</span></a>
             </li>
             <li id="s" class="nav-item">
                 <a class="nav-link" routerLink="/admin/login/category" >
-                    <i class="bi bi-tag-fill"></i>                       <span class="ms-2">Category</span></a>
+                    <i class="bi bi-tag-fill ms-3"id="nua"></i>                       <span id="nua"class="ms-2">Category</span></a>
             </li>
          
             <li id="s" class="nav-item active">
                 <a class="nav-link" routerLink="/admin/login/inquiry" routerLinkActive="active"  >
-                    <i class="bi bi-journal-check"></i>                        <span class="ms-2">Inquiry</span></a>
+                    <i class="bi bi-journal-check ms-3"id="nua"></i>                        <span id="nua"class="ms-2">Inquiry</span></a>
             </li>
           
 
@@ -107,6 +107,8 @@
                         
 
                         <div class="topbar-divider d-none d-sm-block "></div>
+                        <h3 id="wel">Welcome Sinan</h3>
+
                         <button id="btn" class="btn btn-danger " (click)="logout()"> Logout</button>
                      
 
@@ -117,7 +119,7 @@
                 <div class="container-fluid">
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Inquiries</h1>
+                        <h1 class="h3 mb-0 "[ngStyle]="{'color':'#37517e'}">Inquiries</h1>
                      
                     </div>
 

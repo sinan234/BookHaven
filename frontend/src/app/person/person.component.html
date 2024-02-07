@@ -12,15 +12,20 @@
 <div *ngIf="menu" class="report-options card">
   <div class="card-body">
     <h5 class="card-title">Report to Admin</h5>
-    <select class="form-select mb-3" [(ngModel)]="dis" (change)="select($event)">
+    <!-- <select class="form-select mb-3" [(ngModel)]="dis" (change)="select($event)">
       <option value=" "   >Select any option</option>
       <option value="fraud">Fraud</option>
       <option value="scam">Scam</option>
       <option value="other">Other</option>
-    </select>
-    <input type="text" [(ngModel)]="customOption" [hidden]="dis !== 'other'" (input)="updateReason()">
-
-    <button class="btn btn-primary" id="send" (click)="send(seluser[0]._id, user._id)">Send</button>
+    </select> -->
+    <!-- <input type="text"  [(ngModel)]="customOption" [hidden]="dis !== 'other'" (input)="updateReason()"> -->
+    <textarea 
+    type="text"
+    class="form-control form-status border-0 py-1 px-0"
+    placeholder="Enter the reason for reporting the user"
+    [(ngModel)]="selvalue"
+    ></textarea>
+    <button class="btn btn-primary " id="send" (click)="send(seluser[0]._id, user._id)">Send</button>
   </div>
 </div>
 <div class="ds">

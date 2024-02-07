@@ -18,7 +18,24 @@
     <input checked="checked" type="checkbox" [(ngModel)]="ischecked">
     <div class="checkmark"></div>
   </label>
-  <label id="ku" class=" fw-bold ">InterestedCategories</label>
+  <select
+          id="ku"
+          name="cat"
+          class="form-control"
+          required
+          [(ngModel)]="cat"
+        >
+          <option [value]="'Interested category'" disabled>
+            Interested category
+          </option>
+          <option [value]="'all'" > All </option>
+          <option [value]=user.category1>{{user.category1}}</option>
+          <option [value]=user.category2>{{user.category2}}</option>
+          <option [value]=user.category3>{{user.category3}}</option>
+          <!-- <option *ngFor="let item of cat" [value]=item.category>{{item.category}}</option> -->
+        </select>
+  <!-- <label id="ku" class=" fw-bold ">InterestedCategories</label> -->
+
   </div>
 
 
@@ -69,14 +86,25 @@
                     name="author"
                     required
                   />
-                  <input
+                  <!-- <input
                     type="text"
                     class="form-control mt-3"
                     placeholder="Enter the category of the book"
                     [(ngModel)]="bookcategory"
                     name="bookcategory"
                     required
-                  />
+                  /> -->
+                  <select
+                  class="form-control mt-3"
+                    [(ngModel)]="bookcategory"
+                    name="bookcategory"
+                    required
+                  >
+                  <option [value]="'Enter the category of the book'" disabled  >
+                    Enter the category of the book
+                  </option>
+                  <option *ngFor="let item of category" [value]=item.category>{{item.category}}</option>
+                </select>
                   <textarea
                     type="text"
                     #myInputn
@@ -215,58 +243,74 @@
                   </div>
                 </div>
                 <ul
-                  class="list-unstyled d-flex justify-content-start mb-0 ms-2 pe-xl-5"
+                  class="list-unstyled d-flex justify-content-start mb-0  pe-xl-5"
                 >
                 <li>
-                  <div class="like-container">
+                  <div class="like-container" id="like" (click)="like(item._id)"
+                  [ngStyle]="{
+                    backgroundColor: liked.includes(item._id) ? '#f1f2f3' : 'none',
+                    borderRadius: liked.includes(item._id) ? '8px' : '0px',
+                    border:  liked.includes(item._id) ? '0.5px solid #f7f8f9' : 'none'
+                  }"
+                  >
+                    <span class="small ms-2 me-2">{{ item.like }}</span>
+
                     <i id="idu"
                        class="bi bi-hand-thumbs-up-fill like-icon"
                        [ngStyle]="{
                           color: item.like >= 1 ? 'rgb(0, 110, 255)' : '#d1d1d1'
                        }"
-                       (click)="like(item._id)"
+                       
                     ></i>
-                    <span class="small ps-2">{{ item.like }}</span>
+                    <div class="mt-3 ms-2 ">
+                      <p  >Like</p>
+                    </div>
                   </div>
-                  <div>
-                    <p class="x mb-1" >Like</p>
-                  </div>
+                  
                 </li>
                   <li class="lu">
-                    <div class="like-container">
+                    <div class="like-container" id="like" (click)="wishlist(item._id)"     
+                     [ngStyle]="{
+                      backgroundColor: m.includes(item._id) ? '#f1f2f3' : '#fff',
+                      borderRadius: m.includes(item._id) ? '8px' : '0px',
+                      border:  m.includes(item._id) ? '0.5px solid #f7f8f9' : 'none'
+                    }"
+                    >
 
                     <i
-                      class="bi bi-heart-fill ms-5"
+                      class="bi bi-heart-fill "
                       id="icu"
                       [ngStyle]="{
                         color: m.includes(item._id) ? 'red' : '#d1d1d1'
                       }"
-                      (click)="wishlist(item._id)"
                     ></i>
+                    <div class="mt-3 ms-2">
+                      <p >Wishlist</p>
                     </div>
-                    <div>
-                      <p id="xy" class="mb-3">Wishlist</p>
                     </div>
+              
                   </li>
                   <li [routerLink]="['/login/chat', getid(item.username)]" *ngIf="item.user_id != user._id">
-                    <div class="like-container">
+                    <div class="like-container " id="like">
 
                     <i id="idu" class="bi bi-chat-dots ms-3" ></i>
+             
+                    <div class="ms-2 mt-3" >
+                      <p >Chat</p>
                     </div>
-                    <div>
-                      <p id="xyz"class="mb-3">Chat</p>
-                    </div>
+                  </div>
                   </li>
                   <ng-container *ngIf="item.user_id != user._id ">
                   <ng-container *ngIf="item.status=='Available'">
                   <li (click)="toggleBookPopup(item)"  *ngIf="(!accepted.includes(item.bookname)) && (!notaccepted.includes(item.bookname)) ||(item.status=='Available')" >
-                    <div class="like-container">
+                    <div class="like-container" id="like">
 
-                    <i id="idu" class="bi ms-3 bi-journal-check"></i>
+                    <i id="idu" class="bi ms-2 bi-journal-check"></i>
+                    <div >
+                      <p class="ms-2 mt-3">Book</p>
                     </div>
-                    <div>
-                      <p id="xyzd" class="mb-3">Book</p>
                     </div>
+                 
                   </li>
                 </ng-container>
                 </ng-container>
@@ -360,10 +404,10 @@
     
   </div>
 
-  <section *ngIf="showold " class="dots-container">
+  <!-- <section *ngIf="showold " class="dots-container">
     <div class="dot"></div>
     <div class="dot"></div>
     <div class="dot"></div>
     <div class="dot"></div>
     <div class="dot"></div>
-  </section>
+  </section> -->

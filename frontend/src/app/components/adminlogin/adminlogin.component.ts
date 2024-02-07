@@ -16,10 +16,15 @@ export class AdminloginComponent {
     private http:HttpClient,
     private router:Router,
     private route:ActivatedRoute
-  ){}
+  ){
+    this.showPassword = false;
+    this.eyeIconClass = 'bi bi-eye-slash';
+  }
 
   email!:string
   password!:string
+  showPassword!: boolean;
+  eyeIconClass!: string;
 
 
   onsubmit(form:NgForm){
@@ -68,5 +73,9 @@ export class AdminloginComponent {
           this.toastr.error(err.error.message)
         }
       })
+  }
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+    this.eyeIconClass = this.showPassword ? 'bi bi-eye' : 'bi bi-eye-slash';
   }
 }
