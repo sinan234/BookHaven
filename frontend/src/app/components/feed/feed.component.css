@@ -96,8 +96,8 @@
   }
   #xyzd{
     position: relative;
-
-    margin-left: 16px;
+    margin-top: 12px;
+    margin-left: 5px;
   } 
   #df{
     width: 100px;
@@ -237,7 +237,20 @@ i{
   height: 45px;
   background-color: none;
 }
+#likes{
+  position: absolute;
+  left: 51%;
+  width: 100px;
+  height: 45px;
+  background-color: none;
+}
 #like:hover{
+  border: 0.2px solid #f7f8f9 !important;
+  border-radius: 8px !important;
+  background-color: #f1f2f3 !important;
+  cursor: pointer;
+}
+#likes:hover{
   border: 0.2px solid #f7f8f9 !important;
   border-radius: 8px !important;
   background-color: #f1f2f3 !important;

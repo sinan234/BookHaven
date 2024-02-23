@@ -316,15 +316,19 @@
                 </ng-container>
                 <ng-container *ngIf="item.user_id != user._id">
                   <li  *ngIf="notaccepted.includes(item.bookname) && !accepted.includes(item.bookname) ">
-                    <i id="d" class="ms-4 bi bi-bookmark-check-fill"></i>
+                    <div class="like-container " id="likes">
+                    <i id="d" class="ms-2 bi bi-bookmark-check-fill"></i>
                     <div>
                       <p id="xyzd">Requested</p>
                     </div>
+                    </div>
                   </li>
-                  <li  *ngIf="(accepted.includes(item.bookname)) && (item.status!='Available')">
-                    <i id="du" class="ms-4 bi bi-bookmark-check-fill"></i>
+                  <li   *ngIf="(accepted.includes(item.bookname)) && (item.status!='Available')">
+                    <div class="like-container " id="likes">
+                    <i id="du" class="ms-2 bi bi-bookmark-check-fill"></i>
                     <div>
                       <p id="xyzd">Accepted</p>
+                    </div>
                     </div>
                   </li>
                 </ng-container>

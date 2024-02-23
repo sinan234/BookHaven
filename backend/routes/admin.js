@@ -224,4 +224,5 @@ router.delete('/removecategory/:id', async(req,res)=>{
     res.status(500).json({message:" Unknown error occured"})
   }
 })
+
 module.exports=router

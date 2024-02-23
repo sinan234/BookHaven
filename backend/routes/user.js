@@ -15,205 +15,203 @@ const otpGenerator = require('otp-generator');
 const Inquiry = require("../models/inquirymodel");
 const cache = require('memory-cache');
 const Category = require('../models/admincategory');
-
-
-const transporter = nodemailer.createTransport({
-  service: 'Gmail',
-  auth: {
-    user: 'mpsinan015@gmail.com',
-    pass: 'olvv wytw yrjq eulb'
-  }
-});
+const otpcontroller=require('../controllers/otpcontroller')
+const passwordcontroller= require('../controllers/passwordcontroller')
+const inquirycontroller=require('../controllers/inquirycontroller')
 const sessionTimeout=1800000;
 
-const otparray=[]
-
-router.post('/send-otp', (req, res) => {
+router.post('/send-otp', otpcontroller.sendOtp )
+router.post('/verify-otp', otpcontroller.verifyOtp)
+router.post('/forgotpassword', passwordcontroller.forgotPassword)
+router.post('/resetpassword' , passwordcontroller.resetPassword)
+router.post('/sendinquiry',inquirycontroller.sendinquiry)
+router.post('/updateinquiry', inquirycontroller.updateinquiry)
+router.get('/getinquiry' , inquirycontroller.getinquiry)
+// router.post('/send-otp', (req, res) => {
   
-  function generateNumericOTP(length) {
-    const digits = '0123456789';
-    let OTP = '';
-    for (let i = 0; i < length; i++) {
-      OTP += digits[Math.floor(Math.random() * 10)];
-    }
-    return OTP;
-  }
-  function removeFirstOTPAfterTwoMinutes() {
-    if (otparray.length > 0) {
-      otparray.shift(); 
-    }
-  }
-  const otp = generateNumericOTP(6);
-  if (otp) {
-    otparray.push(otp);
-    setTimeout(removeFirstOTPAfterTwoMinutes, 2 * 60 * 1000);
-  }
-  const mailOptions = {
-    from: 'mpsinan015@gmail.com',
-    to: req.body.email,
-    subject: 'BookHaven Community Bookstore- Email Verification',
-    // text: `Your OTP for email verification is: ${otp}`
-    html: `
-    <html>
-      <head>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-          }
-          .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-          }
-          .logo {
-            text-align: center;
-            margin-bottom: 20px;
-          }
-          .content {
-            color: #333;
-          }
-          .otp {
-            font-size: 24px;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 20px;
-          }
+//   function generateNumericOTP(length) {
+//     const digits = '0123456789';
+//     let OTP = '';
+//     for (let i = 0; i < length; i++) {
+//       OTP += digits[Math.floor(Math.random() * 10)];
+//     }
+//     return OTP;
+//   }
+//   function removeFirstOTPAfterTwoMinutes() {
+//     if (otparray.length > 0) {
+//       otparray.shift(); 
+//     }
+//   }
+//   const otp = generateNumericOTP(6);
+//   if (otp) {
+//     otparray.push(otp);
+//     setTimeout(removeFirstOTPAfterTwoMinutes, 2 * 60 * 1000);
+//   }
+//   const mailOptions = {
+//     from: 'mpsinan015@gmail.com',
+//     to: req.body.email,
+//     subject: 'BookHaven Community Bookstore- Email Verification',
+//     html: `
+//     <html>
+//       <head>
+//         <style>
+//           body {
+//             font-family: Arial, sans-serif;
+//           }
+//           .container {
+//             max-width: 600px;
+//             margin: 0 auto;
+//             padding: 20px;
+//             border: 1px solid #e0e0e0;
+//             border-radius: 5px;
+//           }
+//           .logo {
+//             text-align: center;
+//             margin-bottom: 20px;
+//           }
+//           .content {
+//             color: #333;
+//           }
+//           .otp {
+//             font-size: 24px;
+//             font-weight: bold;
+//             text-align: center;
+//             margin-top: 20px;
+//           }
        
-        </style>
-      </head>
-      <body>
-        <div class="container">
-          <div class="logo">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWQuXx6VelnEOU7yG16vGbhHFWWG6Pi7ynyGlVYhfq-wCHlyHkgS9wYOqkjk6xf_16sY8&usqp=CAU" alt="BookHaven Community Bookstore">
-          </div>
-          <div class="content">
-            <p>Dear ${req.body.name},</p>
-            <p>Thank you for choosing BookHaven Community Bookstore. To complete your email verification, please use the OTP provided below.</p>
-            <div class="otp">
-              Your OTP for email verification is: ${otp}
-            </div>
-          </div>
-        </div>
-      </body>
-    </html>
-  `
+//         </style>
+//       </head>
+//       <body>
+//         <div class="container">
+//           <div class="logo">
+//             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWQuXx6VelnEOU7yG16vGbhHFWWG6Pi7ynyGlVYhfq-wCHlyHkgS9wYOqkjk6xf_16sY8&usqp=CAU" alt="BookHaven Community Bookstore">
+//           </div>
+//           <div class="content">
+//             <p>Dear ${req.body.name},</p>
+//             <p>Thank you for choosing BookHaven Community Bookstore. To complete your email verification, please use the OTP provided below.</p>
+//             <div class="otp">
+//               Your OTP for email verification is: ${otp}
+//             </div>
+//           </div>
+//         </div>
+//       </body>
+//     </html>
+//   `
 
-  };
+//   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-      res.status(500).json({ message: 'Failed to send OTP' });
-    } else {
-      console.log('Email sent: ' + info.response);
-      res.status(200).json({ message: 'OTP sent successfully' });
-    }
-  });
-});
+//   transporter.sendMail(mailOptions, (error, info) => {
+//     if (error) {
+//       console.log(error);
+//       res.status(500).json({ message: 'Failed to send OTP' });
+//     } else {
+//       console.log('Email sent: ' + info.response);
+//       res.status(200).json({ message: 'OTP sent successfully' });
+//     }
+//   });
+// });
 
-router.post('/verify-otp', (req, res) => {
-  const userOTP = req.body.otp; 
-  console.log(otparray)
-  if (otparray.includes(userOTP.toString())) {
-    res.status(200).json({ message: 'OTP verification successful' });
-  } else {
-    res.status(400).json({ message: 'Invalid OTP' });
-  }
-});
+// router.post('/verify-otp', (req, res) => {
+//   const userOTP = req.body.otp; 
+//   console.log(otparray)
+//   if (otparray.includes(userOTP.toString())) {
+//     res.status(200).json({ message: 'OTP verification successful' });
+//   } else {
+//     res.status(400).json({ message: 'Invalid OTP' });
+//   }
+// });
 
-router.post('/forgotpassword',async (req,res)=>{
-  try{
-    console.log(req.body.email)
-    const user=await User.findOne({email:req.body.email})
-    if(!user){
-      return res.status(500).json({message:"User not found with the email"})
-    }
+// router.post('/forgotpassword',async (req,res)=>{
+//   try{
+//     console.log(req.body.email)
+//     const user=await User.findOne({email:req.body.email})
+//     if(!user){
+//       return res.status(500).json({message:"User not found with the email"})
+//     }
 
-    const userId=user._id
+//     const userId=user._id
     
-    const mailOptions = {
-      from: 'mpsinan015@gmail.com',
-      to: req.body.email,
-      subject: 'BookHaven Community Bookstore - Password Reset',
-      html: `
-        <html>
-          <head>
-            <style>
-              body {
-                font-family: Arial, sans-serif;
-              }
-              .container {
-                max-width: 600px;
-                margin: 0 auto;
-                padding: 20px;
-                border: 1px solid #e0e0e0;
-                border-radius: 5px;
-              }
-              .logo {
-                text-align: center;
-                margin-bottom: 20px;
-              }
-              .content {
-                color: #333;
-              }
-              .reset-link {
-                margin-top: 20px;
-                text-align: center;
-              }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <div class="logo">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWQuXx6VelnEOU7yG16vGbhHFWWG6Pi7ynyGlVYhfq-wCHlyHkgS9wYOqkjk6xf_16sY8&usqp=CAU" alt="BookHaven Community Bookstore">
-              </div>
-              <div class="content">
-                <p>Dear ${user.name},</p>
-                <p>We received a request to reset your password for your BookHaven Community Bookstore account.</p>
-                <p>To reset your password, please click the link below:</p>
-                <div class="reset-link">
-                  <a href="http://localhost:4200/resetpassword/${userId}">Reset Password</a>
-                </div>
-                <p>If the link above doesn't work, you can copy and paste the following URL into your browser:</p>
-                <p>http://localhost:4200/resetpassword/${userId}</p>
-              </div>
-            </div>
-          </body>
-        </html>
-      `
-    };
+//     const mailOptions = {
+//       from: 'mpsinan015@gmail.com',
+//       to: req.body.email,
+//       subject: 'BookHaven Community Bookstore - Password Reset',
+//       html: `
+//         <html>
+//           <head>
+//             <style>
+//               body {
+//                 font-family: Arial, sans-serif;
+//               }
+//               .container {
+//                 max-width: 600px;
+//                 margin: 0 auto;
+//                 padding: 20px;
+//                 border: 1px solid #e0e0e0;
+//                 border-radius: 5px;
+//               }
+//               .logo {
+//                 text-align: center;
+//                 margin-bottom: 20px;
+//               }
+//               .content {
+//                 color: #333;
+//               }
+//               .reset-link {
+//                 margin-top: 20px;
+//                 text-align: center;
+//               }
+//             </style>
+//           </head>
+//           <body>
+//             <div class="container">
+//               <div class="logo">
+//                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWQuXx6VelnEOU7yG16vGbhHFWWG6Pi7ynyGlVYhfq-wCHlyHkgS9wYOqkjk6xf_16sY8&usqp=CAU" alt="BookHaven Community Bookstore">
+//               </div>
+//               <div class="content">
+//                 <p>Dear ${user.name},</p>
+//                 <p>We received a request to reset your password for your BookHaven Community Bookstore account.</p>
+//                 <p>To reset your password, please click the link below:</p>
+//                 <div class="reset-link">
+//                   <a href="http://localhost:4200/resetpassword/${userId}">Reset Password</a>
+//                 </div>
+//                 <p>If the link above doesn't work, you can copy and paste the following URL into your browser:</p>
+//                 <p>http://localhost:4200/resetpassword/${userId}</p>
+//               </div>
+//             </div>
+//           </body>
+//         </html>
+//       `
+//     };
   
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-        res.status(500).json({ message: 'Failed to send OTP' });
-      } else {
-        console.log('Email sent: ' + info.response);
-        res.status(200).json({ message: 'OTP sent successfully' });
-      }
-    });
-  }catch (err) {
-    res.status(500).json({ message: "Unknown error occured" });
-  }
-}
-)
+//     transporter.sendMail(mailOptions, (error, info) => {
+//       if (error) {
+//         console.log(error);
+//         res.status(500).json({ message: 'Failed to send OTP' });
+//       } else {
+//         console.log('Email sent: ' + info.response);
+//         res.status(200).json({ message: 'OTP sent successfully' });
+//       }
+//     });
+//   }catch (err) {
+//     res.status(500).json({ message: "Unknown error occured" });
+//   }
+// }
+// )
 
-router.post('/resetpassword' ,async(req,res)=>{
-  try{
-     const user=await User.findOne({_id:req.body.userId})
-     if(!user){
-      return res.status(500).json({message:"User not found with the email"})
-    }
-    var bpassword= await bcrypt.hash(req.body.password, 10)
-    user.password=bpassword
-    await user.save()
-    res.status(200).json({message:"Password updated successfully"})
-  }catch (err) {
-    res.status(500).json({ message: "Unknown error occured" });
-  }
-})
+// router.post('/resetpassword' ,async(req,res)=>{
+//   try{
+//      const user=await User.findOne({_id:req.body.userId})
+//      if(!user){
+//       return res.status(500).json({message:"User not found with the email"})
+//     }
+//     var bpassword= await bcrypt.hash(req.body.password, 10)
+//     user.password=bpassword
+//     await user.save()
+//     res.status(200).json({message:"Password updated successfully"})
+//   }catch (err) {
+//     res.status(500).json({ message: "Unknown error occured" });
+//   }
+// })
 
 router.post("/create_user", async (req, res) => {
   try {
@@ -291,7 +289,6 @@ router.get('/getpost/:id', async (req, res) => {
     const id = jwt.verify(token, "secretkey");
     const userId = id.userId;
     const weeks= req.params.id*10
-
     const cacheKey = `getpost_${userId}`;
     const cachedData = cache.get(cacheKey);
 
@@ -350,36 +347,6 @@ function updateCacheWish(userId) {
   const cacheKey = `getwish_${userId}`;
   cache.del(cacheKey); 
 }
-// router.get('/getpost', async (req, res) => {
-//   try {
-//     const token = req.headers.authorization.split(' ')[1];
-//     const id = jwt.verify(token, "secretkey");
-//     const userId = id.userId;
-//     const alluser=await User.find()
-//     const user = await User.findOne({ _id: userId });
-   
-//     if (!user) {
-//       res.status(500).json({ message: "User not found" });
-//     }
-//     const posts = await Post.find();
-//     if (!posts) {
-//       res.status(500).json({ message: "Posts not found" });
-//     }
-//     const wishlist = await Wishlist.find({ userId: userId });
-//     const request= await Request.find({recieverId:userId})
-    
-//     res.status(200).json({
-//       message: "Details obtained successfully",
-//       posts: posts,
-//       user: user,
-//       wish: wishlist,
-//       alluser:alluser,
-//       request:request
-//     });
-//   } catch (err) {
-//     res.status(500).json({ message: "Unknown error occurred" });
-//   }
-// });
 
 router.get('/getchating', async(req,res)=>{
   try {
@@ -548,6 +515,8 @@ router.put('/updatelike', async (req, res) => {
       post.like -= 1;
       await post.save();
       updateCache(userId)
+      updateCacheWish(userId)
+
       return res.status(200).json({ message: 'Like removed successfully' });
     } else {
       const newLike = new Like({
@@ -555,6 +524,7 @@ router.put('/updatelike', async (req, res) => {
         postId: req.body.postId
       });
       updateCache(userId)
+      updateCacheWish(userId)
       await newLike.save();
      
 
@@ -768,6 +738,7 @@ router.post('/acceptrequest', async (req, res) => {
       post.status = req.body.accepted_time;
       post.request='Request Accepted'
       await post.save();
+      updateCache(userId)
     }
     const request=await Request.findOne({_id: req.body._id})
     if(request.status=='Accepted'){
@@ -850,45 +821,45 @@ router.get('/bookstatus', async(req,res)=>{
 
 })
 
-router.post('/sendinquiry', async(req,res)=>{
-  try{
-    const {name,email,phone,message}=req.body
-    const newinquiry=new Inquiry({name,email,phone,message})
-    await newinquiry.save()
-    return res.status(200).json({message:"Inquiry send successfully"});
-  }catch (err) {
-    return res.status(500).json({ message: "Unknown error occurred" });
-  }
-})
+// router.post('/sendinquiry', async(req,res)=>{
+//   try{
+//     const {name,email,phone,message}=req.body
+//     const newinquiry=new Inquiry({name,email,phone,message})
+//     await newinquiry.save()
+//     return res.status(200).json({message:"Inquiry send successfully"});
+//   }catch (err) {
+//     return res.status(500).json({ message: "Unknown error occurred" });
+//   }
+// })
 
-router.post('/updateinquiry', async(req,res)=>{
-  try{
-    const {id}=req.body
-    const newinquiry=await Inquiry.findOne({_id:id})
-    if(!newinquiry){
-      return res.status(400).json({message:"No inquiry found"})
+// router.post('/updateinquiry', async(req,res)=>{
+//   try{
+//     const {id}=req.body
+//     const newinquiry=await Inquiry.findOne({_id:id})
+//     if(!newinquiry){
+//       return res.status(400).json({message:"No inquiry found"})
 
-    }
-    newinquiry.resolved=true;
-    await newinquiry.save()
-    return res.status(200).json({message:"Inquiry saved successfully"});
-  }catch (err) {
-    return res.status(500).json({ message: "Unknown error occurred" });
-  }
-})
+//     }
+//     newinquiry.resolved=true;
+//     await newinquiry.save()
+//     return res.status(200).json({message:"Inquiry saved successfully"});
+//   }catch (err) {
+//     return res.status(500).json({ message: "Unknown error occurred" });
+//   }
+// })
 
-router.get('/getinquiry' ,async(req,res)=>{
-  try{
-    const data=await Inquiry.find()
-    if(!data){
-      return res.status(400).json({message:"No inquiry found"})
-    }
-    return res.status(200).json({message:"Inquiry obtained successfully", data:data});
+// router.get('/getinquiry' ,async(req,res)=>{
+//   try{
+//     const data=await Inquiry.find()
+//     if(!data){
+//       return res.status(400).json({message:"No inquiry found"})
+//     }
+//     return res.status(200).json({message:"Inquiry obtained successfully", data:data});
 
-  }catch (err) {
-    return res.status(500).json({ message: "Unknown error occurred" });
-  }
-})
+//   }catch (err) {
+//     return res.status(500).json({ message: "Unknown error occurred" });
+//   }
+// })
 
 cron.schedule('0 12 * * *', async () => {
   try {

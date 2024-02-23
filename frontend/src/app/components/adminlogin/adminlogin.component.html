@@ -13,7 +13,7 @@
     <form #a="ngForm" (ngSubmit)="onsubmit(a)">
 
       <input type="text" id="login" class="fadeIn second" name="email" placeholder="email" [(ngModel)]="email">
-      <input   type="{{ showPassword ? 'text' : 'password' }}" id="password" class="fadeIn third" name="password" placeholder="password" [(ngModel)]="password">
+      <input   type="{{ showPassword ? 'text' : 'password' }}" id="password" class="fadeIn third ms-2" name="password" placeholder="password" [(ngModel)]="password">
       <span
           *ngIf="password.length > 0"
           class="password-toggle"
